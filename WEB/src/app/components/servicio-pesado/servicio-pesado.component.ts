@@ -2,335 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs/operators';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { DataFilterPipe } from '../../pipes/data-filter.pipe';
+import { DataService } from '../../services/data.service';
+import { PositionFilterPipe } from '../../pipes/position-filter.pipe';
 
 export interface DataExample {
-    ID: number,
-    GABRIEL: string,
-    MONROE: string,
-    GRC: string,
-    Armadora: string,
-    PosicionDel: number,
-    PosicionTra: number,
-    PosicionCab: number,
-    Tipo: string,
-    LongitudExp: string,
-    LongitudComp: string,
-    Carrera: string,
-    TipoMontajeSup: string,
-    DiametroSup: string,
-    LongitudSup: string,
-    TipoMontajeInf: string,
-    DiametroInf: string,
-    LongitudInf: string,
+  ID: number;
+  GABRIEL: string;
+  MONROE: string;
+  GRC: string;
+  Armadora: string;
+  Posicion: string;
+  Tipo: string;
+  LongitudExp: string;
+  LongitudComp: string;
+  Carrera: string;
+  TipoMontajeSup: string;
+  DiametroSup: string;
+  LongitudSup: string;
+  TipoMontajeInf: string;
+  DiametroInf: string;
+  LongitudInf: string;
 }
-
-const dataExample: DataExample[] = [
-  {
-    ID: 234,
-    GABRIEL: '58066-A',
-    MONROE: "None",
-    GRC: "None",
-    Armadora: 'VOLKSWAGEN',
-    PosicionDel: 1,
-    PosicionTra: 0,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '33.27',
-    LongitudComp: '20.28',
-    Carrera: '12.99',
-    TipoMontajeSup: 'AB',
-    DiametroSup: '1',
-    LongitudSup: '1.97',
-    TipoMontajeInf: 'AB',
-    DiametroInf: '1',
-    LongitudInf: '1.97',
-  },
-  {
-    ID: 235,
-    GABRIEL: '58065-A',
-    MONROE: "None",
-    GRC: '85949',
-    Armadora: 'VOLKSWAGEN',
-    PosicionDel: 1,
-    PosicionTra: 0,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '32.76',
-    LongitudComp: '19.76',
-    Carrera: '12.99',
-    TipoMontajeSup: 'AB',
-    DiametroSup: '1',
-    LongitudSup: '2',
-    TipoMontajeInf: 'AB',
-    DiametroInf: '1',
-    LongitudInf: '2',
-  },
-  {
-    ID: 236,
-    GABRIEL: 'USA78064-A',
-    MONROE: '74441',
-    GRC: '85301',
-    Armadora: 'CHEVROLET',
-    PosicionDel: 1,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '31.92',
-    LongitudComp: '19.02',
-    Carrera: '12.90',
-    TipoMontajeSup: 'AB',
-    DiametroSup: '1',
-    LongitudSup: '1.97',
-    TipoMontajeInf: 'AB',
-    DiametroInf: '1',
-    LongitudInf: '1.97',
-  },
-  {
-    ID: 237,
-    GABRIEL: 'USA78065-A',
-    MONROE: '74418',
-    GRC: '85709',
-    Armadora: 'MAN',
-    PosicionDel: 1,
-    PosicionTra: 0,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '31.64',
-    LongitudComp: '18.36',
-    Carrera: '13.28',
-    TipoMontajeSup: 'P',
-    DiametroSup: '** 5/8"-18',
-    LongitudSup: '3.15',
-    TipoMontajeInf: 'P',
-    DiametroInf: '** 5/8"-18',
-    LongitudInf: '3.15',
-  },
-  {
-    ID: 238,
-    GABRIEL: '58048-A',
-    MONROE: '65111',
-    GRC: '83121',
-    Armadora: 'HENDRICKSON',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '30.19',
-    LongitudComp: '18.23',
-    Carrera: '11.96',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.75',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.75',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 239,
-    GABRIEL: 'USA69749-A',
-    MONROE: '65420',
-    GRC: '85013',
-    Armadora: 'VOLVO\nMERCEDES BENZ',
-    PosicionDel: 1,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'G',
-    LongitudExp: '30.03',
-    LongitudComp: '18.05',
-    Carrera: '11.98',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.75',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.75',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 240,
-    GABRIEL: '58034-A',
-    MONROE: '65420',
-    GRC: "None",
-    Armadora: 'VOLVO',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '30.03',
-    LongitudComp: '18.05',
-    Carrera: '11.98',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.75',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.75',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 241,
-    GABRIEL: 'USA53094-A',
-    MONROE: '65420',
-    GRC: '83137',
-    Armadora: 'VOLVO',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '30',
-    LongitudComp: '17.8',
-    Carrera: '12.20',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.75',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.75',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 242,
-    GABRIEL: 'USA69746-A',
-    MONROE: '65484',
-    GRC: '85976',
-    Armadora: 'HENDRICKSON',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'G',
-    LongitudExp: '29.94',
-    LongitudComp: '17.87',
-    Carrera: '12.07',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.75',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.75',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 243,
-    GABRIEL: 'USA78066-A',
-    MONROE: '74442',
-    GRC: '85727',
-    Armadora: 'CHEVROLET',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '29.89',
-    LongitudComp: '17.36',
-    Carrera: '12.53',
-    TipoMontajeSup: 'P',
-    DiametroSup: '** 5/8"-18',
-    LongitudSup: '3.15',
-    TipoMontajeInf: 'P',
-    DiametroInf: '** 5/8"-18',
-    LongitudInf: '3.15',
-  },
-  {
-    ID: 244,
-    GABRIEL: 'USA69759-A',
-    MONROE: '65483',
-    GRC: '83148',
-    Armadora: 'HENDRICKSON',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'G',
-    LongitudExp: '29.81',
-    LongitudComp: '17.8',
-    Carrera: '12.01',
-    TipoMontajeSup: 'ABC',
-    DiametroSup: '0.8',
-    LongitudSup: '1.76',
-    TipoMontajeInf: 'ABC',
-    DiametroInf: '0.8',
-    LongitudInf: '1.76',
-  },
-  {
-    ID: 245,
-    GABRIEL: 'USA53010-A',
-    MONROE: '65161',
-    GRC: '83136',
-    Armadora: 'CHEVROLET\nKENWORTH\nPETERBILT',
-    PosicionDel: 1,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '29.65',
-    LongitudComp: '16.96',
-    Carrera: '12.69',
-    TipoMontajeSup: 'P',
-    DiametroSup: '** M16 x 1.5',
-    LongitudSup: "None",
-    TipoMontajeInf: 'P',
-    DiametroInf: '** M16 x 1.5',
-    LongitudInf: "None",
-  },
-  {
-    ID: 246,
-    GABRIEL: 'USA78070',
-    MONROE: "None",
-    GRC: '85315',
-    Armadora: 'KENWORTH',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '29.63',
-    LongitudComp: '18.11',
-    Carrera: '11.52',
-    TipoMontajeSup: 'AB',
-    DiametroSup: '1',
-    LongitudSup: '1.97',
-    TipoMontajeInf: 'AB',
-    DiametroInf: '1',
-    LongitudInf: '1.97',
-  },
-  {
-    ID: 247,
-    GABRIEL: '58067-A',
-    MONROE: '70449',
-    GRC: '85942',
-    Armadora: 'VOLKSWAGEN',
-    PosicionDel: 0,
-    PosicionTra: 1,
-    PosicionCab: 0,
-    Tipo: 'H',
-    LongitudExp: '29.21',
-    LongitudComp: '17.8',
-    Carrera: '20.35',
-    TipoMontajeSup: 'AB',
-    DiametroSup: '1',
-    LongitudSup: '2',
-    TipoMontajeInf: 'AB',
-    DiametroInf: '1',
-    LongitudInf: '2',
-  }
-];
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
 
 @Component({
   selector: 'app-servicio-pesado',
@@ -343,16 +39,35 @@ const ELEMENT_DATA: PeriodicElement[] = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    DataFilterPipe,
+    PositionFilterPipe,
   ],
   templateUrl: './servicio-pesado.component.html',
   styleUrl: './servicio-pesado.component.css',
 })
+export class ServicioPesadoComponent implements OnInit {
+  dataSource: DataExample[] = [];
+  armadoras: string[] = [];
+  posiciones: string[] = [];
+  Armadora = new FormControl('');
+  Posicion = new FormControl('');
 
-export class ServicioPesadoComponent implements OnInit{
+  constructor(private dataService: DataService) {}
+
   ngOnInit(): void {
-    const armadorasUnicas= this.getArmadorasUnicas(dataExample);
+    this.dataService.obtenerDatos().subscribe((data) => {
+      this.dataSource = data['strAnswer'];
 
-    this.Armadora.setValue(armadorasUnicas[0])
+      const filteredArmadoras = this.dataSource
+        .map((data) => data.Armadora)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      this.armadoras = filteredArmadoras;
+
+      const filteredPositions = this.dataSource
+        .map((data) => data.Posicion)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      this.posiciones = filteredPositions;
+    });
   }
 
   displayedColumns: string[] = [
@@ -361,9 +76,7 @@ export class ServicioPesadoComponent implements OnInit{
     'MONROE',
     'GRC',
     'Armadora',
-    'PosicionDel',
-    'PosicionTra',
-    'PosicionCab',
+    'Posicion',
     'Tipo',
     'LongitudExp',
     'LongitudComp',
@@ -373,13 +86,10 @@ export class ServicioPesadoComponent implements OnInit{
     'LongitudSup',
     'TipoMontajeInf',
     'DiametroInf',
-    'LongitudInf'];
-  dataSource = dataExample;
-  Armadora = new FormControl('');
-
-  getArmadorasUnicas(data: DataExample[]): string[] {
-    const armadoras = data.map(item => item.Armadora);
-    return armadoras.filter((value, index, self) => self.indexOf(value) === index);
+    'LongitudInf',
+  ];
+  borrarFiltro() {
+    this.Armadora.setValue('');
+    this.Posicion.setValue('');
   }
-
 }

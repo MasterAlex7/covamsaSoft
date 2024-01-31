@@ -1,16 +1,25 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
 
-    <mat-form-field>
+    <mat-form-field class="mx-2">
       <mat-label>Armadora</mat-label>
       <mat-select [formControl]="Armadora">
-        <mat-option *ngFor="let opcion of armadoras" [value]="opcion.Armadora">{{ opcion.Armadora }}</mat-option>
+        <mat-option *ngFor="let opcion of armadoras" [value]="opcion">{{ opcion }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <br>
+    <mat-form-field class="mx-2">
+      <mat-label>Posicion</mat-label>
+      <mat-select [formControl]="Posicion">
+        <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button class="btn btnColor mx-2" (click)="borrarFiltro()">Delete Selection</button>
 
   </mat-drawer>
   <mat-drawer-content>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource | positionFilter:(Posicion.value || '') | dataFilter:(Armadora.value || '')" class="mat-elevation-z8">
       
       <!-- <ng-container matColumnDef="ID">
         <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -37,19 +46,9 @@
         <td mat-cell *matCellDef="let element">{{ element.Armadora }}</td>
       </ng-container>
       
-      <ng-container matColumnDef="PosicionDel">
-        <th mat-header-cell *matHeaderCellDef>Posicion Delantera</th>
-        <td mat-cell *matCellDef="let element">{{ element.PosicionDel }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="PosicionTra">
-        <th mat-header-cell *matHeaderCellDef>Posicion Trasera</th>
-        <td mat-cell *matCellDef="let element">{{ element.PosicionTra }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="PosicionCab">
-        <th mat-header-cell *matHeaderCellDef>Posicion Cabina</th>
-        <td mat-cell *matCellDef="let element">{{ element.PosicionCab }}</td>
+      <ng-container matColumnDef="Posicion">
+        <th mat-header-cell *matHeaderCellDef>Posicion</th>
+        <td mat-cell *matCellDef="let element">{{ element.Posicion }}</td>
       </ng-container>
 
       <ng-container matColumnDef="Tipo">

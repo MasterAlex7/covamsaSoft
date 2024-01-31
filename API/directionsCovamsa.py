@@ -1,47 +1,27 @@
-from flask import Flask, jsonify, request, Response
+from flask_cors import CORS, cross_origin
 
 import os
-from os import path
-import base64
-import pymysql.cursors
+import sys
+import backend.functionsCovamsa as callMethod
 
-import base64
+from flask import Flask, jsonify, request, url_for, Response
 
 import json
-import sys
-import copy
 
-import time
-import datetime
+app = Flask(__name__)
+CORS(app)
 
-strMysqluUser = "root"
-strMysqlHost="localhost"
-strMysqlPort=3306
-strMysqlPassword="cvm980423k63"
-strMysqlDB="covamsa_prov"
+###################################################################
+# USUARIOS
+###################################################################
 
-def fnGetProductos():
-	try:
-		MysqlCnx = pymysql.connect(host=strMysqlHost,
-						port=strMysqlPort,
-						user=strMysqluUser,
-						password=strMysqlPassword,
-						db=strMysqlDB,
-						charset='utf8mb4',
-						cursorclass=pymysql.cursors.DictCursor)
-		cursor = MysqlCnx.cursor()
-		query="select * from serviciopesado"
-		cursor.execute(query)
-		response = cursor.fetchall()
-		if response:
-			print(response)
-			return {'intStatus':200, 'strAnswer': response}
-		else:
-			return {'intStatus':200, 'strAnswer': 'No hay nada'}
-	except Exception as e:
-		return {'intStatus':500, 'strAnswer': str(e)}
-	finally:
-		MysqlCnx.close()
-		
+@app.route('/cvm/servicioPesado', methods=['GET'])
+def getServicioPesado():
+    try:
+        objResult = callMethod.fnGetServicioPesado()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Servicio Pesado: ",e)
+        
 if __name__ == '__main__':
-    fnGetProductos()
+    app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

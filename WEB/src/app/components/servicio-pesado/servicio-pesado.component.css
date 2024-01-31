@@ -1,10 +1,9 @@
-.example-radio-group {
-    display: flex;
-    flex-direction: column;
-    margin: 15px 0;
-    align-items: flex-start;
-  }
-  
-  .example-radio-button {
-    margin: 5px;
-  }
+.example-container {
+    width: 98%;
+    height: 85%; /* 90% del alto del viewport */
+    margin: 10px;
+}
+
+.btnColor{
+    background-color: #e5e5e5;
+}
