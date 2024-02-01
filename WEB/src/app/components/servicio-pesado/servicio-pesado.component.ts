@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { DataFilterPipe } from '../../pipes/data-filter.pipe';
 import { DataService } from '../../services/data.service';
 import { PositionFilterPipe } from '../../pipes/position-filter.pipe';
+import {MatInputModule} from '@angular/material/input';
 
 export interface DataExample {
   ID: number;
@@ -41,6 +42,7 @@ export interface DataExample {
     CommonModule,
     DataFilterPipe,
     PositionFilterPipe,
+    MatInputModule,
   ],
   templateUrl: './servicio-pesado.component.html',
   styleUrl: './servicio-pesado.component.css',
@@ -51,12 +53,15 @@ export class ServicioPesadoComponent implements OnInit {
   posiciones: string[] = [];
   Armadora = new FormControl('');
   Posicion = new FormControl('');
+  Buscar = new FormControl('');
+  datosOriginales: DataExample[] = [];
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.obtenerDatos().subscribe((data) => {
       this.dataSource = data['strAnswer'];
+      this.datosOriginales = [...this.dataSource];
 
       const filteredArmadoras = this.dataSource
         .map((data) => data.Armadora)
@@ -67,6 +72,10 @@ export class ServicioPesadoComponent implements OnInit {
         .map((data) => data.Posicion)
         .filter((value, index, self) => self.indexOf(value) === index);
       this.posiciones = filteredPositions;
+    });
+
+    this.Buscar.valueChanges.subscribe((value) => {
+      this.buscar(value);
     });
   }
 
@@ -88,8 +97,26 @@ export class ServicioPesadoComponent implements OnInit {
     'DiametroInf',
     'LongitudInf',
   ];
+
   borrarFiltro() {
     this.Armadora.setValue('');
     this.Posicion.setValue('');
+    this.Buscar.setValue('');
+    this.dataSource = [...this.datosOriginales];
+  }
+
+  buscar(value: string | null) {
+    if (!value) {
+      // Si el value de búsqueda es nulo o una cadena vacía, restaurar a los datos originales
+      this.dataSource = [...this.datosOriginales];
+    } else {
+      // Si hay un value de búsqueda, aplicar el filtro
+      const resultadoBusqueda = this.datosOriginales.filter((dato) => {
+        return dato.GABRIEL.toLowerCase().includes(value.toLowerCase()) || dato.MONROE.toLowerCase().includes(value.toLowerCase()) || dato.GRC.toLowerCase().includes(value.toLowerCase());
+      });
+
+      // Asignar los resultados filtrados al dataSource
+      this.dataSource = resultadoBusqueda;
+    }
   }
 }

@@ -1,6 +1,10 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
-
+    <mat-form-field class="mx-2">
+      <mat-label>Buscar</mat-label>
+      <input matInput [formControl]="Buscar">
+    </mat-form-field>
+    <br>
     <mat-form-field class="mx-2">
       <mat-label>Armadora</mat-label>
       <mat-select [formControl]="Armadora">
@@ -16,7 +20,6 @@
     </mat-form-field>
     <br>
     <button class="btn btnColor mx-2" (click)="borrarFiltro()">Delete Selection</button>
-
   </mat-drawer>
   <mat-drawer-content>
     <table mat-table [dataSource]="dataSource | positionFilter:(Posicion.value || '') | dataFilter:(Armadora.value || '')" class="mat-elevation-z8">
