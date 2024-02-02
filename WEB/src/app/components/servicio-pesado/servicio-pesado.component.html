@@ -112,12 +112,12 @@
             <mat-icon fontIcon="info" (click)="toggleInput(element)"></mat-icon>
           </div>
           
-          <mat-form-field *ngIf="element.mostrarInput">
-            <input matInput placeholder="Ingrese algo"
+          <mat-form-field class="inputInfo" *ngIf="element.mostrarInput">
+            <textarea matInput placeholder="Ingrese algo"
                 [(ngModel)]="element.valorInput"
                 (keydown.enter)="guardarYCerrar(element)"
                 (blur)="cerrarInput(element)"
-                autofocus>
+                autofocus></textarea>
           </mat-form-field>
 
         </td>

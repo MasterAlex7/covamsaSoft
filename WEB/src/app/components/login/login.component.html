@@ -1,0 +1,33 @@
+<mat-card class="cardLogin" *ngIf="!isLogged(); else loggedInSection">
+    <mat-card-header>
+        <mat-card-title>
+            <h2>Iniciar sesión</h2>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field class="formsLogin">
+        <mat-label>Usuario</mat-label>
+        <input matInput [(ngModel)]="usuario">
+    </mat-form-field>
+
+    <mat-form-field class="formsLogin">
+        <mat-label>Contraseña</mat-label>
+        <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-raised-button class="btnLogin" (click)="iniciarSesion()">Iniciar Sesión</button>
+</mat-card>
+
+<ng-template #loggedInSection>
+    <!-- Contenido que se mostrará si el usuario ha iniciado sesión -->
+        <mat-card class="cardLogged">
+            <mat-card-header>
+                <mat-card-title>
+                    <h1 class="fs-1">Hola {{ getUser()?.toUpperCase() }}</h1>
+                </mat-card-title>
+            </mat-card-header>
+            <button mat-raised-button class="btnLogin" (click)="cerrarSesion()">Cerrar Sesión</button>
+        </mat-card>
+</ng-template>

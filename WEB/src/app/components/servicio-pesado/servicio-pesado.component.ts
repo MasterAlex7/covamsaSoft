@@ -132,13 +132,21 @@ export class ServicioPesadoComponent implements OnInit {
   }
 
   guardarYCerrar(element: any) {
-    // Puedes guardar la información aquí, por ejemplo: this.servicio.guardarInformacion(element.valorInput);
     this.dataSource.map((data) => {
       if (data.GABRIEL === element.GABRIEL) {
         data.info = element.valorInput;
       }
     });
     this.dataSource = [...this.dataSource];
+
+    const data ={
+      "idGabriel": element.GABRIEL,
+      "info": element.valorInput,
+    }
+    this.dataService.guardarDatos(data).subscribe((data) => {
+      console.log(data);
+    });
+    
     console.log(this.dataSource);
     element.mostrarInput = false; // Oculta el input después de guardar
   }

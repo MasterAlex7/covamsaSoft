@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const ip="192.168.100.17";
@@ -10,11 +10,16 @@ const path="/cvm/"
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://'+ip+':'+port+path+'/servicioPesado';
+  private apiUrlGet = 'http://'+ip+':'+port+path+'servicioPesado';
+  private apiUrlPost = 'http://'+ip+':'+port+path+'servicioPesadoInfo';
 
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.apiUrlGet);
+  }
+
+  guardarDatos(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPost, datos);
   }
 }

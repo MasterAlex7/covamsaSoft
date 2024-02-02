@@ -103,6 +103,56 @@ def fnGetServicioPesado():
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnPostServicioPesado(idGabriel,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			idGabriel,
+			info
+		)
+		cursor.callproc('postServicioPesadoInfo',params)
+		MysqlCnx.commit()
+
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnPostLogin(usuario,password):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			usuario,
+			password
+		)
+		cursor.callproc('getLogin',params)
+		response = cursor.fetchall()
+		print(response)
+		if response:
+			#print(result)
+			return {'intStatus':200, 'strAnswer': usuario}
+		else:
+			return {'intStatus':202, 'strAnswer': 'Credenciales incorrectas.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
 		
 if __name__ == '__main__':
     fnGetServicioPesado()
