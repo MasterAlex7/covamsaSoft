@@ -5,36 +5,33 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { DataFilterPipe } from '../../pipes/data-filter.pipe';
 import { DataService } from '../../services/data.service';
-import { PositionFilterPipe } from '../../pipes/position-filter.pipe';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginService } from '../../services/login.service';
+import { AplicacionBAPipe } from '../../pipes/aplicacion-ba.pipe';
 
-export interface DataExample {
-  ID: number;
-  GABRIEL: string;
-  MONROE: string;
-  GRC: string;
-  Armadora: string;
-  Posicion: string;
-  Tipo: string;
-  LongitudExp: string;
-  LongitudComp: string;
-  Carrera: string;
-  TipoMontajeSup: string;
-  DiametroSup: string;
-  LongitudSup: string;
-  TipoMontajeInf: string;
-  DiametroInf: string;
-  LongitudInf: string;
-  info: string;
+export interface DataBolsasDeAire {
+  ID: number, 
+  GABRIEL: string, 
+  FIRESTONE: string, 
+  GOODYEAR: string, 
+  CONTITECH: string, 
+  Aplicacion1:string, 
+  Aplicacion2: string, 
+  Aplicacion3: string, 
+  OE1: string, 
+  OE2: string, 
+  OE3: string, 
+  Tapa: string, 
+  Membrana: string, 
+  Piston: string, 
+  info: string
 }
 
 @Component({
-  selector: 'app-servicio-pesado',
+  selector: 'app-bolsas-de-aire',
   standalone: true,
   imports: [
     MatSidenavModule,
@@ -44,73 +41,65 @@ export interface DataExample {
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    DataFilterPipe,
-    PositionFilterPipe,
     MatInputModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    AplicacionBAPipe
   ],
-  templateUrl: './servicio-pesado.component.html',
-  styleUrl: './servicio-pesado.component.css',
+  templateUrl: './bolsas-de-aire.component.html',
+  styleUrl: './bolsas-de-aire.component.css'
 })
-export class ServicioPesadoComponent implements OnInit {
-  dataSource: DataExample[] = [];
-  armadoras: string[] = [];
-  posiciones: string[] = [];
-  Armadora = new FormControl('');
-  Posicion = new FormControl('');
+export class BolsasDeAireComponent implements OnInit{
+  dataSource: DataBolsasDeAire[] = [];
+  datosOriginales: DataBolsasDeAire[] = [];
+  aplicaciones: string[] = [];
+  Aplicacion= new FormControl('');
   Buscar = new FormControl('');
-  datosOriginales: DataExample[] = [];
 
   constructor(private dataService: DataService, private loginService: LoginService) {}
 
   ngOnInit(): void {
-    this.dataService.obtenerDatos().subscribe((data) => {
+    this.dataService.getBolsasDeAire().subscribe((data) => {
       this.dataSource = data['strAnswer'];
       this.datosOriginales = [...this.dataSource];
+      console.log(this.dataSource);
 
-      const filteredArmadoras = this.dataSource
-        .map((data) => data.Armadora)
-        .filter((value, index, self) => self.indexOf(value) === index);
-      this.armadoras = filteredArmadoras;
-
-      const filteredPositions = this.dataSource
-        .map((data) => data.Posicion)
-        .filter((value, index, self) => self.indexOf(value) === index);
-      this.posiciones = filteredPositions;
+      const filteredAplicaciones1 = this.dataSource
+      .map((data) => data.Aplicacion1)
+      .filter((value, index, self) => self.indexOf(value) === index);
+      const filteredAplicaciones2 = this.dataSource
+      .map((data) => data.Aplicacion2)
+      .filter((value, index, self) => self.indexOf(value) === index);
+      const filteredAplicaciones3 = this.dataSource
+      .map((data) => data.Aplicacion3)
+      .filter((value, index, self) => self.indexOf(value) === index);
+      
+      this.aplicaciones = [...filteredAplicaciones1, ...filteredAplicaciones2, ...filteredAplicaciones3];
+      this.aplicaciones = this.aplicaciones.filter((value, index, self) => self.indexOf(value) === index);
     });
 
     this.Buscar.valueChanges.subscribe((value) => {
       this.buscar(value);
     });
   }
-
+  
   displayedColumns: string[] = [
     /* 'ID', */
     'GABRIEL',
-    'MONROE',
-    'GRC',
-    'Armadora',
-    'Posicion',
-    'Tipo',
-    'LongitudExp',
-    'LongitudComp',
-    'Carrera',
-    'TipoMontajeSup',
-    'DiametroSup',
-    'LongitudSup',
-    'TipoMontajeInf',
-    'DiametroInf',
-    'LongitudInf',
+    'FIRESTONE',
+    'GOODYEAR',
+    'CONTITECH',
+    'Aplicacion1',
+    'Aplicacion2',
+    'Aplicacion3',
+    'OE1',
+    'OE2',
+    'OE3',
+    'Tapa',
+    'Membrana',
+    'Piston',
     'info'
   ];
-
-  borrarFiltro() {
-    this.Armadora.setValue('');
-    this.Posicion.setValue('');
-    this.Buscar.setValue('');
-    this.dataSource = [...this.datosOriginales];
-  }
 
   buscar(value: string | null) {
     if (!value) {
@@ -119,12 +108,24 @@ export class ServicioPesadoComponent implements OnInit {
     } else {
       // Si hay un value de búsqueda, aplicar el filtro
       const resultadoBusqueda = this.datosOriginales.filter((dato) => {
-        return dato.GABRIEL.toLowerCase().includes(value.toLowerCase()) || dato.MONROE.toLowerCase().includes(value.toLowerCase()) || dato.GRC.toLowerCase().includes(value.toLowerCase());
+        return dato.GABRIEL.toLowerCase().includes(value.toLowerCase()) || 
+        dato.FIRESTONE.toLowerCase().includes(value.toLowerCase()) || 
+        dato.GOODYEAR.toLowerCase().includes(value.toLowerCase()) ||
+        dato.CONTITECH.toLowerCase().includes(value.toLowerCase()) ||
+        dato.OE1.toLowerCase().includes(value.toLowerCase()) ||
+        dato.OE2.toLowerCase().includes(value.toLowerCase()) ||
+        dato.OE3.toLowerCase().includes(value.toLowerCase());
       });
 
       // Asignar los resultados filtrados al dataSource
       this.dataSource = resultadoBusqueda;
     }
+  }
+
+  borrarFiltro(){
+    this.Aplicacion.setValue('');
+    this.Buscar.setValue('');
+    this.dataSource = this.datosOriginales;
   }
 
   toggleInput(element: any) {
@@ -148,7 +149,7 @@ export class ServicioPesadoComponent implements OnInit {
       "idGabriel": element.GABRIEL,
       "info": element.valorInput,
     }
-    this.dataService.guardarDatos(data).subscribe((data) => {
+    this.dataService.postBolsasDeAire(data).subscribe((data) => {
       console.log(data);
     });
     

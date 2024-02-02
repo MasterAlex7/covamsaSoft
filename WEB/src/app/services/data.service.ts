@@ -12,6 +12,8 @@ const path="/cvm/"
 export class DataService {
   private apiUrlGet = 'http://'+ip+':'+port+path+'servicioPesado';
   private apiUrlPost = 'http://'+ip+':'+port+path+'servicioPesadoInfo';
+  private apiUrlGetBolsasDeAire = 'http://'+ip+':'+port+path+'bolsasDeAire';
+  private apiUrlPostBolsasDeAire = 'http://'+ip+':'+port+path+'bolsasDeAireInfo';
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +23,13 @@ export class DataService {
 
   guardarDatos(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlPost, datos);
+  }
+
+  getBolsasDeAire(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetBolsasDeAire);
+  }
+
+  postBolsasDeAire(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostBolsasDeAire, datos);
   }
 }
