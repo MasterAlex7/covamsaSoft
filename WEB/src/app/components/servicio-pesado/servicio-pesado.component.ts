@@ -9,6 +9,8 @@ import { DataFilterPipe } from '../../pipes/data-filter.pipe';
 import { DataService } from '../../services/data.service';
 import { PositionFilterPipe } from '../../pipes/position-filter.pipe';
 import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export interface DataExample {
   ID: number;
@@ -27,6 +29,7 @@ export interface DataExample {
   TipoMontajeInf: string;
   DiametroInf: string;
   LongitudInf: string;
+  info: string;
 }
 
 @Component({
@@ -43,6 +46,8 @@ export interface DataExample {
     DataFilterPipe,
     PositionFilterPipe,
     MatInputModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './servicio-pesado.component.html',
   styleUrl: './servicio-pesado.component.css',
@@ -96,6 +101,7 @@ export class ServicioPesadoComponent implements OnInit {
     'TipoMontajeInf',
     'DiametroInf',
     'LongitudInf',
+    'info'
   ];
 
   borrarFiltro() {
@@ -118,5 +124,26 @@ export class ServicioPesadoComponent implements OnInit {
       // Asignar los resultados filtrados al dataSource
       this.dataSource = resultadoBusqueda;
     }
+  }
+
+  toggleInput(element: any) {
+    element.mostrarInput = !element.mostrarInput;
+    element.valorInput = element.info;
+  }
+
+  guardarYCerrar(element: any) {
+    // Puedes guardar la información aquí, por ejemplo: this.servicio.guardarInformacion(element.valorInput);
+    this.dataSource.map((data) => {
+      if (data.GABRIEL === element.GABRIEL) {
+        data.info = element.valorInput;
+      }
+    });
+    this.dataSource = [...this.dataSource];
+    console.log(this.dataSource);
+    element.mostrarInput = false; // Oculta el input después de guardar
+  }
+
+  cerrarInput(element: any) {
+    element.mostrarInput = false; // Oculta el input al perder el foco
   }
 }

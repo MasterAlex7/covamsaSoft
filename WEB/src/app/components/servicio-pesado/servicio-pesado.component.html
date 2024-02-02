@@ -75,33 +75,52 @@
       </ng-container>
 
       <ng-container matColumnDef="TipoMontajeSup">
-        <th mat-header-cell *matHeaderCellDef>TipoMontajeSup</th>
+        <th mat-header-cell *matHeaderCellDef>Tipo Montaje Superior</th>
         <td mat-cell *matCellDef="let element">{{ element.TipoMontajeSup }}</td>
       </ng-container>
 
       <ng-container matColumnDef="DiametroSup">
-        <th mat-header-cell *matHeaderCellDef>DiametroSup</th>
+        <th mat-header-cell *matHeaderCellDef>Diametro Superior</th>
         <td mat-cell *matCellDef="let element">{{ element.DiametroSup }}</td>
       </ng-container>
 
       <ng-container matColumnDef="LongitudSup">
-        <th mat-header-cell *matHeaderCellDef>LongitudSup</th>
+        <th mat-header-cell *matHeaderCellDef>Longitud Superior</th>
         <td mat-cell *matCellDef="let element">{{ element.LongitudSup }}</td>
       </ng-container>
 
       <ng-container matColumnDef="TipoMontajeInf">
-        <th mat-header-cell *matHeaderCellDef>TipoMontajeInf</th>
+        <th mat-header-cell *matHeaderCellDef>Tipo Montaje Inferior</th>
         <td mat-cell *matCellDef="let element">{{ element.TipoMontajeInf }}</td>
       </ng-container>
 
       <ng-container matColumnDef="DiametroInf">
-        <th mat-header-cell *matHeaderCellDef>DiametroInf</th>
+        <th mat-header-cell *matHeaderCellDef>Diametro Inferior</th>
         <td mat-cell *matCellDef="let element">{{ element.DiametroInf }}</td>
       </ng-container>
 
       <ng-container matColumnDef="LongitudInf">
-        <th mat-header-cell *matHeaderCellDef>LongitudInf</th>
+        <th mat-header-cell *matHeaderCellDef>Longitud Inferior</th>
         <td mat-cell *matCellDef="let element">{{ element.LongitudInf }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="info">
+        <th mat-header-cell *matHeaderCellDef>Info</th>
+        <td mat-cell *matCellDef="let element">
+
+          <div matTooltip="{{element.info}}">
+            <mat-icon fontIcon="info" (click)="toggleInput(element)"></mat-icon>
+          </div>
+          
+          <mat-form-field *ngIf="element.mostrarInput">
+            <input matInput placeholder="Ingrese algo"
+                [(ngModel)]="element.valorInput"
+                (keydown.enter)="guardarYCerrar(element)"
+                (blur)="cerrarInput(element)"
+                autofocus>
+          </mat-form-field>
+
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

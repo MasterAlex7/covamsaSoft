@@ -51,6 +51,28 @@ def fnGetServicioPesado():
 				aux="Cab"
 			elif row['PosicionDel'] == 0 and row['PosicionTra'] == 0 and row['PosicionCab'] == 0:
 				aux="Ninguna"
+
+			if(row['TipoMontajeInf'] == "A"):
+				auxInf="Anillo"
+			elif(row['TipoMontajeInf'] == "AB"):
+				auxInf="Anillo - Buje"
+			elif(row['TipoMontajeInf'] == "ABC"):
+				auxInf="Anillo - Buje - Camisa"
+			elif(row['TipoMontajeInf'] == "P"):
+				auxInf="Perno"
+			elif(row['TipoMontajeInf'] == "ATB"):
+				auxInf="Anillo - Buje Trapezoidal"
+			
+			if(row['TipoMontajeSup'] == "A"):
+				auxSup="Anillo"
+			elif(row['TipoMontajeSup'] == "AB"):
+				auxSup="Anillo - Buje"
+			elif(row['TipoMontajeSup'] == "ABC"):
+				auxSup="Anillo - Buje - Camisa"
+			elif(row['TipoMontajeSup'] == "P"):
+				auxSup="Perno"
+			elif(row['TipoMontajeSup'] == "ATB"):
+				auxSup="Anillo - Buje Trapezoidal"
 			obj={
 				'ID': row['ID'],
 				'GABRIEL': row['GABRIEL'],
@@ -62,12 +84,13 @@ def fnGetServicioPesado():
 				'LongitudExp': row['LongitudExp'], 
 				'LongitudComp': row['LongitudComp'], 
 				'Carrera': row['Carrera'], 
-				'TipoMontajeSup': row['TipoMontajeSup'], 
+				'TipoMontajeSup': auxSup, 
 				'DiametroSup': row['DiametroSup'], 
 				'LongitudSup': row['LongitudSup'], 
-				'TipoMontajeInf': row['TipoMontajeInf'], 
+				'TipoMontajeInf': auxInf, 
 				'DiametroInf': row['DiametroInf'], 
 				'LongitudInf': row['LongitudInf'],
+				"info": row['info']
 			}
 			result.append(obj)
 
