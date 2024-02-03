@@ -14,6 +14,8 @@ export class DataService {
   private apiUrlPost = 'http://'+ip+':'+port+path+'servicioPesadoInfo';
   private apiUrlGetBolsasDeAire = 'http://'+ip+':'+port+path+'bolsasDeAire';
   private apiUrlPostBolsasDeAire = 'http://'+ip+':'+port+path+'bolsasDeAireInfo';
+  private apiUrlGetServicioLigero = 'http://'+ip+':'+port+path+'servicioLigero';
+  private apiUrlPostServicioLigero = 'http://'+ip+':'+port+path+'servicioLigeroInfo';
 
   constructor(private http: HttpClient) { }
 
@@ -31,5 +33,13 @@ export class DataService {
 
   postBolsasDeAire(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlPostBolsasDeAire, datos);
+  }
+
+  getServicioLigero(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetServicioLigero);
+  }
+
+  postServicioLigero(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostServicioLigero, datos);
   }
 }

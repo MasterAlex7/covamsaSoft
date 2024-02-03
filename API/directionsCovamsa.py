@@ -60,6 +60,24 @@ def postBolsasDeAire():
         return jsonify(objResult)
     except Exception as e:
         print("Error Post Bolsas de Aire: ",e)
+
+@app.route('/cvm/servicioLigero', methods=['GET'])
+def getServicioLigero():
+    try:
+        objResult = callMethod.fnGetServicioLigero()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Servicio Ligero: ",e)
+
+@app.route('/cvm/servicioLigeroInfo', methods=['POST'])
+def postServicioLigero():
+    try:
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnPostServicioLigero(ID,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Post Servicio Ligero: ",e)
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

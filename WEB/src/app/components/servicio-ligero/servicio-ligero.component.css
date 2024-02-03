@@ -1,0 +1,14 @@
+.example-container {
+    width: 98%;
+    height: 85%; /* 90% del alto del viewport */
+    margin: 10px;
+}
+
+.btnColor{
+    background-color: #e5e5e5;
+}
+
+.inputInfo{
+    width: 80%;
+    margin: 10px;
+}

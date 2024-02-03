@@ -4,6 +4,7 @@ import { ServicioPesadoComponent } from './components/servicio-pesado/servicio-p
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { BolsasDeAireComponent } from './components/bolsas-de-aire/bolsas-de-aire.component';
+import { ServicioLigeroComponent } from './components/servicio-ligero/servicio-ligero.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -11,4 +12,5 @@ export const routes: Routes = [
     { path: 'servicioPesado', component: ServicioPesadoComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'bolsasdeaire', component: BolsasDeAireComponent, canActivate: [AuthGuard] },
+    { path: 'servicioLigero', component: ServicioLigeroComponent, canActivate: [AuthGuard] }
 ];
