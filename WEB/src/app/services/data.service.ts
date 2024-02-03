@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const ip="192.168.100.17";
 const port="9005";
@@ -41,5 +41,12 @@ export class DataService {
 
   postServicioLigero(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlPostServicioLigero, datos);
+  }
+
+  private modelosSubject = new BehaviorSubject<string[]>([]);
+  modelos$: Observable<string[]> = this.modelosSubject.asObservable();
+
+  actualizarModelos(modelos: string[]): void {
+    this.modelosSubject.next(modelos);
   }
 }

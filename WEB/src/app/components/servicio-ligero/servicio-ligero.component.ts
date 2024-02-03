@@ -69,7 +69,6 @@ export class ServicioLigeroComponent implements OnInit{
   Marca = new FormControl('');
   Modelo = new FormControl('');
   Submarca = new FormControl('');
-  Anio = new FormControl('');
   Buscar = new FormControl('');
   
 
@@ -98,7 +97,6 @@ export class ServicioLigeroComponent implements OnInit{
   ];
 
   ngOnInit(): void {
-    console.log("Entro");
     this.dataService.getServicioLigero().subscribe((data) => {
       this.dataSource = data['strAnswer'];
       this.datosOriginales = [...this.dataSource];
@@ -106,36 +104,28 @@ export class ServicioLigeroComponent implements OnInit{
       const marcas = this.dataSource
       .map((data) => data.MarcaAuto)
       .filter((value, index, self) => self.indexOf(value) === index);
-    this.marcas = marcas;
+      this.marcas = marcas.sort();
 
-    const modelos = this.dataSource
-      .map((data) => data.Modelo)
-      .filter((value, index, self) => self.indexOf(value) === index);
-    this.modelos = modelos;
+      this.dataService.modelos$.subscribe(modelos => {
+        this.modelos = modelos.sort();
+      });
 
-    const submarcas = this.dataSource
+      const submarcas = this.dataSource
       .map((data) => data.Submarca)
       .filter((value, index, self) => self.indexOf(value) === index);
-    this.submarcas = submarcas;
-
-    const anios = this.dataSource
-      .map((data) => data.AnoInicio)
-      .filter((value, index, self) => self.indexOf(value) === index);
-    this.anios = anios;
+      this.submarcas = submarcas.sort();
     });
     
     this.Buscar.valueChanges.subscribe((value) => {
       this.buscar(value);
     });
     
-    /* this.setFilters(); */
   }
 
   borrarFiltro(): void {
     this.Marca.setValue('');
     this.Modelo.setValue('');
     this.Submarca.setValue('');
-    this.Anio.setValue('');
     this.Buscar.setValue('');
     this.dataSource = this.datosOriginales;
   }

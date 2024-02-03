@@ -15,15 +15,6 @@
     </mat-form-field>
     <br />
     <mat-form-field class="mx-2">
-        <mat-label>Submarca</mat-label>
-        <mat-select [formControl]="Submarca">
-          <mat-option *ngFor="let opcion of submarcas" [value]="opcion">{{
-            opcion
-            }}</mat-option>
-        </mat-select>
-        </mat-form-field>
-    <br />
-    <mat-form-field class="mx-2">
         <mat-label>Modelo</mat-label>
         <mat-select [formControl]="Modelo">
         <mat-option *ngFor="let opcion of modelos" [value]="opcion">{{
@@ -31,13 +22,13 @@
         }}</mat-option>
         </mat-select>
     </mat-form-field>
-    <br/>
+    <br />
     <mat-form-field class="mx-2">
-        <mat-label>Año</mat-label>
-        <mat-select [formControl]="Anio">
-        <mat-option *ngFor="let opcion of anios" [value]="opcion">{{
+        <mat-label>Submarca</mat-label>
+        <mat-select [formControl]="Submarca">
+          <mat-option *ngFor="let opcion of submarcas" [value]="opcion">{{
             opcion
-        }}</mat-option>
+            }}</mat-option>
         </mat-select>
     </mat-form-field>
     <br />
