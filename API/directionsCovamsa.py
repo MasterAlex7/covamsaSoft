@@ -78,6 +78,32 @@ def postServicioLigero():
         return jsonify(objResult)
     except Exception as e:
         print("Error Post Servicio Ligero: ",e)
+
+@app.route('/cvm/muelles', methods=['GET'])
+def getMuelles():
+    try:
+        objResult = callMethod.fnGetMuelles()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Muelles: ",e)
+
+@app.route('/cvm/muellesInfo', methods=['POST'])
+def postMuelles():
+    try:
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnPostMuelles(ID,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Post Servicio Ligero: ",e)
+
+@app.route('/cvm/muellesMarcas', methods=['GET'])
+def getMuellesMarcas():
+    try:
+        objResult = callMethod.fnGetMuellesMarcas()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Muelles Marcas: ",e)
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

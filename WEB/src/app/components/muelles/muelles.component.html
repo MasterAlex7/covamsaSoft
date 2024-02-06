@@ -1,0 +1,105 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+    <mat-form-field class="mx-2">
+        <mat-label>Buscar</mat-label>
+        <input matInput [formControl]="Buscar">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="mx-2">
+        <mat-label>Posicion</mat-label>
+        <mat-select [formControl]="Posicion">
+          <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <button class="btn btnColor mx-2" (click)="borrarFiltro()">Delete Selection</button>
+    </mat-drawer>
+    <mat-drawer-content>
+        <table mat-table [dataSource]="dataSource | positionFilter: (Posicion.value || '')" class="mat-elevation-z8">
+        
+        <!-- <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.ID }}</td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="RASSINI">
+          <th mat-header-cell *matHeaderCellDef>RASSINI</th>
+          <td mat-cell *matCellDef="let element">{{ element.RASSINI }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="MAF">
+          <th mat-header-cell *matHeaderCellDef>MAF</th>
+          <td mat-cell *matCellDef="let element">{{ element.MAF }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="SANDOVAL">
+          <th mat-header-cell *matHeaderCellDef>SANDOVAL</th>
+          <td mat-cell *matCellDef="let element">{{ element.SANDOVAL }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ORIGINAL">
+          <th mat-header-cell *matHeaderCellDef>ORIGINAL</th>
+          <td mat-cell *matCellDef="let element">{{ element.ORIGINAL }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Ancho">
+          <th mat-header-cell *matHeaderCellDef class="formAncho">Ancho
+            <br>
+            <input matInput [formControl]="Ancho" class="formAncho">
+            </th>
+          <td mat-cell *matCellDef="let element">{{ element.Ancho }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Espesor">
+          <th mat-header-cell *matHeaderCellDef class="formEspesor">Espesor
+            <br>
+            <input matInput [formControl]="Espesor" class="formEspesor">
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.Espesor }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Lfrontal">
+          <th mat-header-cell *matHeaderCellDef class="formLadoF">Lado Frontal
+            <br>
+            <input matInput [formControl]="LadoFrontal" class="formLadoF">
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.Lfrontal }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Ltrasero">
+          <th mat-header-cell *matHeaderCellDef class="formLadoT">Lado Trasero
+            <br>
+            <input matInput [formControl]="LadoTrasero" class="formLadoT">
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.Ltrasero }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Posicion">
+          <th mat-header-cell *matHeaderCellDef>Posicion</th>
+          <td mat-cell *matCellDef="let element">{{ element.Posicion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="info">
+          <th mat-header-cell *matHeaderCellDef>Info</th>
+          <td mat-cell *matCellDef="let element">
+
+            <div matTooltip="{{element.info}}">
+                <mat-icon fontIcon="info" (click)="toggleInput(element)"></mat-icon>
+            </div>
+            
+            <mat-form-field class="inputInfo" *ngIf="element.mostrarInput">
+                <textarea matInput placeholder="Ingrese algo"
+                    [(ngModel)]="element.valorInput"
+                    (keydown.enter)="guardarYCerrar(element)"
+                    (blur)="cerrarInput(element)"
+                    autofocus></textarea>
+            </mat-form-field>
+
+        </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </mat-drawer-content>
+</mat-drawer-container> 

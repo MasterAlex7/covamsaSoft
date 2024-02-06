@@ -16,6 +16,9 @@ export class DataService {
   private apiUrlPostBolsasDeAire = 'http://'+ip+':'+port+path+'bolsasDeAireInfo';
   private apiUrlGetServicioLigero = 'http://'+ip+':'+port+path+'servicioLigero';
   private apiUrlPostServicioLigero = 'http://'+ip+':'+port+path+'servicioLigeroInfo';
+  private apiUrlGetMuelles = 'http://'+ip+':'+port+path+'muelles';
+  private apiUrlPostMuelles = 'http://'+ip+':'+port+path+'muellesInfo';
+  private apiUrlGetMuellesMarca = 'http://'+ip+':'+port+path+'muellesMarcas';
 
   constructor(private http: HttpClient) { }
 
@@ -41,6 +44,18 @@ export class DataService {
 
   postServicioLigero(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlPostServicioLigero, datos);
+  }
+
+  getMuelles(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetMuelles);
+  }
+
+  postMuelles(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostMuelles, datos);
+  }
+
+  getMuellesMarca(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetMuellesMarca);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);
