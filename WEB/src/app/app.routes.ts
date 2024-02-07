@@ -14,7 +14,7 @@ export const routes: Routes = [
     { path: 'servicioPesado', component: ServicioPesadoComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'bolsasdeaire', component: BolsasDeAireComponent, canActivate: [AuthGuard] },
-    { path: 'muelles', component: MuellesComponent, canActivate: [AuthGuard] },
+    { path: 'muelles/:marca', component: MuellesComponent, canActivate: [AuthGuard] },
     { path: 'servicioLigero', component: ServicioLigeroComponent, canActivate: [AuthGuard] },
     { path: 'menuMuelles', component: MenuMuelleComponent, canActivate: [AuthGuard] },
 ];

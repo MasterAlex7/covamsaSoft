@@ -11,6 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginService } from '../../services/login.service';
 import { PositionFilterPipe } from '../../pipes/position-filter.pipe';
+import { ActivatedRoute } from '@angular/router';
+import { PipeAnchoPipe } from '../../pipes/pipesMuelles/pipe-ancho.pipe';
+import { PipeEspesorPipe } from '../../pipes/pipesMuelles/pipe-espesor.pipe';
+import { LFrontalPipePipe } from '../../pipes/pipesMuelles/l-frontal-pipe.pipe';
+import { LTraseroPipePipe } from '../../pipes/pipesMuelles/l-trasero-pipe.pipe';
 
 export interface DataMuelles {
   ID: number,
@@ -18,6 +23,7 @@ export interface DataMuelles {
   MAF: string,
   SANDOVAL: string,
   ORIGINAL: string,
+  No: string,
   Ancho: string,
   Espesor: string,
   Lfrontal: string,
@@ -40,7 +46,11 @@ export interface DataMuelles {
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    PositionFilterPipe
+    PositionFilterPipe,
+    PipeAnchoPipe,
+    PipeEspesorPipe,
+    LFrontalPipePipe,
+    LTraseroPipePipe
   ],
   templateUrl: './muelles.component.html',
   styleUrl: './muelles.component.css'
@@ -56,11 +66,20 @@ export class MuellesComponent implements OnInit{
   LadoTrasero = new FormControl('');
   posiciones: string[] = [];
   Posicion = new FormControl('');
+  marcaMuelle= {};
 
-  constructor(private dataService: DataService, private loginService: LoginService) {}
+  constructor(private dataService: DataService, private loginService: LoginService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.dataService.getMuelles().subscribe(data => {
+    this.route.params.subscribe(params => {
+      this.marcaMuelle = {
+        "marca": params['marca']
+      };
+      console.log(this.marcaMuelle);
+    });
+
+    this.dataService.getMuelles(this.marcaMuelle).subscribe(data => {
+      console.log(data);
       this.dataSource = data['strAnswer'];
       this.datosOriginales = [...this.dataSource];
 
@@ -89,13 +108,15 @@ export class MuellesComponent implements OnInit{
     this.LadoTrasero.valueChanges.subscribe((value) => {
       this.buscarLadoTrasero(value);
     });
+    console.log(this.marcaMuelle);
   }
-
+  
   displayedColumns: string[] = [
     'RASSINI',
     'MAF',
     'SANDOVAL',
     'ORIGINAL',
+    'No',
     'Ancho',
     'Espesor',
     'Lfrontal',

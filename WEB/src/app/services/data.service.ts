@@ -46,8 +46,8 @@ export class DataService {
     return this.http.post<any>(this.apiUrlPostServicioLigero, datos);
   }
 
-  getMuelles(): Observable<any> {
-    return this.http.get<any>(this.apiUrlGetMuelles);
+  getMuelles(marcaMuelle: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetMuelles, marcaMuelle);
   }
 
   postMuelles(datos: any): Observable<any> {

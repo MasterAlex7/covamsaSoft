@@ -238,7 +238,7 @@ def fnPostServicioLigero(ID,info):
 	finally:
 		MysqlCnx.close()
 
-def fnGetMuelles():
+def fnGetMuelles(marca):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
 						port=strMysqlPort,
@@ -248,7 +248,10 @@ def fnGetMuelles():
 						charset='utf8mb4',
 						cursorclass=pymysql.cursors.DictCursor)
 		cursor = MysqlCnx.cursor()
-		cursor.callproc('getMuelles')
+		params = (
+			marca,
+		)
+		cursor.callproc('getMuelles',params)
 		response = cursor.fetchall()
 		if response:
 			return {'intStatus':200, 'strAnswer': response}

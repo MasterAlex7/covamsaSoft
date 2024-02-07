@@ -79,10 +79,11 @@ def postServicioLigero():
     except Exception as e:
         print("Error Post Servicio Ligero: ",e)
 
-@app.route('/cvm/muelles', methods=['GET'])
+@app.route('/cvm/muelles', methods=['POST'])
 def getMuelles():
     try:
-        objResult = callMethod.fnGetMuelles()
+        marca = request.json['marca'] if ('marca' in request.json) else None
+        objResult = callMethod.fnGetMuelles(marca)
         return jsonify(objResult)
     except Exception as e:
         print("Error Get Muelles: ",e)
