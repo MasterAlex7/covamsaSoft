@@ -93,21 +93,6 @@ export class MuellesComponent implements OnInit{
       this.buscar(value);
     });
 
-    this.Ancho.valueChanges.subscribe((value) => {
-      this.buscarAncho(value);
-    });
-
-    this.Espesor.valueChanges.subscribe((value) => {
-      this.buscarEspesor(value);
-    });
-
-    this.LadoFrontal.valueChanges.subscribe((value) => {
-      this.buscarLadoFrontal(value);
-    });
-
-    this.LadoTrasero.valueChanges.subscribe((value) => {
-      this.buscarLadoTrasero(value);
-    });
     console.log(this.marcaMuelle);
   }
   
@@ -139,46 +124,6 @@ export class MuellesComponent implements OnInit{
     }
   }
 
-  buscarAncho(value: string | null) {
-    if(!value){
-      this.dataSource = [...this.datosOriginales];
-    } else {
-      this.dataSource = this.datosOriginales.filter((val) => {
-        return val.Ancho.toLowerCase().includes(value.toLowerCase());
-      });
-    }
-  }
-
-  buscarEspesor(value: string | null) {
-    if(!value){
-      this.dataSource = [...this.datosOriginales];
-    } else {
-      this.dataSource = this.datosOriginales.filter((val) => {
-        return val.Espesor.toLowerCase().includes(value.toLowerCase());
-      });
-    }
-  }
-
-  buscarLadoFrontal(value: string | null) {
-    if(!value){
-      this.dataSource = [...this.datosOriginales];
-    } else {
-      this.dataSource = this.datosOriginales.filter((val) => {
-        return val.Lfrontal.toLowerCase().includes(value.toLowerCase());
-      });
-    }
-  }
-
-  buscarLadoTrasero(value: string | null) {
-    if(!value){
-      this.dataSource = [...this.datosOriginales];
-    } else {
-      this.dataSource = this.datosOriginales.filter((val) => {
-        return val.Ltrasero.toLowerCase().includes(value.toLowerCase());
-      });
-    }
-  }
-
   borrarFiltro(){
     this.Buscar.setValue('');
     this.Ancho.setValue('');
@@ -205,7 +150,6 @@ export class MuellesComponent implements OnInit{
       }
     });
     this.dataSource = [...this.dataSource];
-
     const data ={
       "ID": element.ID,
       "info": element.valorInput,

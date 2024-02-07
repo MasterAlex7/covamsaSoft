@@ -11,7 +11,7 @@ export class LFrontalPipePipe implements PipeTransform {
       return items;
     }
 
-    return items.filter(item => item.Lfrontal.toLowerCase().includes(filter.toLowerCase()));
+    return items.filter(item => item.Lfrontal.includes(filter));
   }
 
 }

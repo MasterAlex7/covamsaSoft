@@ -11,7 +11,7 @@ export class PipeAnchoPipe implements PipeTransform {
       return items;
     }
 
-    return items.filter(item => item.Ancho.toLowerCase().includes(filter.toLowerCase()));
+    return items.filter(item => item.Ancho===filter);
   }
 
 }

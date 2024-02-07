@@ -11,7 +11,7 @@ export class LTraseroPipePipe implements PipeTransform {
       return items;
     }
 
-    return items.filter(item => item.Ltrasero.toLowerCase().includes(filter.toLowerCase()));
+    return items.filter(item => item.Ltrasero.includes(filter));
   }
 
 }

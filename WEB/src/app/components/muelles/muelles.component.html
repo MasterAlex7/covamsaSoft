@@ -12,7 +12,7 @@
         </mat-select>
     </mat-form-field>
     <br>
-    <button class="btn btnColor mx-2" (click)="borrarFiltro()">Delete Selection</button>
+    <button class="btn btnColor mx-2" (click)="borrarFiltro()">Limpiar Filtros</button>
     </mat-drawer>
     <mat-drawer-content>
         <table mat-table [dataSource]="dataSource | positionFilter: (Posicion.value || '') 

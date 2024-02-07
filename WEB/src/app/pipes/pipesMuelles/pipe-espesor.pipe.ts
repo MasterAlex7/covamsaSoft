@@ -11,7 +11,7 @@ export class PipeEspesorPipe implements PipeTransform {
       return items;
     }
 
-    return items.filter(item => item.Espesor.toLowerCase().includes(filter.toLowerCase()));
+    return items.filter(item => item.Espesor===filter);
   }
 
 }

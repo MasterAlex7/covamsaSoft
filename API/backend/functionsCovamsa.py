@@ -248,10 +248,15 @@ def fnGetMuelles(marca):
 						charset='utf8mb4',
 						cursorclass=pymysql.cursors.DictCursor)
 		cursor = MysqlCnx.cursor()
-		params = (
-			marca,
-		)
-		cursor.callproc('getMuelles',params)
+
+		if marca == "all":
+			cursor.callproc('getMuellesAll')
+		else:
+			params = (
+				marca,
+			)
+			cursor.callproc('getMuelles',params)
+
 		response = cursor.fetchall()
 		if response:
 			return {'intStatus':200, 'strAnswer': response}
