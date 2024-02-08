@@ -104,6 +104,8 @@ def fnGetServicioPesado():
 	finally:
 		MysqlCnx.close()
 
+
+
 def fnPostServicioPesado(idGabriel,info):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
@@ -306,6 +308,222 @@ def fnGetMuellesMarcas():
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetColumns(tabla):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		sentence = "SHOW COLUMNS FROM "+tabla
+		cursor.execute(sentence)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def	fnAddProductSP(GABRIEL,MONROE,GRC,Armadora,Posicion,Tipo,LongitudExp,LongitudComp,Carrera,TipoMontajeSup,DiametroSup,LongitudSup,TipoMontajeInf,DiametroInf,LongitudInf,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+
+		if Posicion == "DEL":
+			PosicionDel = 1
+			PosicionTra = 0
+			PosicionCab = 0
+		elif Posicion == "TRA":
+			PosicionDel = 0
+			PosicionTra = 1
+			PosicionCab = 0
+		elif Posicion == "CAB":
+			PosicionDel = 0
+			PosicionTra = 0
+			PosicionCab = 1
+		elif Posicion == "DEL TRA":
+			PosicionDel = 1
+			PosicionTra = 1
+			PosicionCab = 0
+		
+		params = (
+			GABRIEL,
+			MONROE,
+			GRC,
+			Armadora,
+			PosicionDel,
+			PosicionTra,
+			PosicionCab,
+			Tipo,
+			LongitudExp,
+			LongitudComp,
+			Carrera,
+			TipoMontajeSup,
+			DiametroSup,
+			LongitudSup,
+			TipoMontajeInf,
+			DiametroInf,
+			LongitudInf,
+			info
+		)
+		cursor.callproc('postAddProductSP',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
 		
 if __name__ == '__main__':
     fnGetServicioPesado()
+	
+def fnGetServicioPesadoID(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('getServicioPesadoID',params)
+		response = cursor.fetchall()
+		result=[]
+		for row in response:
+			aux=""
+			if row['PosicionDel'] == 1 and row['PosicionTra'] == 1 and row['PosicionCab'] == 1:
+				aux="Del Tra Cab"
+			elif row['PosicionDel'] == 1 and row['PosicionTra'] == 1 and row['PosicionCab'] == 0:
+				aux="Del Tra"
+			elif row['PosicionDel'] == 1 and row['PosicionTra'] == 0 and row['PosicionCab'] == 1:
+				aux="Del Cab"
+			elif row['PosicionDel'] == 1 and row['PosicionTra'] == 0 and row['PosicionCab'] == 0:
+				aux="Del"
+			elif row['PosicionDel'] == 0 and row['PosicionTra'] == 1 and row['PosicionCab'] == 1:
+				aux="Tra Cab"
+			elif row['PosicionDel'] == 0 and row['PosicionTra'] == 1 and row['PosicionCab'] == 0:
+				aux="Tra"
+			elif row['PosicionDel'] == 0 and row['PosicionTra'] == 0 and row['PosicionCab'] == 1:
+				aux="Cab"
+			elif row['PosicionDel'] == 0 and row['PosicionTra'] == 0 and row['PosicionCab'] == 0:
+				aux="Ninguna"
+
+			obj={
+				'ID': row['ID'],
+				'GABRIEL': row['GABRIEL'],
+				'MONROE': row['MONROE'], 
+				'GRC': row['GRC'], 
+				'Armadora': row['Armadora'], 
+				'Posicion': aux, 
+				'Tipo': row['Tipo'], 
+				'LongitudExp': row['LongitudExp'], 
+				'LongitudComp': row['LongitudComp'], 
+				'Carrera': row['Carrera'], 
+				'TipoMontajeSup': row['TipoMontajeSup'], 
+				'DiametroSup': row['DiametroSup'], 
+				'LongitudSup': row['LongitudSup'], 
+				'TipoMontajeInf': row['TipoMontajeInf'], 
+				'DiametroInf': row['DiametroInf'], 
+				'LongitudInf': row['LongitudInf'],
+				"info": row['info']
+			}
+			result.append(obj)
+
+		if result:
+			#print(result)
+			return {'intStatus':200, 'strAnswer': result}
+		else:
+			return {'intStatus':200, 'strAnswer': 'No hay nada'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnEditProductSP(GABRIEL,MONROE,GRC,Armadora,Posicion,Tipo,
+                    LongitudExp,LongitudComp,Carrera,TipoMontajeSup,DiametroSup,LongitudSup,TipoMontajeInf,DiametroInf,LongitudInf,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+
+		if Posicion == "DEL":
+			PosicionDel = 1
+			PosicionTra = 0
+			PosicionCab = 0
+		elif Posicion == "TRA":
+			PosicionDel = 0
+			PosicionTra = 1
+			PosicionCab = 0
+		elif Posicion == "CAB":
+			PosicionDel = 0
+			PosicionTra = 0
+			PosicionCab = 1
+		elif Posicion == "DEL TRA":
+			PosicionDel = 1
+			PosicionTra = 1
+			PosicionCab = 0
+		
+		params = (
+			GABRIEL,
+			MONROE,
+			GRC,
+			Armadora,
+			PosicionDel,
+			PosicionTra,
+			PosicionCab,
+			Tipo,
+			LongitudExp,
+			LongitudComp,
+			Carrera,
+			TipoMontajeSup,
+			DiametroSup,
+			LongitudSup,
+			TipoMontajeInf,
+			DiametroInf,
+			LongitudInf,
+			info
+		)
+		cursor.callproc('putEditProductSP',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnDeleteProductSP(GABRIEL):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (GABRIEL,)
+		cursor.callproc('deleteProductSP',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha eliminado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

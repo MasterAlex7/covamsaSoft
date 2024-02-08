@@ -19,6 +19,11 @@ export class DataService {
   private apiUrlGetMuelles = 'http://'+ip+':'+port+path+'muelles';
   private apiUrlPostMuelles = 'http://'+ip+':'+port+path+'muellesInfo';
   private apiUrlGetMuellesMarca = 'http://'+ip+':'+port+path+'muellesMarcas';
+  private appiUrlGetColumns = 'http://'+ip+':'+port+path+'columnasTabla';
+  private apiUrlPostNewProductSP = 'http://'+ip+':'+port+path+'addProductSP';
+  private apiUrlGetServicioPesadoID = 'http://'+ip+':'+port+path+'servicioPesadoID';
+  private apiUrlPutEditProductoSP = 'http://'+ip+':'+port+path+'editProductSP';
+  private apiUrlDeleteProductSP = 'http://'+ip+':'+port+path+'deleteProductSP';
 
   constructor(private http: HttpClient) { }
 
@@ -56,6 +61,26 @@ export class DataService {
 
   getMuellesMarca(): Observable<any> {
     return this.http.get<any>(this.apiUrlGetMuellesMarca);
+  }
+
+  getColumns(tabla: string): Observable<any> {
+    return this.http.get<any>(this.appiUrlGetColumns + '/' + tabla);
+  }
+
+  postNewProductSP(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductSP, datos);
+  }
+
+  getServicioPesadoID(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetServicioPesadoID + '/' + id);
+  }
+
+  putEditProductoSP(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutEditProductoSP, datos);
+  }
+
+  deleteProductSP(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlDeleteProductSP, datos);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

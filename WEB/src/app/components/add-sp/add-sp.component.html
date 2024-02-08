@@ -1,0 +1,96 @@
+<mat-card class="cardLogin">
+    <mat-card-header>
+        <mat-card-title>
+            <h2>Agregar Nuevo Producto a Servicio Pesado</h2>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field>
+        <mat-label>GABRIEL</mat-label>
+        <input matInput [(ngModel)]="GABRIEL">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>MONROE</mat-label>
+        <input matInput [(ngModel)]="MONROE"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>GRC</mat-label>
+        <input matInput [(ngModel)]="GRC"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>ARMADORA</mat-label>
+        <input matInput [(ngModel)]="Armadora"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Posicion</mat-label>
+        <mat-select [formControl]="Posicion">
+        <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>TIPO</mat-label>
+        <mat-select [formControl]="Tipo">
+        <mat-option *ngFor="let opcion of tiposAmortiguador" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>LONGITUD EXPANSION</mat-label>
+        <input matInput [(ngModel)]="LongitudExp"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>LONGITUD COMPRESION</mat-label>
+        <input matInput [(ngModel)]="LongitudComp"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>CARRERA</mat-label>
+        <input matInput [(ngModel)]="Carrera"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>TIPO DE MONTAJE SUPERIOR</mat-label>
+        <mat-select [formControl]="TipoMontajeSup">
+        <mat-option *ngFor="let opcion of tiposMontajes" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>DIAMETRO SUPERIOR</mat-label>
+        <input matInput [(ngModel)]="DiametroSup"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>LONGITUD SUPERIOR</mat-label>
+        <input matInput [(ngModel)]="LongitudSup"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>TIPO DE MONTAJE INFERIOR</mat-label>
+        <mat-select [formControl]="TipoMontajeInf">
+        <mat-option *ngFor="let opcion of tiposMontajes" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>DIAMETRO INFERIOR</mat-label>
+        <input matInput [(ngModel)]="DiametroInf"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>LONGITUD INFERIOR</mat-label>
+        <input matInput [(ngModel)]="LongitudInf"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>INFORMACION</mat-label>
+        <input matInput [(ngModel)]="info"/>
+    </mat-form-field>
+    <button mat-raised-button class="btnLogin" (click)="submit()">Agregar</button>
+</mat-card>

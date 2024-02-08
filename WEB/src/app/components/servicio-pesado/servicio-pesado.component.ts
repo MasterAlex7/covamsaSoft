@@ -12,6 +12,8 @@ import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginService } from '../../services/login.service';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export interface DataExample {
   ID: number;
@@ -48,7 +50,8 @@ export interface DataExample {
     PositionFilterPipe,
     MatInputModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    RouterModule
   ],
   templateUrl: './servicio-pesado.component.html',
   styleUrl: './servicio-pesado.component.css',
@@ -83,6 +86,28 @@ export class ServicioPesadoComponent implements OnInit {
     this.Buscar.valueChanges.subscribe((value) => {
       this.buscar(value);
     });
+
+    if(this.getUser() == 'master'){
+      this.displayedColumns = [
+        'GABRIEL',
+        'MONROE',
+        'GRC',
+        'Armadora',
+        'Posicion',
+        'Tipo',
+        'LongitudExp',
+        'LongitudComp',
+        'Carrera',
+        'TipoMontajeSup',
+        'DiametroSup',
+        'LongitudSup',
+        'TipoMontajeInf',
+        'DiametroInf',
+        'LongitudInf',
+        'info',
+        'actions'
+      ];
+    }
   }
 
   displayedColumns: string[] = [
@@ -102,7 +127,7 @@ export class ServicioPesadoComponent implements OnInit {
     'TipoMontajeInf',
     'DiametroInf',
     'LongitudInf',
-    'info'
+    'info',
   ];
 
   borrarFiltro() {
@@ -158,5 +183,31 @@ export class ServicioPesadoComponent implements OnInit {
 
   cerrarInput(element: any) {
     element.mostrarInput = false; // Oculta el input al perder el foco
+  }
+
+  getUser(): string | null{
+    return this.loginService.getAuthToken();
+  }
+
+  deleteProductoSP(GABRIEL: string) {
+    const params={
+      "GABRIEL": GABRIEL
+    }
+    this.dataService.deleteProductSP(params).subscribe((response) => {
+      if(response["intStatus"] == 200){
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: response["strAnswer"],
+        });
+        this.ngOnInit();
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: response["strAnswer"],
+        });
+      }
+    });
   }
 }

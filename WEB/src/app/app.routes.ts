@@ -7,6 +7,8 @@ import { BolsasDeAireComponent } from './components/bolsas-de-aire/bolsas-de-air
 import { ServicioLigeroComponent } from './components/servicio-ligero/servicio-ligero.component';
 import { MuellesComponent } from './components/muelles/muelles.component';
 import { MenuMuelleComponent } from './components/menu-muelle/menu-muelle.component';
+import { AdminMenuComponent } from './components/admin-menu/admin-menu.component';
+import { AddSPComponent } from './components/add-sp/add-sp.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -17,4 +19,7 @@ export const routes: Routes = [
     { path: 'muelles/:marca', component: MuellesComponent, canActivate: [AuthGuard] },
     { path: 'servicioLigero', component: ServicioLigeroComponent, canActivate: [AuthGuard] },
     { path: 'menuMuelles', component: MenuMuelleComponent, canActivate: [AuthGuard] },
+    { path: 'adminMenu', component: AdminMenuComponent, canActivate: [AuthGuard] },
+    { path: 'addSP/:accion/:idItem', component: AddSPComponent, canActivate: [AuthGuard] },
+    { path: 'addSP/:accion', component: AddSPComponent, canActivate: [AuthGuard] },
 ];
