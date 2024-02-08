@@ -24,6 +24,10 @@ export class DataService {
   private apiUrlGetServicioPesadoID = 'http://'+ip+':'+port+path+'servicioPesadoID';
   private apiUrlPutEditProductoSP = 'http://'+ip+':'+port+path+'editProductSP';
   private apiUrlDeleteProductSP = 'http://'+ip+':'+port+path+'deleteProductSP';
+  private apiUrlGetBolsasDeAireID = 'http://'+ip+':'+port+path+'bolsasDeAireID';
+  private apiUrlPostNewProductBA = 'http://'+ip+':'+port+path+'addProductBA';
+  private apiUrlPutEditProductBA = 'http://'+ip+':'+port+path+'editProductBA';
+  private apiUrlDeleteProductBA = 'http://'+ip+':'+port+path+'deleteProductBA';
 
   constructor(private http: HttpClient) { }
 
@@ -81,6 +85,22 @@ export class DataService {
 
   deleteProductSP(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlDeleteProductSP, datos);
+  }
+
+  getBolsasDeAireID(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetBolsasDeAireID + '/' + id);
+  }
+
+  postNewProductBA(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductBA, datos);
+  }
+
+  putEditProductBA(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutEditProductBA, datos);
+  }
+
+  deleteProductBA(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlDeleteProductBA, datos);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

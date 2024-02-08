@@ -1,0 +1,78 @@
+<mat-card class="cardLogin">
+    <mat-card-header>
+        <mat-card-title>
+            <h2>Agregar Nuevo Producto a Bolsas de Aire</h2>
+        </mat-card-title>
+    </mat-card-header>
+    
+    <mat-form-field>
+        <mat-label>GABRIEL</mat-label>
+        <input matInput [(ngModel)]="GABRIEL">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>FIRESTONE</mat-label>
+        <input matInput [(ngModel)]="FIRESTONE"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>GOODYEAR</mat-label>
+        <input matInput [(ngModel)]="GOODYEAR"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>CONTITECH</mat-label>
+        <input matInput [(ngModel)]="CONTITECH"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Aplicacion 1</mat-label>
+        <input matInput [(ngModel)]="Aplicacion1"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Aplicacion 2</mat-label>
+        <input matInput [(ngModel)]="Aplicacion2"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Aplicacion 3</mat-label>
+        <input matInput [(ngModel)]="Aplicacion3"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>OE1</mat-label>
+        <input matInput [(ngModel)]="OE1"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>OE2</mat-label>
+        <input matInput [(ngModel)]="OE2"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>OE3</mat-label>
+        <input matInput [(ngModel)]="OE3"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Tapa</mat-label>
+        <input matInput [(ngModel)]="Tapa"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Membrana</mat-label>
+        <input matInput [(ngModel)]="Membrana"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Piston</mat-label>
+        <input matInput [(ngModel)]="Piston"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>INFORMACION</mat-label>
+        <input matInput [(ngModel)]="info"/>
+    </mat-form-field>
+    <button mat-raised-button class="btnLogin" (click)="submit()">Agregar</button>
+</mat-card>

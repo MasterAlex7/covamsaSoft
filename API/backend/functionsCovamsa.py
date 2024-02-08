@@ -527,3 +527,110 @@ def fnDeleteProductSP(GABRIEL):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetBolsasDeAireID(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('getBolsasDeAireID',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnAddProductBA(GABRIEL,FIRESTONE,GOODYEAR,CONTITECH,Aplicacion1,Aplicacion2,Aplicacion3,OE1,OE2,OE3,Tapa,Membrana,Piston,inf):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			GABRIEL,
+			FIRESTONE,
+			GOODYEAR,
+			CONTITECH,
+			Aplicacion1,
+			Aplicacion2,
+			Aplicacion3,
+			OE1,
+			OE2,
+			OE3,
+			Tapa,
+			Membrana,
+			Piston,
+			inf
+		)
+		cursor.callproc('postAddProductBA',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnEditProductBA(GABRIEL,FIRESTONE,GOODYEAR,CONTITECH,Aplicacion1,Aplicacion2,Aplicacion3,OE1,OE2,OE3,Tapa,Membrana,Piston,inf):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			GABRIEL,
+			FIRESTONE,
+			GOODYEAR,
+			CONTITECH,
+			Aplicacion1,
+			Aplicacion2,
+			Aplicacion3,
+			OE1,
+			OE2,
+			OE3,
+			Tapa,
+			Membrana,
+			Piston,
+			inf
+		)
+		cursor.callproc('putEditProductBA',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnDeleteProductBA(GABRIEL):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (GABRIEL,)
+		cursor.callproc('deleteProductBA',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha eliminado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

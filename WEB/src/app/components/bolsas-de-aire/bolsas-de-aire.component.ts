@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginService } from '../../services/login.service';
 import { AplicacionBAPipe } from '../../pipes/aplicacion-ba.pipe';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export interface DataBolsasDeAire {
   ID: number, 
@@ -44,7 +46,8 @@ export interface DataBolsasDeAire {
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    AplicacionBAPipe
+    AplicacionBAPipe,
+    RouterModule
   ],
   templateUrl: './bolsas-de-aire.component.html',
   styleUrl: './bolsas-de-aire.component.css'
@@ -81,6 +84,26 @@ export class BolsasDeAireComponent implements OnInit{
     this.Buscar.valueChanges.subscribe((value) => {
       this.buscar(value);
     });
+
+    if(this.getUser() == 'master'){
+      this.displayedColumns= [
+        'GABRIEL',
+        'FIRESTONE',
+        'GOODYEAR',
+        'CONTITECH',
+        'Aplicacion1',
+        'Aplicacion2',
+        'Aplicacion3',
+        'OE1',
+        'OE2',
+        'OE3',
+        'Tapa',
+        'Membrana',
+        'Piston',
+        'info',
+        'actions'
+      ];
+    }
   }
   
   displayedColumns: string[] = [
@@ -159,5 +182,31 @@ export class BolsasDeAireComponent implements OnInit{
 
   cerrarInput(element: any) {
     element.mostrarInput = false; // Oculta el input al perder el foco
+  }
+
+  getUser(): string | null{
+    return this.loginService.getAuthToken();
+  }
+
+  deleteProducto(GABRIEL: string) {
+    const params={
+      "GABRIEL": GABRIEL
+    }
+    this.dataService.deleteProductBA(params).subscribe((response) => {
+      if(response["intStatus"] == 200){
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: response["strAnswer"],
+        });
+        this.ngOnInit();
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: response["strAnswer"],
+        });
+      }
+    });
   }
 }

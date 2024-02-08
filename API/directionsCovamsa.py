@@ -181,6 +181,67 @@ def deleteProductSP():
     except Exception as e:
         print("Error Delete Product SP: ",e)
 
+@app.route('/cvm/bolsasDeAireID/<ID>', methods=['GET'])
+def getBolsasDeAireID(ID):
+    try:
+        objResult = callMethod.fnGetBolsasDeAireID(ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Bolsas de Aire ID: ",e)
+
+@app.route('/cvm/addProductBA', methods=['POST'])
+def addProductBA():
+    try:
+        GABRIEL = request.json['GABRIEL'] if ('GABRIEL' in request.json) else None
+        FIRESTONE = request.json['FIRESTONE'] if ('FIRESTONE' in request.json) else None
+        GOODYEAR = request.json['GOODYEAR'] if ('GOODYEAR' in request.json) else None
+        CONTITECH = request.json['CONTITECH'] if ('CONTITECH' in request.json) else None
+        Aplicacion1 = request.json['Aplicacion1'] if ('Aplicacion1' in request.json) else None 
+        Aplicacion2 = request.json['Aplicacion2'] if ('Aplicacion2' in request.json) else None
+        Aplicacion3 = request.json['Aplicacion3'] if ('Aplicacion3' in request.json) else None
+        OE1 = request.json['OE1'] if ('OE1' in request.json) else None
+        OE2 = request.json['OE2'] if ('OE2' in request.json) else None
+        OE3 = request.json['OE3'] if ('OE3' in request.json) else None
+        Tapa = request.json['Tapa'] if ('Tapa' in request.json) else None
+        Membrana = request.json['Membrana'] if ('Membrana' in request.json) else None
+        Piston = request.json['Piston'] if ('Piston' in request.json) else None
+        inf = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnAddProductBA(GABRIEL,FIRESTONE,GOODYEAR,CONTITECH,Aplicacion1,Aplicacion2,Aplicacion3,OE1,OE2,OE3,Tapa,Membrana,Piston,inf)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Add Product BA: ",e)
+
+@app.route('/cvm/editProductBA', methods=['PUT'])
+def editProductBA():
+    try:
+        GABRIEL = request.json['GABRIEL'] if ('GABRIEL' in request.json) else None
+        FIRESTONE = request.json['FIRESTONE'] if ('FIRESTONE' in request.json) else None
+        GOODYEAR = request.json['GOODYEAR'] if ('GOODYEAR' in request.json) else None
+        CONTITECH = request.json['CONTITECH'] if ('CONTITECH' in request.json) else None
+        Aplicacion1 = request.json['Aplicacion1'] if ('Aplicacion1' in request.json) else None 
+        Aplicacion2 = request.json['Aplicacion2'] if ('Aplicacion2' in request.json) else None
+        Aplicacion3 = request.json['Aplicacion3'] if ('Aplicacion3' in request.json) else None
+        OE1 = request.json['OE1'] if ('OE1' in request.json) else None
+        OE2 = request.json['OE2'] if ('OE2' in request.json) else None
+        OE3 = request.json['OE3'] if ('OE3' in request.json) else None
+        Tapa = request.json['Tapa'] if ('Tapa' in request.json) else None
+        Membrana = request.json['Membrana'] if ('Membrana' in request.json) else None
+        Piston = request.json['Piston'] if ('Piston' in request.json) else None
+        inf = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnEditProductBA(GABRIEL,FIRESTONE,GOODYEAR,CONTITECH,Aplicacion1,Aplicacion2,Aplicacion3,OE1,OE2,OE3,Tapa,Membrana,Piston,inf)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Edit Product BA: ",e)
+
+@app.route('/cvm/deleteProductBA', methods=['POST'])
+def deleteProductBA():
+    try:
+        GABRIEL = request.json['GABRIEL'] if ('GABRIEL' in request.json) else None
+        objResult = callMethod.fnDeleteProductBA(GABRIEL)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Delete Product BA: ",e)
+
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
