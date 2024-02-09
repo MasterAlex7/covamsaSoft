@@ -1,0 +1,20 @@
+<div class="row mx-5 py-5 d-flex justify-content-center">
+    <div class="col-sm-2 py-4">
+        <div class="card">
+            <h2 class="card-header">Busqueda General</h2>
+            <div class="card-body">
+                <a [routerLink]="['/refacciones', 'all']" class="btn btn-primary">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4" *ngFor="let tipo of tipos">
+        <div class="card">
+            <h2 class="card-header">{{ tipo.Tipo }}</h2>
+            <div class="card-body">
+                <a [routerLink]="['/refacciones', tipo.Tipo]" class="btn btn-primary">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -374,6 +374,14 @@ def deleteProductMue():
         return jsonify(objResult)
     except Exception as e:
         print("Error Delete Product Muelles: ",e)
+
+@app.route('/cvm/tiposRefa', methods=['GET'])
+def getTiposRefa():
+    try:
+        objResult = callMethod.fnGetTiposRefa()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Tipos Refacciones: ",e)
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
