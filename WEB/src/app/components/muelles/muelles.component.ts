@@ -16,6 +16,8 @@ import { PipeAnchoPipe } from '../../pipes/pipesMuelles/pipe-ancho.pipe';
 import { PipeEspesorPipe } from '../../pipes/pipesMuelles/pipe-espesor.pipe';
 import { LFrontalPipePipe } from '../../pipes/pipesMuelles/l-frontal-pipe.pipe';
 import { LTraseroPipePipe } from '../../pipes/pipesMuelles/l-trasero-pipe.pipe';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export interface DataMuelles {
   ID: number,
@@ -50,7 +52,8 @@ export interface DataMuelles {
     PipeAnchoPipe,
     PipeEspesorPipe,
     LFrontalPipePipe,
-    LTraseroPipePipe
+    LTraseroPipePipe,
+    RouterModule
   ],
   templateUrl: './muelles.component.html',
   styleUrl: './muelles.component.css'
@@ -94,6 +97,23 @@ export class MuellesComponent implements OnInit{
     });
 
     console.log(this.marcaMuelle);
+
+    if(this.getUser() == 'master'){
+      this.displayedColumns = [
+        'RASSINI',
+        'MAF',
+        'SANDOVAL',
+        'ORIGINAL',
+        'No',
+        'Ancho',
+        'Espesor',
+        'Lfrontal',
+        'Ltrasero',
+        'Posicion',
+        'info',
+        'actions'
+      ]
+    }
   }
   
   displayedColumns: string[] = [
@@ -164,5 +184,33 @@ export class MuellesComponent implements OnInit{
 
   cerrarInput(element: any) {
     element.mostrarInput = false; // Oculta el input al perder el foco
+  }
+
+  getUser(): string | null{
+    return this.loginService.getAuthToken();
+  }
+
+  deleteProducto(RASSINI: number) {
+    const params={
+      "RASSINI": RASSINI
+    }
+    this.dataService.deleteProductMue(params).subscribe((data) => {
+      if(data['intStatus'] == 200){
+        Swal.fire({
+          title: 'Exito',
+          text: 'Muelle eliminado con exito',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        })
+        this.ngOnInit();
+      }else{
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo eliminar el muelle',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
+      }
+    });
   }
 }

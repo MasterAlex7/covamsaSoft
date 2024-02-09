@@ -167,7 +167,25 @@ export class AddSlComponent implements OnInit{
             title: 'Guardado',
             text: response["strAnswer"],
           });
-          this.route.navigate(['/servicioLigero']);
+          this.MarcaAuto = ''
+          this.Submarca = ''
+          this.Referencia = ''
+          this.Modelo = ''
+          this.AnoInicio = ''
+          this.AnoFinal = ''
+          this.Marca = ''
+          this.Posicion.setValue('')
+          this.Tipo.setValue('')
+          this.LongExp = ''
+          this.LongComp = ''
+          this.Carrera = ''
+          this.MontSup = ''
+          this.MontInf = ''
+          this.MONROE = ''
+          this.GRC = ''
+          this.KYB = ''
+          this.BOGE = ''
+          this.info = ''
         }else{
           Swal.fire({
             icon: 'error',

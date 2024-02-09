@@ -108,8 +108,6 @@ export class AddSPComponent implements OnInit{
       "info": this.info
     }
 
-    console.log(params);
-
     if(this.ruta == 'editar'){
       this.dataService.putEditProductoSP(params).subscribe(
         (response) => {

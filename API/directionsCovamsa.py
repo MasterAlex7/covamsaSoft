@@ -341,7 +341,7 @@ def addProductMue():
         Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
         info = request.json['info'] if ('info' in request.json) else None
         marca = request.json['marca'] if ('marca' in request.json) else None
-        objResult = callMethod.fnAddProductSL(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca)
+        objResult = callMethod.fnAddProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca)
         return jsonify(objResult)
     except Exception as e:
         print("Error Add Product Muelles: ",e)

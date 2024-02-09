@@ -145,7 +145,6 @@ export class AddBAComponent implements OnInit{
           this.Membrana = "";
           this.Piston = "";
           this.info = "";
-          this.route.navigate(['/bolsasdeaire']);
         }else{
           Swal.fire({
             title: 'Error!',
