@@ -10,6 +10,7 @@ import { MenuMuelleComponent } from './components/menu-muelle/menu-muelle.compon
 import { AdminMenuComponent } from './components/admin-menu/admin-menu.component';
 import { AddSPComponent } from './components/add-sp/add-sp.component';
 import { AddBAComponent } from './components/add-ba/add-ba.component';
+import { AddSlComponent } from './components/add-sl/add-sl.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -25,4 +26,6 @@ export const routes: Routes = [
     { path: 'addSP/:accion', component: AddSPComponent, canActivate: [AuthGuard] },
     { path: 'addBA/:accion/:idItem', component: AddBAComponent, canActivate: [AuthGuard] },
     { path: 'addBA/:accion', component: AddBAComponent, canActivate: [AuthGuard] },
+    { path: 'addSL/:accion/:idItem', component: AddSlComponent, canActivate: [AuthGuard] },
+    { path: 'addSL/:accion', component: AddSlComponent, canActivate: [AuthGuard] }
 ];

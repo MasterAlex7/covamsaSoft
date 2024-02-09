@@ -242,6 +242,138 @@ def deleteProductBA():
     except Exception as e:
         print("Error Delete Product BA: ",e)
 
+@app.route('/cvm/servicioLigeroID/<ID>', methods=['GET'])
+def getServicioLigeroID(ID):
+    try:
+        objResult = callMethod.fnGetServicioLigeroID(ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Servicio Ligero ID: ",e)
+
+@app.route('/cvm/addProductSL', methods=['POST'])
+def addProductSL():
+    try:
+        MarcaAuto = request.json['MarcaAuto'] if ('MarcaAuto' in request.json) else None
+        Submarca = request.json['Submarca'] if ('Submarca' in request.json) else None
+        Referencia = request.json['Referencia'] if ('Referencia' in request.json) else None
+        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
+        AnoInicio = request.json['AnoInicio'] if ('AnoInicio' in request.json) else None
+        AnoFinal = request.json['AnoFinal'] if ('AnoFinal' in request.json) else None
+        Marca = request.json['Marca'] if ('Marca' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
+        LongExp = request.json['LongExp'] if ('LongExp' in request.json) else None
+        LongComp = request.json['LongComp'] if ('LongComp' in request.json) else None
+        Carrera = request.json['Carrera'] if ('Carrera' in request.json) else None
+        MontSup = request.json['MontSup'] if ('MontSup' in request.json) else None
+        MontInf = request.json['MontInf'] if ('MontInf' in request.json) else None
+        MONROE = request.json['MONROE'] if ('MONROE' in request.json) else None
+        GRC = request.json['GRC'] if ('GRC' in request.json) else None
+        KYB = request.json['KYB'] if ('KYB' in request.json) else None
+        BOGE = request.json['BOGE'] if ('BOGE' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnAddProductSL(MarcaAuto,Submarca,Referencia,Modelo,AnoInicio,AnoFinal,Marca,Posicion,Tipo,LongExp,LongComp,Carrera,MontSup,MontInf,MONROE,GRC,KYB,BOGE,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Add Product SL: ",e)
+
+@app.route('/cvm/editProductSL', methods=['PUT'])
+def editProductSL():
+    try:
+        MarcaAuto = request.json['MarcaAuto'] if ('MarcaAuto' in request.json) else None
+        Submarca = request.json['Submarca'] if ('Submarca' in request.json) else None
+        Referencia = request.json['Referencia'] if ('Referencia' in request.json) else None
+        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
+        AnoInicio = request.json['AnoInicio'] if ('AnoInicio' in request.json) else None
+        AnoFinal = request.json['AnoFinal'] if ('AnoFinal' in request.json) else None
+        Marca = request.json['Marca'] if ('Marca' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
+        LongExp = request.json['LongExp'] if ('LongExp' in request.json) else None
+        LongComp = request.json['LongComp'] if ('LongComp' in request.json) else None
+        Carrera = request.json['Carrera'] if ('Carrera' in request.json) else None
+        MontSup = request.json['MontSup'] if ('MontSup' in request.json) else None
+        MontInf = request.json['MontInf'] if ('MontInf' in request.json) else None
+        MONROE = request.json['MONROE'] if ('MONROE' in request.json) else None
+        GRC = request.json['GRC'] if ('GRC' in request.json) else None
+        KYB = request.json['KYB'] if ('KYB' in request.json) else None
+        BOGE = request.json['BOGE'] if ('BOGE' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        objResult = callMethod.fnEditProductSL(MarcaAuto,Submarca,Referencia,Modelo,AnoInicio,AnoFinal,Marca,Posicion,Tipo,LongExp,LongComp,Carrera,
+                                                MontSup,MontInf,MONROE,GRC,KYB,BOGE,info,ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Edit Product SL: ",e)
+
+@app.route('/cvm/deleteProductSL', methods=['POST'])
+def deleteProductSL():
+    try:
+        MarcaAuto = request.json['MarcaAuto'] if ('MarcaAuto' in request.json) else None
+        Submarca = request.json['Submarca'] if ('Submarca' in request.json) else None
+        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
+        Referencia = request.json['Referencia'] if ('Referencia' in request.json) else None
+        objResult = callMethod.fnDeleteProductSL(MarcaAuto,Submarca,Modelo,Referencia)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Delete Product SL: ",e)
+
+@app.route('/cvm/muellesID/<ID>', methods=['GET'])
+def getMuellesID(ID):
+    try:
+        objResult = callMethod.fnGetMuellesID(ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Muelles ID: ",e)
+
+@app.route('/cvm/addProductMue', methods=['POST'])
+def addProductMue():
+    try:
+        RASSINI = request.json['RASSINI'] if ('RASSINI' in request.json) else None
+        MAF = request.json['MAF'] if ('MAF' in request.json) else None
+        SANDOVAL = request.json['SANDOVAL'] if ('SANDOVAL' in request.json) else None
+        ORIGINAL = request.json['ORIGINAL'] if ('ORIGINAL' in request.json) else None
+        No = request.json['No'] if ('No' in request.json) else None
+        Ancho = request.json['Ancho'] if ('Ancho' in request.json) else None
+        Espesor = request.json['Espesor'] if ('Espesor' in request.json) else None
+        Lfrontal = request.json['Lfrontal'] if ('Lfrontal' in request.json) else None
+        Ltrasero = request.json['Ltrasero'] if ('Ltrasero' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        marca = request.json['marca'] if ('marca' in request.json) else None
+        objResult = callMethod.fnAddProductSL(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Add Product Muelles: ",e)
+
+@app.route('/cvm/editProductMue', methods=['PUT'])
+def editProductMue():
+    try:
+        RASSINI = request.json['RASSINI'] if ('RASSINI' in request.json) else None
+        MAF = request.json['MAF'] if ('MAF' in request.json) else None
+        SANDOVAL = request.json['SANDOVAL'] if ('SANDOVAL' in request.json) else None
+        ORIGINAL = request.json['ORIGINAL'] if ('ORIGINAL' in request.json) else None
+        No = request.json['No'] if ('No' in request.json) else None
+        Ancho = request.json['Ancho'] if ('Ancho' in request.json) else None
+        Espesor = request.json['Espesor'] if ('Espesor' in request.json) else None
+        Lfrontal = request.json['Lfrontal'] if ('Lfrontal' in request.json) else None
+        Ltrasero = request.json['Ltrasero'] if ('Ltrasero' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        marca = request.json['marca'] if ('marca' in request.json) else None
+        objResult = callMethod.fnEditProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Edit Product Muelles: ",e)
+
+@app.route('/cvm/deleteProductMue', methods=['POST'])
+def deleteProductMue():
+    try:
+        RASSINI = request.json['RASSINI'] if ('RASSINI' in request.json) else None
+        objResult = callMethod.fnDeleteProductMue(RASSINI)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Delete Product Muelles: ",e)
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

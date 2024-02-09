@@ -1,0 +1,107 @@
+<mat-card class="cardLogin">
+    <mat-card-header>
+        <mat-card-title>
+            <h2>Agregar Nuevo Producto a Servicio Ligero</h2>
+        </mat-card-title>
+    </mat-card-header>
+    
+    <mat-form-field>
+        <mat-label>Marca Auto</mat-label>
+        <input matInput [(ngModel)]="MarcaAuto">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Submarca</mat-label>
+        <input matInput [(ngModel)]="Submarca"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Referencia</mat-label>
+        <input matInput [(ngModel)]="Referencia"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Modelo</mat-label>
+        <input matInput [(ngModel)]="Modelo"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Año Inicio</mat-label>
+        <input matInput [(ngModel)]="AnoInicio"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Año Final</mat-label>
+        <input matInput [(ngModel)]="AnoFinal"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Marca</mat-label>
+        <input matInput [(ngModel)]="Marca"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Posicion</mat-label>
+        <mat-select [formControl]="Posicion">
+        <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select [formControl]="Tipo">
+        <mat-option *ngFor="let opcion of tiposAmortiguador" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Longitud Expansion</mat-label>
+        <input matInput [(ngModel)]="LongExp"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Longitud Compresion</mat-label>
+        <input matInput [(ngModel)]="LongComp"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Carrera</mat-label>
+        <input matInput [(ngModel)]="Carrera"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Montaje Superior</mat-label>
+        <input matInput [(ngModel)]="MontSup"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Montaje Inferior</mat-label>
+        <input matInput [(ngModel)]="MontInf"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>MONROE</mat-label>
+        <input matInput [(ngModel)]="MONROE"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>GRC</mat-label>
+        <input matInput [(ngModel)]="GRC"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>KYB</mat-label>
+        <input matInput [(ngModel)]="KYB"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>BOGE</mat-label>
+        <input matInput [(ngModel)]="BOGE"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>INFORMACION</mat-label>
+        <input matInput [(ngModel)]="info"/>
+    </mat-form-field>
+    <button mat-raised-button class="btnLogin" (click)="submit()">Agregar</button>
+</mat-card>

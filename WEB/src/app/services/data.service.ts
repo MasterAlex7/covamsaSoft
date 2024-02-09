@@ -20,14 +20,26 @@ export class DataService {
   private apiUrlPostMuelles = 'http://'+ip+':'+port+path+'muellesInfo';
   private apiUrlGetMuellesMarca = 'http://'+ip+':'+port+path+'muellesMarcas';
   private appiUrlGetColumns = 'http://'+ip+':'+port+path+'columnasTabla';
+
   private apiUrlPostNewProductSP = 'http://'+ip+':'+port+path+'addProductSP';
   private apiUrlGetServicioPesadoID = 'http://'+ip+':'+port+path+'servicioPesadoID';
   private apiUrlPutEditProductoSP = 'http://'+ip+':'+port+path+'editProductSP';
   private apiUrlDeleteProductSP = 'http://'+ip+':'+port+path+'deleteProductSP';
+
   private apiUrlGetBolsasDeAireID = 'http://'+ip+':'+port+path+'bolsasDeAireID';
   private apiUrlPostNewProductBA = 'http://'+ip+':'+port+path+'addProductBA';
   private apiUrlPutEditProductBA = 'http://'+ip+':'+port+path+'editProductBA';
   private apiUrlDeleteProductBA = 'http://'+ip+':'+port+path+'deleteProductBA';
+
+  private apiUrlpostNewProductSL = 'http://'+ip+':'+port+path+'addProductSL';
+  private apiUrlGetServicioLigeroID = 'http://'+ip+':'+port+path+'servicioLigeroID';
+  private apiUrlPutEditProductSL = 'http://'+ip+':'+port+path+'editProductSL';
+  private apiUrlDeleteProductSL = 'http://'+ip+':'+port+path+'deleteProductSL';
+
+  private apiUrlPostNewProductM = 'http://'+ip+':'+port+path+'addProductMue';
+  private apiUrlGetMuellesID = 'http://'+ip+':'+port+path+'muellesID';
+  private apiUrlPutEditProductM = 'http://'+ip+':'+port+path+'editProductMue';
+  private apiUrlDeleteProductM = 'http://'+ip+':'+port+path+'deleteProductMue';
 
   constructor(private http: HttpClient) { }
 
@@ -101,6 +113,39 @@ export class DataService {
 
   deleteProductBA(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlDeleteProductBA, datos);
+  }
+
+  postNewProductSL(datos: any): Observable<any> {
+    console.log(datos);
+    return this.http.post<any>(this.apiUrlpostNewProductSL, datos);
+  }
+
+  getServicioLigeroID(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetServicioLigeroID + '/' + id);
+  }
+
+  putEditProductSL(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutEditProductSL, datos);
+  }
+
+  deleteProductSL(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlDeleteProductSL, datos);
+  }
+
+  postNewProductMue(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductM, datos);
+  }
+
+  getMuellesID(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetMuellesID + '/' + id);
+  }
+
+  putEditProductMue(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutEditProductM, datos);
+  }
+
+  deleteProductMue(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlDeleteProductM, datos);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

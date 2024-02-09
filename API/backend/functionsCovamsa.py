@@ -634,3 +634,225 @@ def fnDeleteProductBA(GABRIEL):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetServicioLigeroID(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('getServicioLigeroID',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnAddProductSL(MarcaAuto,Submarca,Referencia,Modelo,AnoInicio,AnoFinal,Marca,Posicion,Tipo,LongExp,LongComp,Carrera,MontSup,MontInf,MONROE,GRC,KYB,BOGE,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			MarcaAuto,
+			Submarca,
+			Referencia,
+			Modelo,
+			AnoInicio,
+			AnoFinal,
+			Marca,
+			Posicion,
+			Tipo,
+			LongExp,
+			LongComp,
+			Carrera,
+			MontSup,
+			MontInf,
+			MONROE,
+			GRC,
+			KYB,
+			BOGE,
+			info
+		)
+		cursor.callproc('postAddProductSL',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnEditProductSL(MarcaAuto,Submarca,Referencia,Modelo,AnoInicio,AnoFinal,Marca,Posicion,Tipo,LongExp,LongComp,Carrera,
+                    MontSup,MontInf,MONROE,GRC,KYB,BOGE,info,ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			ID,
+			MarcaAuto,
+			Submarca,
+			Referencia,
+			Modelo,
+			AnoInicio,
+			AnoFinal,
+			Marca,
+			Posicion,
+			Tipo,
+			LongExp,
+			LongComp,
+			Carrera,
+			MontSup,
+			MontInf,
+			MONROE,
+			GRC,
+			KYB,
+			BOGE,
+			info
+		)
+		cursor.callproc('putEditProductSL',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnDeleteProductSL(MarcaAuto,Submarca,Modelo,Referencia):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (MarcaAuto,Submarca,Referencia,Modelo)
+		cursor.callproc('deleteProductSL',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha eliminado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetMuellesID(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('getMuellesID',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnAddProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			RASSINI,
+			MAF,
+			SANDOVAL,
+			ORIGINAL,
+			No,
+			Ancho,
+			Espesor,
+			Lfrontal,
+			Ltrasero,
+			Posicion,
+			info,
+			marca
+		)
+		cursor.callproc('postAddProductMue',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnEditProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			RASSINI,
+			MAF,
+			SANDOVAL,
+			ORIGINAL,
+			No,
+			Ancho,
+			Espesor,
+			Lfrontal,
+			Ltrasero,
+			Posicion,
+			info,
+			marca
+		)
+		cursor.callproc('putEditProductMue',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnDeleteProductMue(RASSINI):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (RASSINI,)
+		cursor.callproc('deleteProductMue',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha eliminado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

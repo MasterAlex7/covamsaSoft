@@ -13,6 +13,8 @@ import { LoginService } from '../../services/login.service';
 import { MarcaPipe } from '../../pipes/marca.pipe';
 import { ModeloPipe } from '../../pipes/modelo.pipe';
 import { SubmarcaPipe } from '../../pipes/submarca.pipe';
+import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 export interface DatosServicioLigero {
   ID: number, 
@@ -53,7 +55,8 @@ export interface DatosServicioLigero {
     MatTooltipModule,
     MarcaPipe,
     ModeloPipe,
-    SubmarcaPipe
+    SubmarcaPipe,
+    RouterModule
   ],
   templateUrl: './servicio-ligero.component.html',
   styleUrl: './servicio-ligero.component.css'
@@ -120,6 +123,30 @@ export class ServicioLigeroComponent implements OnInit{
       this.buscar(value);
     });
     
+    if(this.getUser() == 'master'){
+      this.displayedColumns=[
+        'MarcaAuto',
+        'Submarca',
+        'Referencia',
+        'Modelo',
+        'AnoInicio',
+        'AnoFinal',
+        'Marca',
+        'Posicion',
+        'Tipo',
+        'LongExp',
+        'LongComp',
+        'Carrera',
+        'MontSup',
+        'MontInf',
+        'MONROE',
+        'GRC',
+        'KYB',
+        'BOGE',
+        'info',
+        'actions'
+      ];
+    }
   }
 
   borrarFiltro(): void {
@@ -180,5 +207,34 @@ export class ServicioLigeroComponent implements OnInit{
 
   cerrarInput(element: any) {
     element.mostrarInput = false; // Oculta el input al perder el foco
+  }
+
+  getUser(): string | null {
+    return this.loginService.getAuthToken();
+  }
+
+  deleteProducto(MarcaAuto: string,Submarca: string,Referencia: string,Modelo: string){
+    const datos = {
+      "MarcaAuto": MarcaAuto,
+      "Submarca": Submarca,
+      "Referencia": Referencia,
+      "Modelo": Modelo
+    }
+    this.dataService.deleteProductSL(datos).subscribe((data) => {
+      if(data["intStatus"] == 200){
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Producto eliminado correctamente',
+        });
+        this.ngOnInit();
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data["strAnswer"],
+        });
+      }
+    });
   }
 }
