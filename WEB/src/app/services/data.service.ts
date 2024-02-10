@@ -42,6 +42,12 @@ export class DataService {
   private apiUrlDeleteProductM = 'http://'+ip+':'+port+path+'deleteProductMue';
 
   private apiUrlGetTiposRefa = 'http://'+ip+':'+port+path+'tiposRefa';
+  private apiUrlGetRefacciones = 'http://'+ip+':'+port+path+'refacciones';
+  private apiUrlPostRefacciones = 'http://'+ip+':'+port+path+'refaccionesInfo';
+  private apiUrlPostNewProductRefa = 'http://'+ip+':'+port+path+'addProductRefa';
+  private apiUrlGetRefaccionesID = 'http://'+ip+':'+port+path+'refaccionesID';
+  private apiUrlPutEditProductRefa = 'http://'+ip+':'+port+path+'editProductRefa';
+  private apiUrlDeleteProductRefa = 'http://'+ip+':'+port+path+'deleteProductRefa';
 
   constructor(private http: HttpClient) { }
 
@@ -152,6 +158,30 @@ export class DataService {
 
   getTiposRefa(): Observable<any> {
     return this.http.get<any>(this.apiUrlGetTiposRefa);
+  }
+
+  getRefacciones(tipo: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetRefacciones,tipo);
+  }
+
+  postRefacciones(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostRefacciones, datos);
+  }
+
+  postNewProductRefa(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductRefa, datos);
+  }
+
+  getRefaccionesID(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetRefaccionesID + '/' + id);
+  }
+
+  putEditProductRefa(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutEditProductRefa, datos);
+  }
+
+  deleteProductRefa(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlDeleteProductRefa, datos);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

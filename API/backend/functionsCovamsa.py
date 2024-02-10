@@ -875,3 +875,157 @@ def fnGetTiposRefa():
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetRefacciones(tipo):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+
+		if tipo == "all":
+			cursor.callproc('getRefaccionesAll')
+		else:
+			params = (
+				tipo,
+			)
+			cursor.callproc('getRefacciones',params)
+
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnPostRefacciones(ID,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			ID,
+			info
+		)
+		cursor.callproc('postRefaccionesInfo',params)
+		MysqlCnx.commit()
+
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetRefaccionesID(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('getRefaccionesID',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnAddProductRefa(idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			idModelo,
+			Descripcion,
+			Tipo,
+			Unidad,
+			Modelo,
+			Anio,
+			Posicion,
+			DiametroInt,
+			DiametroExt,
+			Largo,
+			LargoTot,
+			info
+		)
+		cursor.callproc('postAddProductRefa',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnEditProductRefa(ID,idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (
+			ID,
+			idModelo,
+			Descripcion,
+			Tipo,
+			Unidad,
+			Modelo,
+			Anio,
+			Posicion,
+			DiametroInt,
+			DiametroExt,
+			Largo,
+			LargoTot,
+			info
+		)
+		cursor.callproc('putEditProductRefa',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnDeleteProductRefa(ID):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+		params = (ID,)
+		cursor.callproc('deleteProductRefa',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': "Se ha eliminado la informacion correctamente."}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

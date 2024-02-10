@@ -1,0 +1,70 @@
+<mat-card class="cardLogin">
+    <mat-card-header>
+        <mat-card-title>
+            <h2>Agregar Nuevo Producto a Refacciones</h2>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field>
+        <mat-label>ID Modelo</mat-label>
+        <input matInput [(ngModel)]="idModelo">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Descripcion</mat-label>
+        <textarea matInput [(ngModel)]="Descripcion"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <input matInput [(ngModel)]="Tipo"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Unidad</mat-label>
+        <input matInput [(ngModel)]="Unidad"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Modelo</mat-label>
+        <input matInput [(ngModel)]="Modelo"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Año</mat-label>
+        <input matInput [(ngModel)]="Anio"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Posicion</mat-label>
+        <mat-select [formControl]="Posicion">
+        <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Diametro Interior</mat-label>
+        <input matInput [(ngModel)]="DiametroInt"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Diametro Exterior</mat-label>
+        <input matInput [(ngModel)]="DiametroExt"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Largo</mat-label>
+        <input matInput [(ngModel)]="Largo"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Largo Total</mat-label>
+        <input matInput [(ngModel)]="LargoTot"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>INFORMACION</mat-label>
+        <input matInput [(ngModel)]="info"/>
+    </mat-form-field>
+    <button mat-raised-button class="btnLogin" (click)="submit()">Agregar</button>
+</mat-card>

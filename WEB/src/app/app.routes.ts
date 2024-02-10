@@ -14,6 +14,7 @@ import { AddSlComponent } from './components/add-sl/add-sl.component';
 import { AddMueComponent } from './components/add-mue/add-mue.component';
 import { MenuRefaccionesComponent } from './components/menu-refacciones/menu-refacciones.component';
 import { RefaccionesComponent } from './components/refacciones/refacciones.component';
+import { AddRefaComponent } from './components/add-refa/add-refa.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -35,4 +36,6 @@ export const routes: Routes = [
     { path: 'addMue/:accion', component: AddMueComponent, canActivate: [AuthGuard] },
     { path: 'menuRefacciones', component: MenuRefaccionesComponent, canActivate: [AuthGuard]},
     { path: 'refacciones/:tipo', component: RefaccionesComponent, canActivate: [AuthGuard] },
+    { path: 'addRefa/:accion/:idItem', component: AddRefaComponent, canActivate: [AuthGuard] },
+    { path: 'addRefa/:accion', component: AddRefaComponent, canActivate: [AuthGuard] },
 ];

@@ -382,6 +382,83 @@ def getTiposRefa():
         return jsonify(objResult)
     except Exception as e:
         print("Error Get Tipos Refacciones: ",e)
+
+@app.route('/cvm/refacciones', methods=['POST'])
+def getRefacciones():
+    try:
+        tipo = request.json['tipo'] if ('tipo' in request.json) else None
+        objResult = callMethod.fnGetRefacciones(tipo)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Refacciones: ",e)
+
+@app.route('/cvm/refaccionesInfo', methods=['POST'])
+def postRefacciones():
+    try:
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnPostRefacciones(ID,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Post Refacciones: ",e)
+
+@app.route('/cvm/refaccionesID/<ID>', methods=['GET'])
+def getRefaccionesID(ID):
+    try:
+        objResult = callMethod.fnGetRefaccionesID(ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Refacciones ID: ",e)
+
+@app.route('/cvm/addProductRefa', methods=['POST'])
+def addProductRefa():
+    try:
+        idModelo = request.json['idModelo'] if ('idModelo' in request.json) else None
+        Descripcion = request.json['Descripcion'] if ('Descripcion' in request.json) else None
+        Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
+        Unidad = request.json['Unidad'] if ('Unidad' in request.json) else None
+        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
+        Anio = request.json['Anio'] if ('Anio' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        DiametroInt = request.json['DiametroInt'] if ('DiametroInt' in request.json) else None
+        DiametroExt = request.json['DiametroExt'] if ('DiametroExt' in request.json) else None
+        Largo = request.json['Largo'] if ('Largo' in request.json) else None
+        LargoTot = request.json['LargoTot'] if ('LargoTot' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnAddProductRefa(idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Add Product Refacciones: ",e)
+
+@app.route('/cvm/editProductRefa', methods=['PUT'])
+def editProductRefa():
+    try:
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        idModelo = request.json['idModelo'] if ('idModelo' in request.json) else None
+        Descripcion = request.json['Descripcion'] if ('Descripcion' in request.json) else None
+        Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
+        Unidad = request.json['Unidad'] if ('Unidad' in request.json) else None
+        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
+        Anio = request.json['Anio'] if ('Anio' in request.json) else None
+        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
+        DiametroInt = request.json['DiametroInt'] if ('DiametroInt' in request.json) else None
+        DiametroExt = request.json['DiametroExt'] if ('DiametroExt' in request.json) else None
+        Largo = request.json['Largo'] if ('Largo' in request.json) else None
+        LargoTot = request.json['LargoTot'] if ('LargoTot' in request.json) else None
+        info = request.json['info'] if ('info' in request.json) else None
+        objResult = callMethod.fnEditProductRefa(ID,idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Edit Product Refacciones: ",e)
+
+@app.route('/cvm/deleteProductRefa', methods=['POST'])
+def deleteProductRefa():
+    try:
+        ID = request.json['ID'] if ('ID' in request.json) else None
+        objResult = callMethod.fnDeleteProductRefa(ID)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Delete Product Refacciones: ",e)
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

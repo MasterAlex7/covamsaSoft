@@ -1,1 +1,129 @@
-<h1>Hola Mundo</h1>
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+    <mat-form-field class="mx-2">
+        <mat-label>Buscar</mat-label>
+        <input matInput [formControl]="Buscar">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="mx-2">
+        <mat-label>Posicion</mat-label>
+        <mat-select [formControl]="Posicion">
+          <mat-option *ngFor="let opcion of posiciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <button class="btn btnColor mx-2" (click)="borrarFiltro()">Limpiar Filtros</button>
+    </mat-drawer>
+    <mat-drawer-content>
+        <table mat-table [dataSource]="dataSource | positionFilter: (Posicion.value || '')
+        | diaInt: (DiametroInt.value || '')
+        | diaExt: (DiametroExt.value || '')
+        | largo: (Largo.value || '')
+        | largoTotal: (LargoTot.value || '')" class="mat-elevation-z8">
+        
+        <!-- <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{ element.ID }}</td>
+        </ng-container> -->
+        
+        <ng-container matColumnDef="idModelo">
+          <th mat-header-cell *matHeaderCellDef>ID Modelo</th>
+          <td mat-cell *matCellDef="let element">{{ element.idModelo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Descripcion">
+          <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+          <td mat-cell *matCellDef="let element">{{ element.Descripcion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Tipo">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let element">{{ element.SANDOVAL }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Unidad">
+          <th mat-header-cell *matHeaderCellDef>Unidad</th>
+          <td mat-cell *matCellDef="let element">{{ element.Unidad }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Modelo">
+          <th mat-header-cell *matHeaderCellDef>Modelo</th>
+          <td mat-cell *matCellDef="let element">{{ element.Modelo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Anio">
+            <th mat-header-cell *matHeaderCellDef>Año</th>
+            <td mat-cell *matCellDef="let element">{{ element.Anio }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Posicion">
+          <th mat-header-cell *matHeaderCellDef>Posicion</th>
+          <td mat-cell *matCellDef="let element">{{ element.Posicion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="DiametroInt">
+          <th mat-header-cell *matHeaderCellDef class="formAncho">Diametro Interior
+            <br>
+            <input matInput [formControl]="DiametroInt" class="formAncho">
+            </th>
+          <td mat-cell *matCellDef="let element">{{ element.DiametroInt }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="DiametroExt">
+          <th mat-header-cell *matHeaderCellDef class="formAncho">Diametro Exterior
+            <br>
+            <input matInput [formControl]="DiametroExt" class="formAncho">
+            </th>
+          <td mat-cell *matCellDef="let element">{{ element.DiametroExt }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Largo">
+          <th mat-header-cell *matHeaderCellDef class="formAncho">Largo
+            <br>
+            <input matInput [formControl]="Largo" class="formAncho">
+            </th>
+          <td mat-cell *matCellDef="let element">{{ element.Largo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="LargoTot">
+          <th mat-header-cell *matHeaderCellDef class="formAncho">Largo Total
+            <br>
+            <input matInput [formControl]="LargoTot" class="formAncho">
+            </th>
+          <td mat-cell *matCellDef="let element">{{ element.LargoTot }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="info">
+          <th mat-header-cell *matHeaderCellDef>Info</th>
+          <td mat-cell *matCellDef="let element">
+
+            <div matTooltip="{{element.info}}">
+                <mat-icon fontIcon="info" (click)="toggleInput(element)"></mat-icon>
+            </div>
+            
+            <mat-form-field class="inputInfo" *ngIf="element.mostrarInput">
+                <textarea matInput placeholder="Ingrese algo"
+                    [(ngModel)]="element.valorInput"
+                    (keydown.enter)="guardarYCerrar(element)"
+                    (blur)="cerrarInput(element)"
+                    autofocus></textarea>
+            </mat-form-field>
+
+        </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            
+              <mat-icon [routerLink]="['/addRefa', 'editar',element.ID]">edit</mat-icon>
+              <mat-icon (click)="deleteProducto(element.ID)">delete</mat-icon>
+            
+          </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </mat-drawer-content>
+</mat-drawer-container> 
