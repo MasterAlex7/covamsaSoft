@@ -14,26 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoginService } from '../../services/login.service';
 import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
-
-export interface DataExample {
-  ID: number;
-  GABRIEL: string;
-  MONROE: string;
-  GRC: string;
-  Armadora: string;
-  Posicion: string;
-  Tipo: string;
-  LongitudExp: string;
-  LongitudComp: string;
-  Carrera: string;
-  TipoMontajeSup: string;
-  DiametroSup: string;
-  LongitudSup: string;
-  TipoMontajeInf: string;
-  DiametroInf: string;
-  LongitudInf: string;
-  info: string;
-}
+import { ServicioPesado } from '../../interfaces/servicio-pesado';
 
 @Component({
   selector: 'app-servicio-pesado',
@@ -57,13 +38,13 @@ export interface DataExample {
   styleUrl: './servicio-pesado.component.css',
 })
 export class ServicioPesadoComponent implements OnInit {
-  dataSource: DataExample[] = [];
+  dataSource: ServicioPesado[] = [];
   armadoras: string[] = [];
   posiciones: string[] = [];
   Armadora = new FormControl('');
   Posicion = new FormControl('');
   Buscar = new FormControl('');
-  datosOriginales: DataExample[] = [];
+  datosOriginales: ServicioPesado[] = [];
 
   constructor(private dataService: DataService, private loginService: LoginService) {}
 

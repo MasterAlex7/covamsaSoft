@@ -17,22 +17,7 @@ import { DiaExtPipe } from '../../pipes/pipesRefacciones/dia-ext.pipe';
 import { DiaIntPipe } from '../../pipes/pipesRefacciones/dia-int.pipe';
 import { LargoPipe } from '../../pipes/pipesRefacciones/largo.pipe';
 import { LargoTotalPipe } from '../../pipes/pipesRefacciones/largo-total.pipe';
-
-export interface Refaccion {
-  ID: number,
-  idModelo: string,
-  Descripcion: string,
-  Tipo: string,
-  Unidad: string,
-  Modelo: string,
-  Anio: string,
-  Posicion: string,
-  DiametroInt: string,
-  DiametroExt: string,
-  Largo: string,
-  LargoTot: string,
-  info: string,
-}
+import { Refaccion } from '../../interfaces/refaccion';
 
 @Component({
   selector: 'app-refacciones',

@@ -1,0 +1,22 @@
+export interface DatosServicioLigero {
+    ID: number, 
+    MarcaAuto: string, 
+    Submarca: string, 
+    Referencia: string, 
+    Modelo: string, 
+    AnoInicio: string, 
+    AnoFinal: string, 
+    Marca: string, 
+    Posicion: string, 
+    Tipo: string, 
+    LongExp: string, 
+    LongComp: string, 
+    Carrera: string, 
+    MontSup: string, 
+    MontInf: string, 
+    MONROE: string, 
+    GRC: string, 
+    KYB: string, 
+    BOGE: string, 
+    info: string
+}

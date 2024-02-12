@@ -13,24 +13,7 @@ import { LoginService } from '../../services/login.service';
 import { AplicacionBAPipe } from '../../pipes/aplicacion-ba.pipe';
 import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
-
-export interface DataBolsasDeAire {
-  ID: number, 
-  GABRIEL: string, 
-  FIRESTONE: string, 
-  GOODYEAR: string, 
-  CONTITECH: string, 
-  Aplicacion1:string, 
-  Aplicacion2: string, 
-  Aplicacion3: string, 
-  OE1: string, 
-  OE2: string, 
-  OE3: string, 
-  Tapa: string, 
-  Membrana: string, 
-  Piston: string, 
-  info: string
-}
+import { DataBolsasDeAire } from '../../interfaces/data-bolsas-de-aire';
 
 @Component({
   selector: 'app-bolsas-de-aire',

@@ -15,29 +15,7 @@ import { ModeloPipe } from '../../pipes/modelo.pipe';
 import { SubmarcaPipe } from '../../pipes/submarca.pipe';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
-
-export interface DatosServicioLigero {
-  ID: number, 
-  MarcaAuto: string, 
-  Submarca: string, 
-  Referencia: string, 
-  Modelo: string, 
-  AnoInicio: string, 
-  AnoFinal: string, 
-  Marca: string, 
-  Posicion: string, 
-  Tipo: string, 
-  LongExp: string, 
-  LongComp: string, 
-  Carrera: string, 
-  MontSup: string, 
-  MontInf: string, 
-  MONROE: string, 
-  GRC: string, 
-  KYB: string, 
-  BOGE: string, 
-  info: string
-}
+import { DatosServicioLigero } from '../../interfaces/datos-servicio-ligero';
 
 @Component({
   selector: 'app-servicio-ligero',
