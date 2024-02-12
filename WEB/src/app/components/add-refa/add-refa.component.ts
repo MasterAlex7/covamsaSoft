@@ -32,9 +32,10 @@ import { Router } from '@angular/router';
 })
 export class AddRefaComponent {
   posiciones: string[] = ['DEL', 'TRAS']
+  tipos: string[] = ['Percha', 'Perno', 'Buje', 'Soporte', 'Granada']
   idModelo: string = ''
   Descripcion: string = ''
-  Tipo: string = ''
+  Tipo= new FormControl('')
   Unidad: string = ''
   Modelo: string = ''
   Anio: string = ''
@@ -57,7 +58,7 @@ export class AddRefaComponent {
         this.dataService.getRefaccionesID(params['idItem']).subscribe((response: any) => {
           this.idModelo = response['strAnswer'][0]['idModelo'],
           this.Descripcion = response['strAnswer'][0]['Descripcion'],
-          this.Tipo = response['strAnswer'][0]['Tipo'],
+          this.Tipo.setValue(response['strAnswer'][0]['Tipo']),
           this.Unidad = response['strAnswer'][0]['Unidad'],
           this.Modelo = response['strAnswer'][0]['Modelo'],
           this.Anio = response['strAnswer'][0]['Anio'],
@@ -79,7 +80,7 @@ export class AddRefaComponent {
         "ID": this.ID,
         "idModelo": this.idModelo,
         "Descripcion": this.Descripcion,
-        "Tipo": this.Tipo,
+        "Tipo": this.Tipo.value,
         "Unidad": this.Unidad,
         "Modelo": this.Modelo,
         "Anio": this.Anio,
@@ -108,7 +109,7 @@ export class AddRefaComponent {
         const params = {
           "idModelo": this.idModelo,
           "Descripcion": this.Descripcion,
-          "Tipo": this.Tipo,
+          "Tipo": this.Tipo.value,
           "Unidad": this.Unidad,
           "Modelo": this.Modelo,
           "Anio": this.Anio,
@@ -127,7 +128,7 @@ export class AddRefaComponent {
           })
           this.idModelo = ''
           this.Descripcion = ''
-          this.Tipo = ''
+          this.Tipo.setValue('')
           this.Unidad = ''
           this.Modelo = ''
           this.Anio = ''
