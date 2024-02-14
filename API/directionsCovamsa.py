@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 import os
 import sys
 import backend.functionsCovamsa as callMethod
+import openpyxl
 
 from flask import Flask, jsonify, request, url_for, Response
 
@@ -460,5 +461,45 @@ def deleteProductRefa():
     except Exception as e:
         print("Error Delete Product Refacciones: ",e)
         
+
+@app.route('/cvm/insertarArchivo', methods=['POST'])
+def insertarArchivo():
+    try:
+        try:
+            #print(request.files['file'])
+            file = request.files['file']
+            file.save(file.filename)
+        except Exception as e:
+            print("Error al guardar archivo: ",e)
+
+        archivo_excel = file.filename
+        
+        libro_trabajo = openpyxl.load_workbook(archivo_excel)
+        
+        nombre_hoja = "Hoja1"
+        hoja_trabajo = libro_trabajo[nombre_hoja]
+        
+        columnas_deseadas = ['A']
+        
+        fila_inicial = 1  
+        fila_final=1
+        
+        datos_excel = []
+        
+        for fila in hoja_trabajo.iter_rows(min_row=fila_inicial,max_row=fila_final, values_only=True):
+            datos_fila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnas_deseadas]
+            datos_excel.append(datos_fila)
+
+        # Mostrar los datos
+        for fila in datos_excel:
+            print(fila)
+
+        libro_trabajo.close()
+        os.remove(archivo_excel)
+
+        return jsonify({'status': 'ok'})
+    except Exception as e:
+        print("Error Insertar Archivo: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
