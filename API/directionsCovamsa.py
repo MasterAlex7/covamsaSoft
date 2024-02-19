@@ -460,7 +460,8 @@ def deleteProductRefa():
         return jsonify(objResult)
     except Exception as e:
         print("Error Delete Product Refacciones: ",e)
-        
+
+###################################################################
 
 @app.route('/cvm/insertarArchivo', methods=['POST'])
 def insertarArchivo():
@@ -500,6 +501,16 @@ def insertarArchivo():
         return jsonify({'status': 'ok'})
     except Exception as e:
         print("Error Insertar Archivo: ",e)
+
+###################################################################
+        
+@app.route('/cvm/getTornilleria/<idCovamsa>', methods=['GET'])
+def getTornilleria(idCovamsa):
+    try:
+        objResult = callMethod.fnGetTornilleria(idCovamsa)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Tornilleria: ",e)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

@@ -1,8 +1,37 @@
-<nav class="navbar navbar-expand-lg bgColorNav">
+<div *ngIf="getUser() === 'ventas'">
+  <nav class="navbar navbar-expand-lg bgColorNav">
     <div class="container-fluid">
       <a class="navbar-brand" href="/home"><img src="assets/logo_covamsa_clasico.png" alt="" height="100" width="170"></a>
-      <!-- <a class="navbar-brand" href="#"><img src="assets/usuario.png" alt="" height="50" width="50"></a> -->
       <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a>
     </div>
-</nav>
+  </nav>
+</div>
+
+<div *ngIf="getUser() === 'compras'">
+  <nav class="navbar navbar-expand-lg bgColorNav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home"><img src="assets/covamsa_logotipo.png" alt="" height="100" width="170"></a>
+      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
+    </div>
+  </nav>
+</div>
+
+<div *ngIf="getUser() === 'admin' || getUser() === 'master'">
+  <nav class="navbar navbar-expand-lg bgColorNav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home"><img src="assets/administracion.png" alt="" height="100" width="170"></a>
+      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
+    </div>
+  </nav>
+</div>
+
+<div>
+  <nav class="navbar navbar-expand-lg bgColorNav" *ngIf="!isLogged()">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home"><img src="assets/carro.png" alt="" height="100" width="170"></a>
+      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
+    </div>
+  </nav>
+</div>
+
 <router-outlet></router-outlet>

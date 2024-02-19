@@ -15,6 +15,7 @@ import { AddMueComponent } from './components/add-mue/add-mue.component';
 import { MenuRefaccionesComponent } from './components/menu-refacciones/menu-refacciones.component';
 import { RefaccionesComponent } from './components/refacciones/refacciones.component';
 import { AddRefaComponent } from './components/add-refa/add-refa.component';
+import { TornilleriaComponent } from './components/tornilleria/tornilleria.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -38,4 +39,5 @@ export const routes: Routes = [
     { path: 'refacciones/:tipo', component: RefaccionesComponent, canActivate: [AuthGuard] },
     { path: 'addRefa/:accion/:idItem', component: AddRefaComponent, canActivate: [AuthGuard] },
     { path: 'addRefa/:accion', component: AddRefaComponent, canActivate: [AuthGuard] },
+    { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] }
 ];

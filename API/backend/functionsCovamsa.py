@@ -1029,3 +1029,51 @@ def fnDeleteProductRefa(ID):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetTornilleria(idCovamsa):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+		cursor = MysqlCnx.cursor()
+
+		params = (
+			idCovamsa,
+		)
+		cursor.callproc('getTornilleria',params)
+		response = cursor.fetchall()
+
+		if response:
+			params = (
+				response[0]['Linea'],
+			)
+			cursor.callproc('getTabuladorPrecios',params)
+			response2 = cursor.fetchall()
+
+			costos=[float(resp['Costo']) for resp in response]
+			costoMaximo = max(costos)
+			costoMinimo = min(costos)
+			proveedor_maximo = next(dato["Proveedor"] for dato in response if float(dato["Costo"]) == costoMaximo)
+			proveedor_minimo = next(dato["Proveedor"] for dato in response if float(dato["Costo"]) == costoMinimo)
+			answer = {
+				"proveedores": response,
+				"proveedor_maximo": proveedor_maximo,
+				"costoMaximo": costoMaximo,
+				"proveedor_minimo": proveedor_minimo,
+				"costoMinimo": costoMinimo,
+				"Publico": response2[0]['Publico'],
+				"Mayoreo": response2[0]['Mayoreo'],
+				"Platino": response2[0]['Platino'],
+				"Comercio": response2[0]['Comercio'],
+			}
+			return {'intStatus':200, 'strAnswer': answer}	
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay proveedores.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
