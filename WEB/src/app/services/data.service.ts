@@ -49,6 +49,8 @@ export class DataService {
   private apiUrlPutEditProductRefa = 'http://'+ip+':'+port+path+'editProductRefa';
   private apiUrlDeleteProductRefa = 'http://'+ip+':'+port+path+'deleteProductRefa';
 
+  private apiUrlGetProveedores = 'http://'+ip+':'+port+path+'getProvedores';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -182,6 +184,10 @@ export class DataService {
 
   deleteProductRefa(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlDeleteProductRefa, datos);
+  }
+
+  getProveedores(tipoProv: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetProveedores+'/'+tipoProv);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

@@ -1,0 +1,10 @@
+<div class="row mx-5 py-5 d-flex justify-content-center">
+    <div class="col-sm-2 py-4" *ngFor="let prov of dataSource">
+        <div class="card">
+            <h2 class="card-header">{{ prov.NombreProv }}</h2>
+            <div class="card-body">
+                <a [routerLink]="['/cotizador', prov.TablaProv]" class="btn btn-primary" (click)="setMoneda(prov.TipoMoneda)">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+</div>

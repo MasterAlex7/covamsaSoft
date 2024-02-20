@@ -512,5 +512,13 @@ def getTornilleria(idCovamsa):
     except Exception as e:
         print("Error Get Tornilleria: ",e)
 
+@app.route('/cvm/getProvedores/<tipoProv>', methods=['GET'])
+def getProvedores(tipoProv):
+    try:
+        objResult = callMethod.fnGetProvedores(tipoProv)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Provedores Herramientas: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

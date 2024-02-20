@@ -16,6 +16,9 @@ import { MenuRefaccionesComponent } from './components/menu-refacciones/menu-ref
 import { RefaccionesComponent } from './components/refacciones/refacciones.component';
 import { AddRefaComponent } from './components/add-refa/add-refa.component';
 import { TornilleriaComponent } from './components/tornilleria/tornilleria.component';
+import { MenuCotizadoresComponent } from './components/menu-cotizadores/menu-cotizadores.component';
+import { CotizadorComponent } from './components/cotizador/cotizador.component';
+import { CotizadoresComponent } from './components/cotizadores/cotizadores.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -39,5 +42,8 @@ export const routes: Routes = [
     { path: 'refacciones/:tipo', component: RefaccionesComponent, canActivate: [AuthGuard] },
     { path: 'addRefa/:accion/:idItem', component: AddRefaComponent, canActivate: [AuthGuard] },
     { path: 'addRefa/:accion', component: AddRefaComponent, canActivate: [AuthGuard] },
-    { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] }
+    { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] },
+    { path: 'menuCotizadores', component: MenuCotizadoresComponent, canActivate: [AuthGuard] },
+    { path: 'cotizador/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
+    { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] }
 ];
