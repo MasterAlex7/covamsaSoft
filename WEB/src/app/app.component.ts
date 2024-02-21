@@ -13,10 +13,10 @@ export class AppComponent {
   title = 'WEB';
 
   getUser(){
-    return localStorage.getItem('user');
+    return sessionStorage.getItem('user');
   }
 
   isLogged(){
-    return localStorage.getItem('user') != null;
+    return sessionStorage.getItem('user') != null;
   }
 }

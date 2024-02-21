@@ -50,6 +50,7 @@ export class DataService {
   private apiUrlDeleteProductRefa = 'http://'+ip+':'+port+path+'deleteProductRefa';
 
   private apiUrlGetProveedores = 'http://'+ip+':'+port+path+'getProvedores';
+  private apiUrlGetProductoProv = 'http://'+ip+':'+port+path+'getProductoProv';
 
   constructor(private http: HttpClient) { }
 
@@ -188,6 +189,10 @@ export class DataService {
 
   getProveedores(tipoProv: string): Observable<any> {
     return this.http.get<any>(this.apiUrlGetProveedores+'/'+tipoProv);
+  }
+
+  getProductoProv(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetProductoProv, datos);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

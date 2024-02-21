@@ -20,15 +20,15 @@ export class LoginService {
   }
 
   setAuthToken(token: string): void {
-    localStorage.setItem(this.USER, token);
+    sessionStorage.setItem(this.USER, token);
   }
 
   getAuthToken(): string | null {
-    return localStorage.getItem(this.USER);
+    return sessionStorage.getItem(this.USER);
   }
 
   removeAuthToken(): void {
-    localStorage.removeItem(this.USER);
+    sessionStorage.removeItem(this.USER);
   }
 
   isAuthenticated(): boolean {

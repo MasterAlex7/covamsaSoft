@@ -520,5 +520,15 @@ def getProvedores(tipoProv):
     except Exception as e:
         print("Error Get Provedores Herramientas: ",e)
 
+@app.route('/cvm/getProductoProv', methods=['POST'])
+def getProductoProv():
+    try:
+        tabla = request.json['tabla'] if ('tabla' in request.json) else None
+        clave = request.json['clave'] if ('clave' in request.json) else None
+        objResult = callMethod.fnGetProductoProv(tabla,clave)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Producto Provedor: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

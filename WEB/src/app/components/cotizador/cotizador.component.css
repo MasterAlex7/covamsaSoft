@@ -29,3 +29,13 @@
     margin-top: 2%;
     white-space: nowrap;
 }
+
+.table-container {
+    max-height: 65%;
+    overflow-y: auto;
+}
+
+.btn-finish{
+    margin-top: 1%;
+    margin-left: 1%;
+}
