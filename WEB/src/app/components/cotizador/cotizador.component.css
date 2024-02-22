@@ -39,3 +39,13 @@
     margin-top: 1%;
     margin-left: 1%;
 }
+
+.nameContainer{
+    flex: 0;
+    margin-left: 1%;
+    margin-top: 2%;
+    white-space: nowrap;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}

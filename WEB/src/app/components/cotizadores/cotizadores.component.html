@@ -3,7 +3,7 @@
         <div class="card">
             <h2 class="card-header">{{ prov.NombreProv }}</h2>
             <div class="card-body">
-                <a [routerLink]="['/cotizador', prov.TablaProv]" class="btn btn-primary" (click)="setMoneda(prov.TipoMoneda)">Ver Mas</a>
+                <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" class="btn btn-primary" (click)="setMoneda(prov.TipoMoneda)">Ver Mas</a>
             </div>
         </div>
     </div>

@@ -44,6 +44,6 @@ export const routes: Routes = [
     { path: 'addRefa/:accion', component: AddRefaComponent, canActivate: [AuthGuard] },
     { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] },
     { path: 'menuCotizadores', component: MenuCotizadoresComponent, canActivate: [AuthGuard] },
-    { path: 'cotizador/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
+    { path: 'cotizador/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
     { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] }
 ];

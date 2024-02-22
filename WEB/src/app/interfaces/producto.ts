@@ -2,9 +2,9 @@ export interface Producto {
     Cantidad: number,
     Codigo: string,
     Descripcion: string,
-    Empaque: string,
+    Empaque: number,
     PLista: number,
-    Descuento: string,
+    Descuento: Number,
     Costo: number,
     Importe: number,
 }

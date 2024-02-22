@@ -10,6 +10,7 @@ import { Producto } from '../../interfaces/producto';
 import { ViewChild, ElementRef } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import Swal from 'sweetalert2';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-cotizador',
@@ -28,19 +29,21 @@ import Swal from 'sweetalert2';
 export class CotizadorComponent {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
   @ViewChild('IDinput') IDInput: ElementRef | undefined;
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private excel: ExcelService) { }
 
   ID = new FormControl('');
   Cantidad = new FormControl('');
   Moneda = new FormControl('');
   tabla='';
+  nombreProveedor = '';
   dataSource: Producto[] = [];
   total = 0;
   totalDolares = 0;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.tabla = params['id']
+      this.tabla = params['id'],
+      this.nombreProveedor = params['nombre']
     });
   }
 
@@ -79,10 +82,10 @@ export class CotizadorComponent {
                 "Cantidad": Number(this.Cantidad.value) || 0,
                 "Codigo": data['strAnswer'][0]['CLAVE'],
                 "Descripcion": data['strAnswer'][0]['Descripcion'],
-                "Empaque": data['strAnswer'][0]['PzaCaja'],
-                "PLista": data['strAnswer'][0]['PrecioLista'],
-                "Descuento": (data['strAnswer'][0]['Descuento'] * 100).toString(),
-                "Costo": data['strAnswer'][0]['Costo'],
+                "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
+                "PLista": Number(data['strAnswer'][0]['PrecioLista']),
+                "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
+                "Costo": Number(data['strAnswer'][0]['Costo']),
                 "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
               };
               this.dataSource.push(auxProducto);
@@ -122,30 +125,42 @@ export class CotizadorComponent {
       if (this.ID.value != '' && this.Cantidad.value != '' && this.Moneda.value != ''){
         this.dataService.getProductoProv(params).subscribe((data: any) => {
           if (data['intStatus'] == 200) {
-            const auxProducto: Producto = {
-              "Cantidad": Number(this.Cantidad.value) || 0,
-              "Codigo": data['strAnswer'][0]['CLAVE'],
-              "Descripcion": data['strAnswer'][0]['Descripcion'],
-              "Empaque": data['strAnswer'][0]['PzaCaja'],
-              "PLista": data['strAnswer'][0]['PrecioLista'],
-              "Descuento": (data['strAnswer'][0]['Descuento'] * 100).toString(),
-              "Costo": data['strAnswer'][0]['Costo'],
-              "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
-            };
-            this.dataSource.push(auxProducto);
-            console.log(this.dataSource);
-            if (this.table) {
-              this.table.renderRows();
+            if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
+              Swal.fire({
+                title: 'Error en empaque',
+                text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+              this.ID.setValue('');
+              this.Cantidad.setValue('');
+              return;
+            }else{
+              const auxProducto: Producto = {
+                "Cantidad": Number(this.Cantidad.value) || 0,
+                "Codigo": data['strAnswer'][0]['CLAVE'],
+                "Descripcion": data['strAnswer'][0]['Descripcion'],
+                "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
+                "PLista": Number(data['strAnswer'][0]['PrecioLista']),
+                "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
+                "Costo": Number(data['strAnswer'][0]['Costo']),
+                "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
+              };
+              this.dataSource.push(auxProducto);
+              console.log(this.dataSource);
+              if (this.table) {
+                this.table.renderRows();
+              }
+              this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
+              this.total = Number(this.total.toFixed(2));
+              
+              this.totalDolares = this.total * Number(this.Moneda.value);
+              this.totalDolares = Number(this.totalDolares.toFixed(2));
+              
+              this.Cantidad.setValue('');
+              this.ID.setValue('');
+              this.IDInput?.nativeElement.focus();
             }
-            this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
-            this.total = Number(this.total.toFixed(2));
-
-            this.totalDolares = this.total * Number(this.Moneda.value);
-            this.totalDolares = Number(this.totalDolares.toFixed(2));
-
-            this.Cantidad.setValue('');
-            this.ID.setValue('');
-            this.IDInput?.nativeElement.focus();
           }else{
             Swal.fire({
               title: 'Error!',
@@ -172,5 +187,38 @@ export class CotizadorComponent {
 
   getMoneda(){
     return localStorage.getItem('moneda');
+  }
+
+  crearExcel(){
+    if(this.dataSource.length > 0){
+      const filename = 'Cotizacion_' + this.tabla;
+      if(this.getMoneda() != "Dolar"){
+        this.excel.crearExcel(this.dataSource, filename, this.total);
+        this.total = 0;
+        this.dataSource = [];
+        this.table?.renderRows();
+        this.IDInput?.nativeElement.focus();
+        this.Cantidad.setValue('');
+        this.ID.setValue('');
+      }else{
+        const tipoCambio = Number(this.Moneda.value)
+        this.excel.crearExcelDolar(this.dataSource, filename, this.total, this.totalDolares,tipoCambio);
+        this.total = 0;
+        this.totalDolares = 0;
+        this.dataSource = [];
+        this.table?.renderRows();
+        this.IDInput?.nativeElement.focus();
+        this.Cantidad.setValue('');
+        this.ID.setValue('');
+        this.Moneda.setValue('');
+      }
+    }else{
+      Swal.fire({
+        title: 'Error al crear cotizacion',
+        text: 'No hay productos en la lista',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
   }
 }

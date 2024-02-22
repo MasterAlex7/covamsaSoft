@@ -1,4 +1,8 @@
 <div class="containerTop">
+    <div class="nameContainer">
+        <p class="fs-2">{{this.nombreProveedor}}</p>
+    </div>
+
     <div class="formContainer">
         <mat-form-field class="inputID">
             <mat-label>ID</mat-label>
@@ -73,5 +77,5 @@
 </div>
 
 <div class="btn-finish">
-    <button mat-raised-button color="primary" class="btnID" (click)="addProduct()">Añadir</button>
+    <button mat-raised-button color="warn" class="btnID" (click)="crearExcel()">Crear Cotizacion</button>
 </div>
