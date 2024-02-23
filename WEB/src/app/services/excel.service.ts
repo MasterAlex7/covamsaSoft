@@ -47,7 +47,7 @@ export class ExcelService {
     });
   }
 
-  crearExcelDolar(data: any[] | undefined, filename: string, total: number, totalDolares: number, tipoCambio: number){
+  crearExcelDolar(data: any[] | undefined, filename: string, total: number, totalDolares: number, tipoCambio: number, totalImportacion: number){
     console.log(data, filename, total, totalDolares)
     const fecha = new Date();
     const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
@@ -76,8 +76,7 @@ export class ExcelService {
     tipoCambioRow.font = {bold: true};
 
     if(filename == 'Cotizacion_championprov' || filename == 'Cotizacion_mercerprov'){
-      const costoImportacion = totalDolares + (totalDolares * 0.15);
-      const totalImportacionRow = worksheet.addRow(['','','','','','','Total MXN con costo Importacion',costoImportacion]);
+      const totalImportacionRow = worksheet.addRow(['','','','','','','Total MXN con costo Importacion',totalImportacion]);
       totalImportacionRow.font = {bold: true};
     }
 

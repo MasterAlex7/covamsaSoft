@@ -32,7 +32,7 @@ import { finalize, takeUntil, Subject } from 'rxjs';
 })
 export class CotizadorComponent {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
-  @ViewChild('IDinput') IDInput: ElementRef | undefined;
+  @ViewChild('cantidadInput') cantidadInput: ElementRef | undefined;
   private destroy$ = new Subject<void>();
   mostrarSpinner: boolean | undefined;
   constructor(private dataService: DataService, private route: ActivatedRoute, private excel: ExcelService, private loginService: LoginService) { }
@@ -40,11 +40,13 @@ export class CotizadorComponent {
   ID = new FormControl('');
   Cantidad = new FormControl('');
   Moneda = new FormControl('');
+  Importacion = new FormControl('');
   tabla='';
   nombreProveedor = '';
   dataSource: Producto[] = [];
   total = 0;
   totalDolares = 0;
+  totalWImport = 0;
   archivoSeleccionado: File | null = null;
 
   ngOnInit() {
@@ -110,7 +112,7 @@ export class CotizadorComponent {
     
               this.Cantidad.setValue('');
               this.ID.setValue('');
-              this.IDInput?.nativeElement.focus();
+              this.cantidadInput?.nativeElement.focus();
             }
           }else{
             Swal.fire({
@@ -134,7 +136,7 @@ export class CotizadorComponent {
         this.Cantidad.setValue('');
       }
     }else{
-      if (this.ID.value != '' && this.Cantidad.value != '' && this.Moneda.value != ''){
+      if (this.ID.value != '' && this.Cantidad.value != ''){
         this.dataService.getProductoProv(params).subscribe((data: any) => {
           if (data['intStatus'] == 200) {
             if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
@@ -166,12 +168,9 @@ export class CotizadorComponent {
               this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
               this.total = Number(this.total.toFixed(2));
               
-              this.totalDolares = this.total * Number(this.Moneda.value);
-              this.totalDolares = Number(this.totalDolares.toFixed(2));
-              
               this.Cantidad.setValue('');
               this.ID.setValue('');
-              this.IDInput?.nativeElement.focus();
+              this.cantidadInput?.nativeElement.focus();
             }
           }else{
             Swal.fire({
@@ -209,20 +208,22 @@ export class CotizadorComponent {
         this.total = 0;
         this.dataSource = [];
         this.table?.renderRows();
-        this.IDInput?.nativeElement.focus();
+        this.cantidadInput?.nativeElement.focus();
         this.Cantidad.setValue('');
         this.ID.setValue('');
       }else{
         const tipoCambio = Number(this.Moneda.value)
-        this.excel.crearExcelDolar(this.dataSource, filename, this.total, this.totalDolares,tipoCambio);
+        this.excel.crearExcelDolar(this.dataSource, filename, this.total, this.totalDolares,tipoCambio, this.totalWImport);
         this.total = 0;
         this.totalDolares = 0;
         this.dataSource = [];
         this.table?.renderRows();
-        this.IDInput?.nativeElement.focus();
+        this.cantidadInput?.nativeElement.focus();
         this.Cantidad.setValue('');
         this.ID.setValue('');
         this.Moneda.setValue('');
+        this.Importacion.setValue('');
+        this.totalWImport = 0;
       }
     }else{
       Swal.fire({
@@ -275,6 +276,32 @@ export class CotizadorComponent {
 
   seleccionarArchivo(event: any): void {
     this.archivoSeleccionado = event.target.files[0];
+  }
+
+  applyChange(){
+    if(this.Moneda.value != ''){
+      this.totalDolares = this.total * Number(this.Moneda.value);
+      this.totalDolares = Number(this.totalDolares.toFixed(2));
+    }else{
+      this.totalDolares = 0;
+    }
+  }
+
+  isImport(){
+    if(this.tabla == "championprov" || this.tabla == "mercerprov"){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  applyImport(){
+    if(this.Importacion.value != '' && this.totalDolares != 0){
+      this.totalWImport = this.totalDolares+(this.totalDolares * (Number(this.Importacion.value)/100));
+      this.totalWImport = Number(this.totalWImport.toFixed(2));
+    }else{
+      this.totalWImport = 0;
+    }
   }
 
   isMaster(): boolean {

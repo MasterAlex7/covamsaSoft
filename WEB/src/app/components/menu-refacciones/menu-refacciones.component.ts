@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-menu-refacciones',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatButtonModule
   ],
   templateUrl: './menu-refacciones.component.html',
   styleUrl: './menu-refacciones.component.css'

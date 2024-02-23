@@ -5,26 +5,33 @@
 
     <div class="formContainer">
         <mat-form-field class="inputID">
-            <mat-label>ID</mat-label>
-            <input matInput #IDinput [formControl]="ID"> 
-        </mat-form-field>
-    
-        <mat-form-field class="inputID">
             <mat-label>Cantidad</mat-label>
-            <input matInput [formControl]="Cantidad" (keydown.enter)="addProduct()"> 
+            <input matInput #cantidadInput [formControl]="Cantidad"> 
         </mat-form-field>
-    
+
+        <mat-form-field class="inputID">
+            <mat-label>ID</mat-label>
+            <input matInput [formControl]="ID" (keydown.enter)="addProduct()"> 
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="btnID" (click)="addProduct()">Añadir</button>
+
         <mat-form-field class="inputID" *ngIf="getMoneda() === 'Dolar'">
             <mat-label>Tipo Cambio</mat-label>
-            <input matInput [formControl]="Moneda" (keydown.enter)="addProduct()"> 
+            <input matInput [formControl]="Moneda"> 
         </mat-form-field>
-    
-        <button mat-raised-button color="primary" class="btnID" (click)="addProduct()">Añadir</button>
+        <button mat-raised-button color="primary" class="btnID" *ngIf="getMoneda() === 'Dolar'" (click)="applyChange()">Aplicar</button>
+
+        <mat-form-field class="inputID" *ngIf="isImport()">
+            <mat-label>%Importacion</mat-label>
+            <input matInput [formControl]="Importacion"> 
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="btnID" *ngIf="isImport()" (click)="applyImport()">Aplicar</button>
     </div>
 
     <div class="totalContainer">
         <p class="fs-2">Total: {{this.total}}</p>
         <p class="fs-2" *ngIf="getMoneda() === 'Dolar'">Total MX: {{this.totalDolares}}</p>
+        <p class="fs-2" *ngIf="isImport()">Total con Importacion: {{this.totalWImport}}</p>
     </div>
 </div>
 

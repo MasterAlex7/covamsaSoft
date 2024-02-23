@@ -4,7 +4,7 @@
             <img src="assets/semi.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
               <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Pesado</h3>
-              <a href="/servicioPesado" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+              <a href="/servicioPesado" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
             </div>
           </div>
     </div>
@@ -14,7 +14,7 @@
           <img src="assets/bolsaaire.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Bolsas de Aire</h3>
-            <a href="/bolsasdeaire" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/bolsasdeaire" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
           <img src="assets/carro.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Ligero</h3>
-            <a href="/servicioLigero" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/servicioLigero" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
     </div>
@@ -34,27 +34,27 @@
           <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles</h3>
-            <a href="/menuMuelles" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/menuMuelles" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
       <div class="card mb-3">
-          <img src="assets/refaccion.png" class="card-img-top py-2" alt="...">
+          <img src="assets/perno.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Refacciones</h3>
-            <a href="/menuRefacciones" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/menuRefacciones" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
     </div>
 
     <div class="col-sm-2 py-4" *ngIf="isMaster()">
       <div class="card mb-3">
-          <img src="assets/administracion.png" class="card-img-top py-2" alt="...">
+          <img src="assets/ajuste.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Administrador</h3>
-            <a href="/adminMenu" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/adminMenu" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
           <img src="assets/tornillo.png" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria y Soporteria</h3>
-            <a href="/tornilleria" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+            <a href="/tornilleria" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
           </div>
         </div>
   </div>
@@ -76,7 +76,7 @@
         <img src="assets/cotizador.png" class="card-img-top py-2" alt="...">
         <div class="card-body">
           <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
-          <a href="/menuCotizadores" class="btn btn-primary d-flex justify-content-center">Ver Mas</a>
+          <a href="/menuCotizadores" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
         </div>
       </div>
   </div>
@@ -84,6 +84,6 @@
 
 <div class="d-flex justify-content-center">
   <footer>
-    <a class="btn btn-primary" (click)="logout()">Cerrar Sesion</a>
+    <a mat-raised-button color="primary" class="d-flex justify-content-center" (click)="logout()">Cerrar Sesion</a>
   </footer>
 </div>

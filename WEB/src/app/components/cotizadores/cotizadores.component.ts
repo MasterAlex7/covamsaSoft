@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Proveedores } from '../../interfaces/proveedores';
 import { ActivatedRoute } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-cotizadores',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatButtonModule
   ],
   templateUrl: './cotizadores.component.html',
   styleUrl: './cotizadores.component.css'

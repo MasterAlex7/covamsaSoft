@@ -3,7 +3,9 @@
         <div class="card">
             <h2 class="card-header">{{ prov.NombreProv }}</h2>
             <div class="card-body">
-                <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" class="btn btn-primary" (click)="setMoneda(prov.TipoMoneda)">Ver Mas</a>
+                <div class="card-text">Fecha de Modificacion: </div>
+                <div class="card-text">{{prov.fechaModificacion}}</div>
+                <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setMoneda(prov.TipoMoneda)">Cotizar</a>
             </div>
         </div>
     </div>

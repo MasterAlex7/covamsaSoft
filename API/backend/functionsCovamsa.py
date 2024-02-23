@@ -1154,6 +1154,7 @@ def fnGetProductoProv(tabla,clave):
 		)
 		cursor.callproc('getProductoProv',params)
 		response = cursor.fetchall()
+		print(response)
 
 		if response:
 			return {'intStatus':200, 'strAnswer': response}
@@ -1190,6 +1191,8 @@ def fnPostNuevoCatalogo(filename,table):
 			datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
 			datosExcel.append(datosfila)
 
+		fecha = datetime.datetime.now().strftime("%d-%m-%y")
+		
 		for fila in datosExcel:
 			params = (
 				table,
@@ -1199,6 +1202,7 @@ def fnPostNuevoCatalogo(filename,table):
 				fila[3],
 				fila[4],
 				fila[5],
+				str(fecha)
 			)
 			cursor.callproc('postNuevoCatalogoPrecios',params)
 
