@@ -13,6 +13,7 @@ import copy
 
 import time
 import datetime
+import openpyxl
 
 strMysqluUser = "root"
 strMysqlHost="localhost"
@@ -145,7 +146,7 @@ def fnPostLogin(usuario,password):
 		)
 		cursor.callproc('getLogin',params)
 		response = cursor.fetchall()
-		print(response)
+		#print(response)
 		if response:
 			#print(result)
 			return {'intStatus':200, 'strAnswer': usuario}
@@ -1129,3 +1130,51 @@ def fnGetProductoProv(tabla,clave):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnPostNuevoCatalogo(filename,table):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+
+		params=(table,)
+		cursor.callproc('deleteCatalogoPrecios',params)
+
+		datosExcel = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Hoja1'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A','B','C','D','E','F']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+			datosExcel.append(datosfila)
+
+		for fila in datosExcel:
+			params = (
+				table,
+				fila[0],
+				fila[1],
+				fila[2],
+				fila[3],
+				fila[4],
+				fila[5],
+			)
+			cursor.callproc('postNuevoCatalogoPrecios',params)
+
+		MysqlCnx.commit()
+		archivo_excel.close()
+		os.remove(filename)
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+

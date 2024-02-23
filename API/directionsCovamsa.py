@@ -463,42 +463,14 @@ def deleteProductRefa():
 
 ###################################################################
 
-@app.route('/cvm/insertarArchivo', methods=['POST'])
-def insertarArchivo():
+@app.route('/cvm/nuevoCatalogoPrecios/<table>', methods=['POST'])
+def nuevoCatalogo(table):
     try:
-        try:
-            #print(request.files['file'])
-            file = request.files['file']
-            file.save(file.filename)
-        except Exception as e:
-            print("Error al guardar archivo: ",e)
-
-        archivo_excel = file.filename
-        
-        libro_trabajo = openpyxl.load_workbook(archivo_excel)
-        
-        nombre_hoja = "Hoja1"
-        hoja_trabajo = libro_trabajo[nombre_hoja]
-        
-        columnas_deseadas = ['A']
-        
-        fila_inicial = 1  
-        fila_final=1
-        
-        datos_excel = []
-        
-        for fila in hoja_trabajo.iter_rows(min_row=fila_inicial,max_row=fila_final, values_only=True):
-            datos_fila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnas_deseadas]
-            datos_excel.append(datos_fila)
-
-        # Mostrar los datos
-        for fila in datos_excel:
-            print(fila)
-
-        libro_trabajo.close()
-        os.remove(archivo_excel)
-
-        return jsonify({'status': 'ok'})
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnPostNuevoCatalogo(filename,table)
+        return jsonify(objResult)
     except Exception as e:
         print("Error Insertar Archivo: ",e)
 

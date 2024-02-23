@@ -52,6 +52,8 @@ export class DataService {
   private apiUrlGetProveedores = 'http://'+ip+':'+port+path+'getProvedores';
   private apiUrlGetProductoProv = 'http://'+ip+':'+port+path+'getProductoProv';
 
+  private apiUrlPostNuevoCatalogo = 'http://'+ip+':'+port+path+'nuevoCatalogoPrecios';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -193,6 +195,10 @@ export class DataService {
 
   getProductoProv(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetProductoProv, datos);
+  }
+
+  postNuevoCatalogo(formData: any,tabla: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNuevoCatalogo+'/'+tabla, formData);
   }
 
   private modelosSubject = new BehaviorSubject<string[]>([]);

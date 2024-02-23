@@ -11,6 +11,9 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { ExcelService } from '../../services/excel.service';
+import { LoginService } from '../../services/login.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { finalize, takeUntil, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-cotizador',
@@ -21,7 +24,8 @@ import { ExcelService } from '../../services/excel.service';
     CommonModule,
     MatTableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './cotizador.component.html',
   styleUrl: './cotizador.component.css'
@@ -29,7 +33,9 @@ import { ExcelService } from '../../services/excel.service';
 export class CotizadorComponent {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
   @ViewChild('IDinput') IDInput: ElementRef | undefined;
-  constructor(private dataService: DataService, private route: ActivatedRoute, private excel: ExcelService) { }
+  private destroy$ = new Subject<void>();
+  mostrarSpinner: boolean | undefined;
+  constructor(private dataService: DataService, private route: ActivatedRoute, private excel: ExcelService, private loginService: LoginService) { }
 
   ID = new FormControl('');
   Cantidad = new FormControl('');
@@ -39,12 +45,18 @@ export class CotizadorComponent {
   dataSource: Producto[] = [];
   total = 0;
   totalDolares = 0;
+  archivoSeleccionado: File | null = null;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.tabla = params['id'],
       this.nombreProveedor = params['nombre']
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   displayedColumns: string[] = [
@@ -220,5 +232,53 @@ export class CotizadorComponent {
         confirmButtonText: 'Aceptar'
       });
     }
+  }
+
+  subirArchivo(event: any): void {
+    event.preventDefault();
+
+    if (!this.archivoSeleccionado) {
+      console.error('No se ha seleccionado ningún archivo.');
+      return;
+    }
+    
+    this.mostrarSpinner = true;
+
+    const formData = new FormData();
+    formData.append('file', this.archivoSeleccionado);
+
+    console.log(formData);
+    this.dataService.postNuevoCatalogo(formData,this.tabla)
+    .pipe(
+      takeUntil(this.destroy$),
+      finalize(() => {
+      this.mostrarSpinner = false,
+      this.archivoSeleccionado = null
+      }))
+    .subscribe((data: any) => {
+      if (data['intStatus'] == 200) {
+        Swal.fire({
+          title: 'Exito!',
+          text: data['strAnswer'],
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data['strAnswer'],
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
+
+  seleccionarArchivo(event: any): void {
+    this.archivoSeleccionado = event.target.files[0];
+  }
+
+  isMaster(): boolean {
+    return this.loginService.getAuthToken() == "master";
   }
 }
