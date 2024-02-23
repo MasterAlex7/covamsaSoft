@@ -775,7 +775,7 @@ def fnGetMuellesID(ID):
 	finally:
 		MysqlCnx.close()
 
-def fnAddProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca):
+def fnAddProductMue(filename):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
 						port=strMysqlPort,
@@ -785,22 +785,38 @@ def fnAddProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltra
 						charset='utf8mb4',
 						cursorclass=pymysql.cursors.DictCursor)
 		cursor = MysqlCnx.cursor()
-		params = (
-			RASSINI,
-			MAF,
-			SANDOVAL,
-			ORIGINAL,
-			No,
-			Ancho,
-			Espesor,
-			Lfrontal,
-			Ltrasero,
-			Posicion,
-			info,
-			marca
-		)
-		cursor.callproc('postAddProductMue',params)
+		
+		datosExcel = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Hoja1'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+			datosExcel.append(datosfila)
+		
+		for row in datosExcel:
+			params = (
+				row[0], #RASSINI
+				row[1], #MAF
+				row[2], #SANDOVAL
+				row[3], #ORIGINAL
+				row[4], #No
+				row[5], #Ancho
+				row[6], #Espesor
+				row[7], #Lfrontal
+				row[8], #Ltrasero
+				row[9], #Posicion
+				row[10], #info
+				row[11] #marca
+			)
+			cursor.callproc('postAddProductMue',params)
+
 		MysqlCnx.commit()
+		archivo_excel.close()
+		os.remove(filename)
 		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
 	except Exception as e:
 		return {'intStatus':500, 'strAnswer': str(e)}
@@ -947,7 +963,7 @@ def fnGetRefaccionesID(ID):
 	finally:
 		MysqlCnx.close()
 
-def fnAddProductRefa(idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info):
+def fnAddProductRefa(filename):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
 						port=strMysqlPort,
@@ -957,22 +973,39 @@ def fnAddProductRefa(idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,Diame
 						charset='utf8mb4',
 						cursorclass=pymysql.cursors.DictCursor)
 		cursor = MysqlCnx.cursor()
-		params = (
-			idModelo,
-			Descripcion,
-			Tipo,
-			Unidad,
-			Modelo,
-			Anio,
-			Posicion,
-			DiametroInt,
-			DiametroExt,
-			Largo,
-			LargoTot,
-			info
-		)
-		cursor.callproc('postAddProductRefa',params)
+		
+		datosExcel = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Hoja1'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+			datosExcel.append(datosfila)
+
+		for datos in datosExcel:
+			params = (
+				datos[0], #idModelo
+				datos[1], #Descripcion
+				datos[2], #Tipo
+				datos[3], #Unidad
+				datos[4], #Modelo
+				datos[5], #Anio
+				datos[6], #Posicion
+				datos[7], #DiametroInt
+				datos[8], #DiametroExt
+				datos[9], #Largo
+				datos[10], #LargoTot
+				datos[11] #info
+			)
+			print(params)
+			cursor.callproc('postAddProductRefa',params)
+
 		MysqlCnx.commit()
+		archivo_excel.close()
+		os.remove(filename)
 		return {'intStatus':200, 'strAnswer': "Se ha guardado la informacion correctamente."}
 	except Exception as e:
 		return {'intStatus':500, 'strAnswer': str(e)}

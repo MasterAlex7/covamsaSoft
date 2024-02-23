@@ -12,6 +12,8 @@ import { DataService } from '../../services/data.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subject, finalize, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-refa',
@@ -26,11 +28,13 @@ import { Router } from '@angular/router';
     CommonModule,
     MatSelectModule,
     FormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './add-refa.component.html',
   styleUrl: './add-refa.component.css'
 })
 export class AddRefaComponent {
+  private destroy$ = new Subject<void>();
   posiciones: string[] = ['DEL', 'TRAS']
   tipos: string[] = ['Percha', 'Perno', 'Buje', 'Soporte', 'Granada']
   idModelo: string = ''
@@ -47,6 +51,8 @@ export class AddRefaComponent {
   info: string = ''
   ID: string = ''
   ruta: string = ''
+  archivoSeleccionado: File | null = null;
+  mostrarSpinner: boolean | undefined;
 
   constructor(private dataService: DataService, private router: ActivatedRoute, private route: Router) {}
 
@@ -71,6 +77,11 @@ export class AddRefaComponent {
         })
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 
@@ -105,47 +116,53 @@ export class AddRefaComponent {
             icon: 'error'
           })
         }
-      })}else{
-        const params = {
-          "idModelo": this.idModelo,
-          "Descripcion": this.Descripcion,
-          "Tipo": this.Tipo.value,
-          "Unidad": this.Unidad,
-          "Modelo": this.Modelo,
-          "Anio": this.Anio,
-          "Posicion": this.Posicion.value,
-          "DiametroInt": this.DiametroInt,
-          "DiametroExt": this.DiametroExt,
-          "Largo": this.Largo,
-          "LargoTot": this.LargoTot,
-          "info": this.info
-        }
-      this.dataService.postNewProductRefa(params).subscribe((response: any) => {
-        if(response['intStatus'] == 200){
-          Swal.fire({
-            title: 'Refacción agregada',
-            icon: 'success'
-          })
-          this.idModelo = ''
-          this.Descripcion = ''
-          this.Tipo.setValue('')
-          this.Unidad = ''
-          this.Modelo = ''
-          this.Anio = ''
-          this.Posicion.setValue('')
-          this.DiametroInt = ''
-          this.DiametroExt = ''
-          this.Largo = ''
-          this.LargoTot = ''
-          this.info = ''
-          this.ID = ''
-        }else{
-          Swal.fire({
-            title: 'Error',
-            text: 'No se pudo agregar la refacción',
-            icon: 'error'
-          })
-        }
       })}
+  }
+
+  add(): boolean{
+    return this.ruta == 'add' ? true : false
+  }
+
+  seleccionarArchivo(event: any): void {
+    this.archivoSeleccionado = event.target.files[0];
+  }
+
+  subirArchivo(event: any): void {
+    event.preventDefault();
+
+    if (!this.archivoSeleccionado) {
+      console.error('No se ha seleccionado ningún archivo.');
+      return;
+    }
+
+    this.mostrarSpinner = true;
+
+    const formData = new FormData();
+    formData.append('file', this.archivoSeleccionado);
+
+    this.dataService.postNewProductRefa(formData)
+    .pipe(
+      takeUntil(this.destroy$),
+      finalize(() => {
+      this.mostrarSpinner = false,
+      this.archivoSeleccionado = null
+      }))
+    .subscribe((data: any) => {
+      if (data['intStatus'] == 200) {
+        Swal.fire({
+          title: 'Exito!',
+          text: data['strAnswer'],
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data['strAnswer'],
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
   }
 }

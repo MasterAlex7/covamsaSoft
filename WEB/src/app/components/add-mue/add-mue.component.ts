@@ -12,6 +12,8 @@ import { DataService } from '../../services/data.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Subject, finalize, takeUntil } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-add-mue',
@@ -25,12 +27,14 @@ import { Router } from '@angular/router';
     FormsModule,
     CommonModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './add-mue.component.html',
   styleUrl: './add-mue.component.css'
 })
 export class AddMueComponent implements OnInit{
+  private destroy$ = new Subject<void>();
   posiciones: string[] = ['DEL', 'TRAS', '-----']
   RASSINI: string = ''
   MAF: string = ''
@@ -45,6 +49,8 @@ export class AddMueComponent implements OnInit{
   info: string = ''
   marca: string = ''
   ruta: string = ''
+  archivoSeleccionado: File | null = null;
+  mostrarSpinner: boolean | undefined;
 
   constructor(private dataService: DataService, private router: ActivatedRoute, private route: Router) {}
 
@@ -68,6 +74,11 @@ export class AddMueComponent implements OnInit{
           })
         }
       })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   submit(){
@@ -105,37 +116,53 @@ export class AddMueComponent implements OnInit{
           })
         }
       })
-    }else {
-      this.dataService.postNewProductMue(params).subscribe((response: any) => {
-        if(response['intStatus'] == 200){
-          Swal.fire({
-            title: 'Exito',
-            text: response['strAnswer'],
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          })
-          this.RASSINI = ''
-          this.MAF = ''
-          this.SANDOVAL = ''
-          this.ORIGINAL = ''
-          this.No = ''
-          this.Ancho = ''
-          this.Espesor = ''
-          this.Lfrontal = ''
-          this.Ltrasero = ''
-          this.Posicion.setValue('')
-          this.info = ''
-          this.marca = ''
-        }else{
-          Swal.fire({
-            title: 'Error',
-            text: response['strAnswer'],
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          })
-        }
-      })
     }
   }
 
+  add(): boolean{
+    return this.ruta == 'add' ? true : false
+  }
+
+  seleccionarArchivo(event: any): void {
+    this.archivoSeleccionado = event.target.files[0];
+  }
+
+  subirArchivo(event: any): void {
+    event.preventDefault();
+
+    if (!this.archivoSeleccionado) {
+      console.error('No se ha seleccionado ningún archivo.');
+      return;
+    }
+
+    this.mostrarSpinner = true;
+
+    const formData = new FormData();
+    formData.append('file', this.archivoSeleccionado);
+
+    this.dataService.postNewProductMue(formData)
+    .pipe(
+      takeUntil(this.destroy$),
+      finalize(() => {
+      this.mostrarSpinner = false,
+      this.archivoSeleccionado = null
+      }))
+    .subscribe((data: any) => {
+      if (data['intStatus'] == 200) {
+        Swal.fire({
+          title: 'Exito!',
+          text: data['strAnswer'],
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data['strAnswer'],
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
 }

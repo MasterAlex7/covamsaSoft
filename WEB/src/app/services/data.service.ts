@@ -145,8 +145,8 @@ export class DataService {
     return this.http.post<any>(this.apiUrlDeleteProductSL, datos);
   }
 
-  postNewProductMue(datos: any): Observable<any> {
-    return this.http.post<any>(this.apiUrlPostNewProductM, datos);
+  postNewProductMue(formData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductM, formData);
   }
 
   getMuellesID(id: string): Observable<any> {
@@ -173,8 +173,8 @@ export class DataService {
     return this.http.post<any>(this.apiUrlPostRefacciones, datos);
   }
 
-  postNewProductRefa(datos: any): Observable<any> {
-    return this.http.post<any>(this.apiUrlPostNewProductRefa, datos);
+  postNewProductRefa(formData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostNewProductRefa, formData);
   }
 
   getRefaccionesID(id: string): Observable<any> {

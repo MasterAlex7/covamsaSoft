@@ -330,19 +330,10 @@ def getMuellesID(ID):
 @app.route('/cvm/addProductMue', methods=['POST'])
 def addProductMue():
     try:
-        RASSINI = request.json['RASSINI'] if ('RASSINI' in request.json) else None
-        MAF = request.json['MAF'] if ('MAF' in request.json) else None
-        SANDOVAL = request.json['SANDOVAL'] if ('SANDOVAL' in request.json) else None
-        ORIGINAL = request.json['ORIGINAL'] if ('ORIGINAL' in request.json) else None
-        No = request.json['No'] if ('No' in request.json) else None
-        Ancho = request.json['Ancho'] if ('Ancho' in request.json) else None
-        Espesor = request.json['Espesor'] if ('Espesor' in request.json) else None
-        Lfrontal = request.json['Lfrontal'] if ('Lfrontal' in request.json) else None
-        Ltrasero = request.json['Ltrasero'] if ('Ltrasero' in request.json) else None
-        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
-        info = request.json['info'] if ('info' in request.json) else None
-        marca = request.json['marca'] if ('marca' in request.json) else None
-        objResult = callMethod.fnAddProductMue(RASSINI,MAF,SANDOVAL,ORIGINAL,No,Ancho,Espesor,Lfrontal,Ltrasero,Posicion,info,marca)
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnAddProductMue(filename)
         return jsonify(objResult)
     except Exception as e:
         print("Error Add Product Muelles: ",e)
@@ -414,19 +405,10 @@ def getRefaccionesID(ID):
 @app.route('/cvm/addProductRefa', methods=['POST'])
 def addProductRefa():
     try:
-        idModelo = request.json['idModelo'] if ('idModelo' in request.json) else None
-        Descripcion = request.json['Descripcion'] if ('Descripcion' in request.json) else None
-        Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
-        Unidad = request.json['Unidad'] if ('Unidad' in request.json) else None
-        Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
-        Anio = request.json['Anio'] if ('Anio' in request.json) else None
-        Posicion = request.json['Posicion'] if ('Posicion' in request.json) else None
-        DiametroInt = request.json['DiametroInt'] if ('DiametroInt' in request.json) else None
-        DiametroExt = request.json['DiametroExt'] if ('DiametroExt' in request.json) else None
-        Largo = request.json['Largo'] if ('Largo' in request.json) else None
-        LargoTot = request.json['LargoTot'] if ('LargoTot' in request.json) else None
-        info = request.json['info'] if ('info' in request.json) else None
-        objResult = callMethod.fnAddProductRefa(idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info)
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnAddProductRefa(filename)
         return jsonify(objResult)
     except Exception as e:
         print("Error Add Product Refacciones: ",e)

@@ -247,7 +247,6 @@ export class CotizadorComponent {
     const formData = new FormData();
     formData.append('file', this.archivoSeleccionado);
 
-    console.log(formData);
     this.dataService.postNuevoCatalogo(formData,this.tabla)
     .pipe(
       takeUntil(this.destroy$),
