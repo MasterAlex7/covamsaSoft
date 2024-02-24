@@ -8,15 +8,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../services/data.service';
+import { DataService } from '../../../services/data.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { Subject, finalize, takeUntil } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subject, finalize, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-add-mue',
+  selector: 'app-add-refa',
   standalone: true,
   imports: [
     MatIconModule,
@@ -24,30 +24,33 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
-    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     MatSelectModule,
-    ReactiveFormsModule,
+    FormsModule,
     MatProgressSpinnerModule
   ],
-  templateUrl: './add-mue.component.html',
-  styleUrl: './add-mue.component.css'
+  templateUrl: './add-refa.component.html',
+  styleUrl: './add-refa.component.css'
 })
-export class AddMueComponent implements OnInit{
+export class AddRefaComponent {
   private destroy$ = new Subject<void>();
-  posiciones: string[] = ['DEL', 'TRAS', '-----']
-  RASSINI: string = ''
-  MAF: string = ''
-  SANDOVAL: string = ''
-  ORIGINAL: string = ''
-  No: string = ''
-  Ancho: string = ''
-  Espesor: string = ''
-  Lfrontal: string = ''
-  Ltrasero: string = ''
+  posiciones: string[] = ['DEL', 'TRAS']
+  tipos: string[] = ['Percha', 'Perno', 'Buje', 'Soporte', 'Granada']
+  idModelo: string = ''
+  Descripcion: string = ''
+  Tipo= new FormControl('')
+  TipoForma: string = ''
+  Unidad: string = ''
+  Modelo: string = ''
+  Anio: string = ''
   Posicion= new FormControl('')
+  DiametroInt: string = ''
+  DiametroExt: string = ''
+  Largo: string = ''
+  LargoTot: string = ''
   info: string = ''
-  marca: string = ''
+  ID: string = ''
   ruta: string = ''
   archivoSeleccionado: File | null = null;
   mostrarSpinner: boolean | undefined;
@@ -55,25 +58,27 @@ export class AddMueComponent implements OnInit{
   constructor(private dataService: DataService, private router: ActivatedRoute, private route: Router) {}
 
   ngOnInit(): void {
-      this.router.params.subscribe(params => {
-        this.ruta = params['accion']
-        if(this.ruta == 'editar'){
-          this.dataService.getMuellesID(params['idItem']).subscribe((response: any) => {
-            this.RASSINI = response['strAnswer'][0]['RASSINI'],
-            this.MAF = response['strAnswer'][0]['MAF'],
-            this.SANDOVAL = response['strAnswer'][0]['SANDOVAL'],
-            this.ORIGINAL = response['strAnswer'][0]['ORIGINAL'],
-            this.No = response['strAnswer'][0]['No'],
-            this.Ancho = response['strAnswer'][0]['Ancho'],
-            this.Espesor = response['strAnswer'][0]['Espesor'],
-            this.Lfrontal = response['strAnswer'][0]['Lfrontal'],
-            this.Ltrasero = response['strAnswer'][0]['Ltrasero'],
-            this.Posicion.setValue(response['strAnswer'][0]['Posicion']),
-            this.info = response['strAnswer'][0]['info'],
-            this.marca = response['strAnswer'][0]['marca']
-          })
-        }
-      })
+    this.router.params.subscribe(params => {
+      this.ID = params['idItem']
+      this.ruta = params['accion']
+      if(params['accion'] == 'editar'){
+        this.dataService.getRefaccionesID(params['idItem']).subscribe((response: any) => {
+          this.idModelo = response['strAnswer'][0]['idModelo'],
+          this.Descripcion = response['strAnswer'][0]['Descripcion'],
+          this.Tipo.setValue(response['strAnswer'][0]['TipoRefaccion']),
+          this.TipoForma = response['strAnswer'][0]['TipoForma'],
+          this.Unidad = response['strAnswer'][0]['Unidad'],
+          this.Modelo = response['strAnswer'][0]['Modelo'],
+          this.Anio = response['strAnswer'][0]['Anio'],
+          this.Posicion.setValue(response['strAnswer'][0]['Posicion']),
+          this.DiametroInt = response['strAnswer'][0]['DiametroInt'],
+          this.DiametroExt = response['strAnswer'][0]['DiametroExt'],
+          this.Largo = response['strAnswer'][0]['Largo'],
+          this.LargoTot = response['strAnswer'][0]['LargoTot'],
+          this.info = response['strAnswer'][0]['info']
+        })
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -81,42 +86,40 @@ export class AddMueComponent implements OnInit{
     this.destroy$.complete();
   }
 
-  submit(){
-    const params = {
-      "RASSINI": this.RASSINI,
-      "MAF": this.MAF,
-      "SANDOVAL": this.SANDOVAL,
-      "ORIGINAL": this.ORIGINAL,
-      "No": this.No,
-      "Ancho": this.Ancho,
-      "Espesor": this.Espesor,
-      "Lfrontal": this.Lfrontal,
-      "Ltrasero": this.Ltrasero,
-      "Posicion": this.Posicion.value,
-      "info": this.info,
-      "marca": this.marca
-    }
 
+  submit(){
     if(this.ruta == 'editar'){
-      this.dataService.putEditProductMue(params).subscribe((response: any) => {
+      const params = {
+        "ID": this.ID,
+        "idModelo": this.idModelo,
+        "Descripcion": this.Descripcion,
+        "Tipo": this.Tipo.value,
+        "TipoForma": this.TipoForma,
+        "Unidad": this.Unidad,
+        "Modelo": this.Modelo,
+        "Anio": this.Anio,
+        "Posicion": this.Posicion.value,
+        "DiametroInt": this.DiametroInt,
+        "DiametroExt": this.DiametroExt,
+        "Largo": this.Largo,
+        "LargoTot": this.LargoTot,
+        "info": this.info
+      }
+      this.dataService.putEditProductRefa(params).subscribe((response: any) => {
         if(response['intStatus'] == 200){
           Swal.fire({
-            title: 'Exito',
-            text: response['strAnswer'],
-            icon: 'success',
-            confirmButtonText: 'Ok'
+            title: 'Refacción editada',
+            icon: 'success'
           })
-          this.route.navigate(['/menuMuelles'])
+          this.route.navigate(['/menuRefacciones'])
         }else{
           Swal.fire({
             title: 'Error',
-            text: response['strAnswer'],
-            icon: 'error',
-            confirmButtonText: 'Ok'
+            text: 'No se pudo editar la refacción',
+            icon: 'error'
           })
         }
-      })
-    }
+      })}
   }
 
   add(): boolean{
@@ -140,7 +143,7 @@ export class AddMueComponent implements OnInit{
     const formData = new FormData();
     formData.append('file', this.archivoSeleccionado);
 
-    this.dataService.postNewProductMue(formData)
+    this.dataService.postNewProductRefa(formData)
     .pipe(
       takeUntil(this.destroy$),
       finalize(() => {

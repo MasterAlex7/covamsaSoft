@@ -8,7 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../services/data.service';
+import { DataService } from '../../../services/data.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';

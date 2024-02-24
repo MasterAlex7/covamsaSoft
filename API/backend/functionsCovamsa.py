@@ -1156,7 +1156,7 @@ def fnGetProductoProv(tabla,clave):
 		)
 		cursor.callproc('getProductoProv',params)
 		response = cursor.fetchall()
-		print(response)
+		#print(response)
 
 		if response:
 			return {'intStatus':200, 'strAnswer': response}

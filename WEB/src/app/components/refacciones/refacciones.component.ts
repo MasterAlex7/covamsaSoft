@@ -19,7 +19,7 @@ import { LargoPipe } from '../../pipes/pipesRefacciones/largo.pipe';
 import { LargoTotalPipe } from '../../pipes/pipesRefacciones/largo-total.pipe';
 import { Refaccion } from '../../interfaces/refaccion';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogImgComponent } from '../../dialog-img/dialog-img.component';
+import { DialogImgComponent } from '../dialogs/dialog-img/dialog-img.component';
 
 @Component({
   selector: 'app-refacciones',
