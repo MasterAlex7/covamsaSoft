@@ -19,4 +19,8 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class MenuCotizadoresComponent {
   constructor(private dataService: DataService, private loginService: LoginService, private route: ActivatedRoute) { }
+
+  getUser(){
+    return this.loginService.getAuthToken();
+  }
 }

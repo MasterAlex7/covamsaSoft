@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
-import { LoginService } from '../../services/login.service';
+import { DataService } from '../../../services/data.service';
+import { LoginService } from '../../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Proveedores } from '../../interfaces/proveedores';
+import { Proveedores } from '../../../interfaces/proveedores';
 import { ActivatedRoute } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 

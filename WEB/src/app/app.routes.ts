@@ -18,7 +18,8 @@ import { AddRefaComponent } from './components/adds/add-refa/add-refa.component'
 import { TornilleriaComponent } from './components/tornilleria/tornilleria.component';
 import { MenuCotizadoresComponent } from './components/menus/menu-cotizadores/menu-cotizadores.component';
 import { CotizadorComponent } from './components/cotizador/cotizador.component';
-import { CotizadoresComponent } from './components/cotizadores/cotizadores.component';
+import { CotizadoresComponent } from './components/menus/cotizadores/cotizadores.component';
+import { AnalisistornilleriaComponent } from './components/analisistornilleria/analisistornilleria.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -45,6 +46,6 @@ export const routes: Routes = [
     { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] },
     { path: 'menuCotizadores', component: MenuCotizadoresComponent, canActivate: [AuthGuard] },
     { path: 'cotizador/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
-    { path: 'cotizador/:tipo/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
-    { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] }
+    { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] },
+    { path: 'analisisTornilleria', component: AnalisistornilleriaComponent, canActivate: [AuthGuard] }
 ];
