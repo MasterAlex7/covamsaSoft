@@ -18,6 +18,8 @@ import { DiaIntPipe } from '../../pipes/pipesRefacciones/dia-int.pipe';
 import { LargoPipe } from '../../pipes/pipesRefacciones/largo.pipe';
 import { LargoTotalPipe } from '../../pipes/pipesRefacciones/largo-total.pipe';
 import { Refaccion } from '../../interfaces/refaccion';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DialogImgComponent } from '../../dialog-img/dialog-img.component';
 
 @Component({
   selector: 'app-refacciones',
@@ -38,13 +40,14 @@ import { Refaccion } from '../../interfaces/refaccion';
     DiaExtPipe,
     DiaIntPipe,
     LargoPipe,
-    LargoTotalPipe
+    LargoTotalPipe,
+    MatDialogModule
   ],
   templateUrl: './refacciones.component.html',
   styleUrl: './refacciones.component.css'
 })
 export class RefaccionesComponent implements OnInit{
-  constructor(private loginService: LoginService, private dataService: DataService,private route: ActivatedRoute) { }
+  constructor(private loginService: LoginService, private dataService: DataService,private route: ActivatedRoute, public dialog: MatDialog) { }
   dataSource: Refaccion[] = [];
   datosOriginales: Refaccion[] = [];
   Buscar = new FormControl('');
@@ -194,4 +197,10 @@ export class RefaccionesComponent implements OnInit{
     });
   }
 
+  mostrarDialogo() {
+    const dialogRef = this.dialog.open(DialogImgComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
 }
