@@ -3,5 +3,6 @@ export interface Proveedores {
     NombreProv: string, 
     TablaProv: string, 
     TipoMoneda: string,
-    fechaModificacion: string
+    fechaModificacion: string,
+    TipoProv: string,
 }

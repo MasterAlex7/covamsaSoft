@@ -17,10 +17,15 @@
         </mat-form-field>
     
         <mat-form-field>
-            <mat-label>Tipo</mat-label>
+            <mat-label>Tipo Refaccion</mat-label>
             <mat-select [formControl]="Tipo">
             <mat-option *ngFor="let opcion of tipos" [value]="opcion">{{ opcion }}</mat-option>
             </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Tipo Forma</mat-label>
+            <input matInput [(ngModel)]="TipoForma"/>
         </mat-form-field>
     
         <mat-form-field>

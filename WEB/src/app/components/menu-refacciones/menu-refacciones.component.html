@@ -10,9 +10,9 @@
 
     <div class="col-sm-2 py-4" *ngFor="let tipo of tipos">
         <div class="card">
-            <h2 class="card-header">{{ tipo.Tipo }}</h2>
+            <h2 class="card-header">{{ tipo.TipoRefaccion }}</h2>
             <div class="card-body">
-                <a [routerLink]="['/refacciones', tipo.Tipo]" mat-raised-button color="primary">Ver Mas</a>
+                <a [routerLink]="['/refacciones', tipo.TipoRefaccion]" mat-raised-button color="primary">Ver Mas</a>
             </div>
         </div>
     </div>

@@ -420,6 +420,7 @@ def editProductRefa():
         idModelo = request.json['idModelo'] if ('idModelo' in request.json) else None
         Descripcion = request.json['Descripcion'] if ('Descripcion' in request.json) else None
         Tipo = request.json['Tipo'] if ('Tipo' in request.json) else None
+        TipoForma = request.json['TipoForma'] if ('TipoForma' in request.json) else None
         Unidad = request.json['Unidad'] if ('Unidad' in request.json) else None
         Modelo = request.json['Modelo'] if ('Modelo' in request.json) else None
         Anio = request.json['Anio'] if ('Anio' in request.json) else None
@@ -429,7 +430,7 @@ def editProductRefa():
         Largo = request.json['Largo'] if ('Largo' in request.json) else None
         LargoTot = request.json['LargoTot'] if ('LargoTot' in request.json) else None
         info = request.json['info'] if ('info' in request.json) else None
-        objResult = callMethod.fnEditProductRefa(ID,idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info)
+        objResult = callMethod.fnEditProductRefa(ID,idModelo,Descripcion,Tipo,TipoForma,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info)
         return jsonify(objResult)
     except Exception as e:
         print("Error Edit Product Refacciones: ",e)

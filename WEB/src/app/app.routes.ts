@@ -45,5 +45,6 @@ export const routes: Routes = [
     { path: 'tornilleria', component: TornilleriaComponent, canActivate: [AuthGuard] },
     { path: 'menuCotizadores', component: MenuCotizadoresComponent, canActivate: [AuthGuard] },
     { path: 'cotizador/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
+    { path: 'cotizador/:tipo/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
     { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] }
 ];

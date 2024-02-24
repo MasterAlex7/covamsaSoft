@@ -81,7 +81,8 @@ export class RefaccionesComponent implements OnInit{
       this.displayedColumns = [
         "idModelo",
         "Descripcion",
-        "Tipo",
+        "TipoRefaccion",
+        "TipoForma",
         "Unidad",
         "Modelo",
         "Anio",
@@ -99,7 +100,8 @@ export class RefaccionesComponent implements OnInit{
   displayedColumns: string[] = [
     "idModelo",
     "Descripcion",
-    "Tipo",
+    "TipoRefaccion",
+    "TipoForma",
     "Unidad",
     "Modelo",
     "Anio",

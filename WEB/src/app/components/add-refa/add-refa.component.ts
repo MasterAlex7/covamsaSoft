@@ -40,6 +40,7 @@ export class AddRefaComponent {
   idModelo: string = ''
   Descripcion: string = ''
   Tipo= new FormControl('')
+  TipoForma: string = ''
   Unidad: string = ''
   Modelo: string = ''
   Anio: string = ''
@@ -64,7 +65,8 @@ export class AddRefaComponent {
         this.dataService.getRefaccionesID(params['idItem']).subscribe((response: any) => {
           this.idModelo = response['strAnswer'][0]['idModelo'],
           this.Descripcion = response['strAnswer'][0]['Descripcion'],
-          this.Tipo.setValue(response['strAnswer'][0]['Tipo']),
+          this.Tipo.setValue(response['strAnswer'][0]['TipoRefaccion']),
+          this.TipoForma = response['strAnswer'][0]['TipoForma'],
           this.Unidad = response['strAnswer'][0]['Unidad'],
           this.Modelo = response['strAnswer'][0]['Modelo'],
           this.Anio = response['strAnswer'][0]['Anio'],
@@ -92,6 +94,7 @@ export class AddRefaComponent {
         "idModelo": this.idModelo,
         "Descripcion": this.Descripcion,
         "Tipo": this.Tipo.value,
+        "TipoForma": this.TipoForma,
         "Unidad": this.Unidad,
         "Modelo": this.Modelo,
         "Anio": this.Anio,

@@ -2,10 +2,16 @@
     <div class="col-sm-2 py-4" *ngFor="let prov of dataSource">
         <div class="card">
             <h2 class="card-header">{{ prov.NombreProv }}</h2>
-            <div class="card-body">
+            <div class="card-body" *ngIf="prov.TipoProv != 'Tornilleria'">
                 <div class="card-text">Fecha de Modificacion: </div>
                 <div class="card-text">{{prov.fechaModificacion}}</div>
                 <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setMoneda(prov.TipoMoneda)">Cotizar</a>
+            </div>
+
+            <div class="card-body" *ngIf="prov.TipoProv === 'Tornilleria'">
+                <div class="card-text">Fecha de Modificacion: </div>
+                <div class="card-text">{{prov.fechaModificacion}}</div>
+                <a [routerLink]="['/cotizador',prov.TipoProv, prov.NombreProv ,prov.TablaProv]" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setMoneda(prov.TipoMoneda)">Cotizar</a>
             </div>
         </div>
     </div>

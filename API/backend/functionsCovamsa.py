@@ -979,29 +979,30 @@ def fnAddProductRefa(filename):
 		nombreHoja = 'Hoja1'
 		hoja_trabajo = archivo_excel[nombreHoja]
 
-		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L']
+		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L','M']
 
 		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
 			datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
 			datosExcel.append(datosfila)
 
 		for datos in datosExcel:
-			params = (
-				datos[0], #idModelo
-				datos[1], #Descripcion
-				datos[2], #Tipo
-				datos[3], #Unidad
-				datos[4], #Modelo
-				datos[5], #Anio
-				datos[6], #Posicion
-				datos[7], #DiametroInt
-				datos[8], #DiametroExt
-				datos[9], #Largo
-				datos[10], #LargoTot
-				datos[11] #info
-			)
-			print(params)
-			cursor.callproc('postAddProductRefa',params)
+			if datos[0] != None:
+				params = (
+					datos[0], #idModelo
+					datos[1], #Descripcion
+					datos[2], #TipoRefaccion
+					datos[12], #TipoForma
+					datos[3], #Unidad
+					datos[4], #Modelo
+					datos[5], #Anio
+					datos[6], #Posicion
+					datos[7], #DiametroInt
+					datos[8], #DiametroExt
+					datos[9], #Largo
+					datos[10], #LargoTot
+					datos[11] #info
+				)
+				cursor.callproc('postAddProductRefa',params)
 
 		MysqlCnx.commit()
 		archivo_excel.close()
@@ -1012,7 +1013,7 @@ def fnAddProductRefa(filename):
 	finally:
 		MysqlCnx.close()
 
-def fnEditProductRefa(ID,idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info):
+def fnEditProductRefa(ID,idModelo,Descripcion,Tipo,TipoForma,Unidad,Modelo,Anio,Posicion,DiametroInt,DiametroExt,Largo,LargoTot,info):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
 						port=strMysqlPort,
@@ -1027,6 +1028,7 @@ def fnEditProductRefa(ID,idModelo,Descripcion,Tipo,Unidad,Modelo,Anio,Posicion,D
 			idModelo,
 			Descripcion,
 			Tipo,
+			TipoForma,
 			Unidad,
 			Modelo,
 			Anio,
