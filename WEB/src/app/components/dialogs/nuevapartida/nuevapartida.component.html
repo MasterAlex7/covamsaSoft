@@ -1,0 +1,90 @@
+<mat-dialog-content>
+    <h2 mat-dialog-title>Agregar Partida</h2>
+    <div class="containerDialog">
+        <div class="containerTop">
+            <div class="formContainer">
+                <mat-form-field class="inputID">
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select [formControl]="Proveedor">
+                        <mat-option *ngFor="let opcion of nomProv" [value]="opcion">{{opcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="inputID">
+                    <mat-label>CLAVE</mat-label>
+                    <input #claveInput matInput [formControl]="Clave"> 
+                </mat-form-field>
+
+                <mat-form-field class="inputID">
+                    <mat-label>Cantidad</mat-label>
+                    <input matInput [formControl]="Cantidad" (keydown.enter)="addProducto()"> 
+                </mat-form-field>    
+                <button mat-raised-button color="accent" class="btnID" (click)="addProducto()">Añadir</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="Cantidad">
+              <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+              <td mat-cell *matCellDef="let element"> {{element.Cantidad}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Codigo">
+              <th mat-header-cell *matHeaderCellDef> Codigo </th>
+              <td mat-cell *matCellDef="let element"> {{element.Codigo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Proveedor">
+                <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+                <td mat-cell *matCellDef="let element"> {{element.Proveedor}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Descripcion">
+              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+              <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Costo">
+              <th mat-header-cell *matHeaderCellDef> Costo </th>
+              <td mat-cell *matCellDef="let element"> {{element.Costo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="P. Venta">
+                <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
+                <td mat-cell *matCellDef="let element"> {{element.PVenta}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <div>
+        <div class="containerDialog">
+            <div class="containerTop">
+                <div class="formContainer">
+                    <mat-form-field class="inputID">
+                        <mat-label>% Utilidad</mat-label>
+                        <input matInput [formControl]="Utilidad"> 
+                    </mat-form-field>
+
+                    <mat-button-toggle-group class="optBtn" (change)="changePVenta($event)">
+                        <mat-button-toggle value="promedio">Promedio</mat-button-toggle>
+                        <mat-button-toggle value="caro">Caro</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Precio de venta Definido: ${{this.pVentaDef}}</h2>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Cancelar</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Aceptar</button>
+</mat-dialog-actions>

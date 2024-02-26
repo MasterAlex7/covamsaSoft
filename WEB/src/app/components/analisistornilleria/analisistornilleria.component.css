@@ -25,3 +25,20 @@
     margin-top: 2%;
     white-space: nowrap;
 }
+
+.cardsContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    max-height: 75%;
+}
+
+.cardPartida{
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    margin: 10px;
+    padding: 15px;
+    background-color: #fff;
+}

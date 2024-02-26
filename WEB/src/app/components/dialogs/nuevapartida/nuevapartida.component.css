@@ -1,0 +1,19 @@
+.containerTop{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.formContainer{
+    flex: 1;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.inputID{
+    margin-right: 1%;
+}
+
+.optBtn{
+    margin-left: 1%;
+}

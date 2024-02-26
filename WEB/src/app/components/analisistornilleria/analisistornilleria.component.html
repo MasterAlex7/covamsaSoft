@@ -1,14 +1,66 @@
 <div class="containerTop">
     <div class="formContainer">
         <mat-form-field class="inputID">
-            <mat-label>Cantidad</mat-label>
+            <mat-label>Nombre del Cliente</mat-label>
             <input matInput > 
         </mat-form-field>
-        <button mat-raised-button color="primary" class="btnID">Añadir</button>
+        <button mat-raised-button color="accent" class="btnID" (click)="nuevaPartida()">Añadir Partida</button>
     </div>
 
     <div class="totalContainer">
         <button mat-raised-button color="primary" class="btnID">PDF Analisis</button>
         <button mat-raised-button color="primary" class="btnID">PDF Vendedor</button>
     </div>
+</div>
+
+<div class="cardsContainer">
+    <mat-card class="cardPartida">
+        <mat-card-title>
+            <h2>Partida 1</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="Cantidad">
+                  <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Cantidad}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="Codigo">
+                  <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Codigo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Proveedor">
+                    <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Proveedor}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="Descripcion">
+                  <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="Costo">
+                  <th mat-header-cell *matHeaderCellDef> Costo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.Costo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="P. Venta">
+                    <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
+                    <td mat-cell *matCellDef="let element"> {{element.PVenta}} </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <br>
+            <div>
+                <h2>Precio Venta Definido: $0.85</h2>
+                <h2>Porcentaje de Utilidad: 33%</h2>
+                <h2>Calculo hecho con el mas caro</h2>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    
+    
 </div>

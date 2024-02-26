@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 const ip="192.168.100.17";
+//const ip="192.168.196.209"; Prod
 const port="9005";
 const path="/cvm/"
 
