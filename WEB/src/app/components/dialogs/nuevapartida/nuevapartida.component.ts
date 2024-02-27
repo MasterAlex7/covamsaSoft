@@ -16,6 +16,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import Swal from 'sweetalert2';
 import { AnalisisTor } from '../../../interfaces/analisis-tor';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nuevapartida',
@@ -54,7 +55,7 @@ export class NuevapartidaComponent {
   dataEnviar= {};
   criterio = '';
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private dialogRef: MatDialogRef<NuevapartidaComponent>) { }
 
   ngOnInit() {
     this.dataService.getProveedores("tornilleria").subscribe((data: any) => {
@@ -100,10 +101,10 @@ export class NuevapartidaComponent {
           if(this.table){
             this.table.renderRows();
           }
-          this.Cantidad.setValue('');
+          /* this.Cantidad.setValue('');
           this.Clave.setValue('');
           this.Proveedor.setValue('');
-          this.claveInput?.nativeElement.focus();
+          this.claveInput?.nativeElement.focus(); */ //descomenrtar
         }else{
           Swal.fire({
             icon: 'error',
@@ -156,13 +157,35 @@ export class NuevapartidaComponent {
   }
 
   enviarDatos(){
-    this.dataEnviar = {
-      datos: this.dataSource,
-      utilidad: this.Utilidad.value,
-      pVentaDef: this.pVentaDef,
-      criterio: this.criterio
+    if(this.dataSource.length != 0){
+      if(this.Utilidad.value != ''){
+        this.dataEnviar = {
+          datos: this.dataSource,
+          utilidad: this.Utilidad.value,
+          pVentaDef: this.pVentaDef,
+          criterio: this.criterio
+        }
+        console.log(this.dataEnviar);
+        this.dataService.enviarAnalisis(this.dataEnviar);
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debes ingresar la utilidad para calcular el precio de venta',
+        });
+        this.dialogRef.close('cancelado');
+      }
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No has agregado productos a la lista',
+      });
+      this.dialogRef.close('cancelado');
     }
-    console.log(this.dataEnviar);
-    this.dataService.enviarAnalisis(this.dataEnviar);
+  }
+
+  cancelar(){
+    this.dialogRef.close('cancelado');
   }
 }

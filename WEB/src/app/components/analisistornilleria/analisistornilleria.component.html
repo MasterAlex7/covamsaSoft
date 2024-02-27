@@ -2,14 +2,14 @@
     <div class="formContainer">
         <mat-form-field class="inputID">
             <mat-label>Nombre del Cliente</mat-label>
-            <input matInput > 
+            <input matInput [formControl]="Nombre"> 
         </mat-form-field>
         <button mat-raised-button color="accent" class="btnID" (click)="nuevaPartida()">Añadir Partida</button>
     </div>
 
     <div class="totalContainer">
-        <button mat-raised-button color="primary" class="btnID">PDF Analisis</button>
-        <button mat-raised-button color="primary" class="btnID">PDF Vendedor</button>
+        <button mat-raised-button color="primary" class="btnID" (click)="crearPDF()">PDF Analisis</button>
+        <button mat-raised-button color="primary" class="btnID" (click)="crearPDFVendedor()">PDF Vendedor</button>
     </div>
 </div>
 
@@ -75,3 +75,9 @@
         </mat-card>
     </div>
 </ng-template>
+
+<div class="overlay" *ngIf="mostrarSpinner">
+    <div class="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
