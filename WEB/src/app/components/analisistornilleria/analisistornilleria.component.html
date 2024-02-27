@@ -13,13 +13,13 @@
     </div>
 </div>
 
-<div class="cardsContainer">
-    <mat-card class="cardPartida">
+<div class="cardsContainer" *ngIf="Partidas.length > 0; else noPartidas">
+    <mat-card class="cardPartida" *ngFor="let partida of Partidas; let i = index">
         <mat-card-title>
-            <h2>Partida 1</h2>
+            <h2>Partida {{i + 1}}</h2>
         </mat-card-title>
         <mat-card-content>
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table *ngIf="partida.datos.length > 0" [dataSource]="partida.datos" class="mat-elevation-z8">
                 <ng-container matColumnDef="Cantidad">
                   <th mat-header-cell *matHeaderCellDef> Cantidad </th>
                   <td mat-cell *matCellDef="let element"> {{element.Cantidad}} </td>
@@ -55,12 +55,23 @@
             </table>
             <br>
             <div>
-                <h2>Precio Venta Definido: $0.85</h2>
-                <h2>Porcentaje de Utilidad: 33%</h2>
-                <h2>Calculo hecho con el mas caro</h2>
+                <h2>Precio Venta Definido: {{partida.pVentaDef}}</h2>
+                <h2>Porcentaje de Utilidad: {{partida.utilidad}}%</h2>
+                <h2>Criterio de calculo: {{partida.criterio}}</h2>
             </div>
         </mat-card-content>
     </mat-card>
-    
-    
 </div>
+
+<ng-template #noPartidas>
+    <div class="cardsContainer">
+        <mat-card class="cardPartida">
+            <mat-card-title>
+                <h2>Sin Partidas</h2>
+            </mat-card-title>
+            <mat-card-content>
+                <h2>No se han añadido partidas</h2>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</ng-template>

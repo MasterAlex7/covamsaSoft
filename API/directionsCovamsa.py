@@ -485,5 +485,16 @@ def getProductoProv():
     except Exception as e:
         print("Error Get Producto Provedor: ",e)
 
+@app.route('/cvm/getTornilleriaProd', methods=['POST'])
+def getTornilleriaProd():
+    try:
+        tabla = request.json['tabla'] if ('tabla' in request.json) else None
+        idCovamsa = request.json['idCovamsa'] if ('idCovamsa' in request.json) else None
+        proveedor = request.json['proveedor'] if ('proveedor' in request.json) else None
+        objResult = callMethod.fnGetTornilleriaProd(idCovamsa, proveedor, tabla)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Tornilleria Prod: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

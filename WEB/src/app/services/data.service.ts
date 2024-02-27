@@ -55,6 +55,8 @@ export class DataService {
 
   private apiUrlPostNuevoCatalogo = 'http://'+ip+':'+port+path+'nuevoCatalogoPrecios';
 
+  private apiUrlGetTornilleriaProd = 'http://'+ip+':'+port+path+'getTornilleriaProd';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -202,10 +204,21 @@ export class DataService {
     return this.http.post<any>(this.apiUrlPostNuevoCatalogo+'/'+tabla, formData);
   }
 
+  getTornilleriaProd(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetTornilleriaProd, datos);
+  }
+
   private modelosSubject = new BehaviorSubject<string[]>([]);
   modelos$: Observable<string[]> = this.modelosSubject.asObservable();
 
   actualizarModelos(modelos: string[]): void {
     this.modelosSubject.next(modelos);
+  }
+
+  private datosAnalisis = new BehaviorSubject<{}>({});
+  datosAnalisisActuales = this.datosAnalisis.asObservable();
+
+  enviarAnalisis(datos: {}): void {
+    this.datosAnalisis.next(datos);
   }
 }

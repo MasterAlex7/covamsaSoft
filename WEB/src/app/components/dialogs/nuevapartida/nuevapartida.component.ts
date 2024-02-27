@@ -15,15 +15,7 @@ import { MatTable } from '@angular/material/table';
 import { ViewChild, ElementRef } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import Swal from 'sweetalert2';
-
-export interface ProductAnalysis {
-  Cantidad: number;
-  Codigo: string;
-  Proveedor: string;
-  Descripcion: string;
-  Costo: number;
-  PVenta: number;
-}
+import { AnalisisTor } from '../../../interfaces/analisis-tor';
 
 @Component({
   selector: 'app-nuevapartida',
@@ -50,7 +42,7 @@ export class NuevapartidaComponent {
   @ViewChild(MatTable) table: MatTable<any> | undefined;
   @ViewChild('claveInput') claveInput: ElementRef | undefined;
   displayedColumns: string[] = ['Cantidad','Codigo','Proveedor','Descripcion','Costo','P. Venta'];
-  dataSource: ProductAnalysis[] = [];
+  dataSource: AnalisisTor[] = [];
   proveedores: Proveedores[] = [];
   tabla = '';
   Proveedor = new FormControl('');
@@ -59,6 +51,8 @@ export class NuevapartidaComponent {
   Clave = new FormControl('');
   Utilidad = new FormControl('');
   pVentaDef = 0;
+  dataEnviar= {};
+  criterio = '';
 
   constructor(private dataService: DataService) { }
 
@@ -85,9 +79,11 @@ export class NuevapartidaComponent {
       this.tabla = this.proveedores.find((data) => data.NombreProv == this.Proveedor.value)?.TablaProv || '';
       const params = {
         tabla: this.tabla,
-        clave: this.Clave.value,
+        idCovamsa: this.Clave.value,
+        proveedor: this.Proveedor.value
       }
-      this.dataService.getProductoProv(params).subscribe((data: any) => {
+      //console.log(params);
+      this.dataService.getTornilleriaProd(params).subscribe((data: any) => {
         if(data['intStatus'] == 200){
           //this.dataSource.push(data['strAnswer'][0]);
           //console.log(data['strAnswer'][0]);
@@ -128,7 +124,7 @@ export class NuevapartidaComponent {
       });
       this.claveInput?.nativeElement.focus();
     }
-    console.log(this.dataSource);
+    //console.log(this.dataSource);
   }
 
   changePVenta(event: MatButtonToggleChange){
@@ -140,6 +136,7 @@ export class NuevapartidaComponent {
         });
         this.pVentaDef = this.pVentaDef / this.dataSource.length;
         this.pVentaDef = Number(this.pVentaDef.toFixed(2));
+        this.criterio = 'PROMEDIO';
       }else if(event.value == 'caro'){
         this.pVentaDef = 0;
         this.dataSource.forEach((data) => {
@@ -147,6 +144,7 @@ export class NuevapartidaComponent {
             this.pVentaDef = data.PVenta;
           }
         });
+        this.criterio = 'CARO';
       }
     }else{
       Swal.fire({
@@ -155,5 +153,16 @@ export class NuevapartidaComponent {
         text: 'Debes ingresar la utilidad para calcular el precio de venta',
       });
     }
+  }
+
+  enviarDatos(){
+    this.dataEnviar = {
+      datos: this.dataSource,
+      utilidad: this.Utilidad.value,
+      pVentaDef: this.pVentaDef,
+      criterio: this.criterio
+    }
+    console.log(this.dataEnviar);
+    this.dataService.enviarAnalisis(this.dataEnviar);
   }
 }

@@ -1217,3 +1217,30 @@ def fnPostNuevoCatalogo(filename,table):
 	finally:
 		MysqlCnx.close()
 
+def fnGetTornilleriaProd(idCovamsa, proveedor, tabla):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			tabla,
+			idCovamsa,
+			proveedor
+		)
+		cursor.callproc('getTornilleriaProd',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
