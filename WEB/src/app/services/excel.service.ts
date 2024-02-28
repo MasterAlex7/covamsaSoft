@@ -48,7 +48,7 @@ export class ExcelService {
   }
 
   crearExcelDolar(data: any[] | undefined, filename: string, total: number, totalDolares: number, tipoCambio: number, totalImportacion: number){
-    console.log(data, filename, total, totalDolares)
+    //console.log(data, filename, total, totalDolares)
     const fecha = new Date();
     const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
 
@@ -94,6 +94,33 @@ export class ExcelService {
     workbook.xlsx.writeBuffer().then((buffer: any) => {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, `${filename}.xlsx`);
+    });
+  }
+
+  crearPlantilla(tipo: string){
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Plantilla');
+
+    if(tipo == 'SP'){
+      const headers = ['GABRIEL', 'MONROE', 'GRC', 'Armadora', 'Posicion', 'Tipo', 'Longitud Exp', 'Longitud Comp', 'Carrera', 'Tipo Montaje Sup', 'Diametro Sup', 'Longitud Sup', 'Tipo Montaje Inf', 'Diametro Inf', 'Longitud Inf', 'info'];
+      worksheet.addRow(headers);
+    }else if(tipo == 'SL'){
+      const headers = ['Marca Auto', 'Submarca', 'Referencia', 'Modelo', 'Anio Inicio', 'Anio Final', 'Marca', 'Posicion', 'Tipo', 'Long Exp', 'Long Comp', 'Carrera', 'Mont Sup', 'Mont Inf', 'MONROE', 'GRC', 'KYB', 'BOGE', 'info'];
+      worksheet.addRow(headers);
+    }else if(tipo == 'BA'){
+      const headers = ['GABRIEL', 'FIRESTONE', 'GOODYEAR', 'CONTITECH', 'Aplicacion 1', 'Aplicacion 2', 'Aplicacion 3', 'OE1', 'OE2', 'OE3', 'Tapa', 'Membrana', 'Piston', 'info'];
+      worksheet.addRow(headers);
+    }else if(tipo == 'Muelles'){
+      const headers = ['RASSINI', 'MAF', 'SANDOVAL', 'ORIGINAL', 'No', 'Ancho', 'Espesor', 'Lado frontal', 'Lado trasero', 'Posicion', 'info', 'marca'];
+      worksheet.addRow(headers);
+    }else if(tipo == 'Refacciones'){
+      const headers = ['idModelo', 'Descripcion', 'Tipo Refaccion', 'Tipo Forma', 'Unidad', 'Modelo', 'Anio', 'Posicion', 'Diametro Int', 'Diametro Ext', 'Largo', 'LargoTot', 'info'];
+      worksheet.addRow(headers);
+    }
+
+    workbook.xlsx.writeBuffer().then((buffer: any) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, `Plantilla_${tipo}.xlsx`);
     });
   }
 }

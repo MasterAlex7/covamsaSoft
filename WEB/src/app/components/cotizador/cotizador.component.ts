@@ -73,126 +73,178 @@ export class CotizadorComponent {
   ];
 
   addProduct(){
-    const params = {
-      tabla: this.tabla,
-      clave: this.ID.value,
-    };
-    if(this.getMoneda() != "Dolar"){
-      if (this.ID.value != '' && this.Cantidad.value != ''){
-        this.dataService.getProductoProv(params).subscribe((data: any) => {
-          if (data['intStatus'] == 200) {
-            if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
+    if(this.getType() != "Tornilleria"){
+      const params = {
+        tabla: this.tabla,
+        clave: this.ID.value,
+      };
+      if(this.getMoneda() != "Dolar"){
+        if (this.ID.value != '' && this.Cantidad.value != ''){
+          this.dataService.getProductoProv(params).subscribe((data: any) => {
+            if (data['intStatus'] == 200) {
+              if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
+                Swal.fire({
+                  title: 'Error en empaque',
+                  text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+                });
+                this.ID.setValue('');
+                this.Cantidad.setValue('');
+                return;
+              }else{
+                const auxProducto: Producto = {
+                  "Cantidad": Number(this.Cantidad.value) || 0,
+                  "Codigo": data['strAnswer'][0]['CLAVE'],
+                  "Descripcion": data['strAnswer'][0]['Descripcion'],
+                  "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
+                  "PLista": Number(data['strAnswer'][0]['PrecioLista']),
+                  "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
+                  "Costo": Number(data['strAnswer'][0]['Costo']),
+                  "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
+                };
+                this.dataSource.push(auxProducto);
+                console.log(this.dataSource);
+                if (this.table) {
+                  this.table.renderRows();
+                }
+                this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
+                this.total = Number(this.total.toFixed(2));
+      
+                this.Cantidad.setValue('');
+                this.ID.setValue('');
+                this.cantidadInput?.nativeElement.focus();
+              }
+            }else{
               Swal.fire({
-                title: 'Error en empaque',
-                text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
+                title: 'Error!',
+                text: data['strAnswer'],
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               });
               this.ID.setValue('');
               this.Cantidad.setValue('');
-              return;
-            }else{
-              const auxProducto: Producto = {
-                "Cantidad": Number(this.Cantidad.value) || 0,
-                "Codigo": data['strAnswer'][0]['CLAVE'],
-                "Descripcion": data['strAnswer'][0]['Descripcion'],
-                "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
-                "PLista": Number(data['strAnswer'][0]['PrecioLista']),
-                "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
-                "Costo": Number(data['strAnswer'][0]['Costo']),
-                "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
-              };
-              this.dataSource.push(auxProducto);
-              console.log(this.dataSource);
-              if (this.table) {
-                this.table.renderRows();
-              }
-              this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
-              this.total = Number(this.total.toFixed(2));
-    
-              this.Cantidad.setValue('');
-              this.ID.setValue('');
-              this.cantidadInput?.nativeElement.focus();
             }
-          }else{
-            Swal.fire({
-              title: 'Error!',
-              text: data['strAnswer'],
-              icon: 'error',
-              confirmButtonText: 'Aceptar'
-            });
-            this.ID.setValue('');
-            this.Cantidad.setValue('');
-          }
-        });
+          });
+        }else{
+          Swal.fire({
+            title: 'Error',
+            text: 'Favor de llenar todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          this.ID.setValue('');
+          this.Cantidad.setValue('');
+        }
       }else{
-        Swal.fire({
-          title: 'Error',
-          text: 'Favor de llenar todos los campos',
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-        this.ID.setValue('');
-        this.Cantidad.setValue('');
+        if (this.ID.value != '' && this.Cantidad.value != ''){
+          this.dataService.getProductoProv(params).subscribe((data: any) => {
+            if (data['intStatus'] == 200) {
+              if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
+                Swal.fire({
+                  title: 'Error en empaque',
+                  text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+                });
+                this.ID.setValue('');
+                this.Cantidad.setValue('');
+                return;
+              }else{
+                const auxProducto: Producto = {
+                  "Cantidad": Number(this.Cantidad.value) || 0,
+                  "Codigo": data['strAnswer'][0]['CLAVE'],
+                  "Descripcion": data['strAnswer'][0]['Descripcion'],
+                  "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
+                  "PLista": Number(data['strAnswer'][0]['PrecioLista']),
+                  "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
+                  "Costo": Number(data['strAnswer'][0]['Costo']),
+                  "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
+                };
+                this.dataSource.push(auxProducto);
+                console.log(this.dataSource);
+                if (this.table) {
+                  this.table.renderRows();
+                }
+                this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
+                this.total = Number(this.total.toFixed(2));
+                
+                this.Cantidad.setValue('');
+                this.ID.setValue('');
+                this.cantidadInput?.nativeElement.focus();
+              }
+            }else{
+              Swal.fire({
+                title: 'Error!',
+                text: data['strAnswer'],
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+              this.ID.setValue('');
+              this.Cantidad.setValue('');
+            }
+          });
+        }else{
+          Swal.fire({
+            title: 'Error',
+            text: 'Favor de llenar todos los campos',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          this.ID.setValue('');
+          this.Cantidad.setValue('');
+        }
       }
     }else{
-      if (this.ID.value != '' && this.Cantidad.value != ''){
-        this.dataService.getProductoProv(params).subscribe((data: any) => {
-          if (data['intStatus'] == 200) {
-            if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
-              Swal.fire({
-                title: 'Error en empaque',
-                text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-              });
-              this.ID.setValue('');
-              this.Cantidad.setValue('');
-              return;
-            }else{
-              const auxProducto: Producto = {
-                "Cantidad": Number(this.Cantidad.value) || 0,
-                "Codigo": data['strAnswer'][0]['CLAVE'],
-                "Descripcion": data['strAnswer'][0]['Descripcion'],
-                "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
-                "PLista": Number(data['strAnswer'][0]['PrecioLista']),
-                "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
-                "Costo": Number(data['strAnswer'][0]['Costo']),
-                "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
-              };
-              this.dataSource.push(auxProducto);
-              console.log(this.dataSource);
-              if (this.table) {
-                this.table.renderRows();
-              }
-              this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
-              this.total = Number(this.total.toFixed(2));
-              
-              this.Cantidad.setValue('');
-              this.ID.setValue('');
-              this.cantidadInput?.nativeElement.focus();
-            }
-          }else{
+      const params = {
+        tabla: this.tabla,
+        idCovamsa: this.ID.value,
+        proveedor: this.nombreProveedor
+      }
+      this.dataService.getTornilleriaProd(params).subscribe((data: any) => {
+        if(data['intStatus'] == 200){
+          if(Number(this.Cantidad.value) % Number(data['strAnswer'][0]['PzaCaja']) !== 0){
             Swal.fire({
-              title: 'Error!',
-              text: data['strAnswer'],
+              title: 'Error en empaque',
+              text: 'La cantidad debe ser multiplo o tener un minimo de ' + data['strAnswer'][0]['PzaCaja'],
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
             this.ID.setValue('');
             this.Cantidad.setValue('');
+            return;
+          }else{
+            const auxProducto: Producto = {
+              "Cantidad": Number(this.Cantidad.value) || 0,
+              "Codigo": data['strAnswer'][0]['CLAVE'],
+              "Descripcion": data['strAnswer'][0]['Descripcion'],
+              "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
+              "PLista": Number(data['strAnswer'][0]['PrecioLista']),
+              "Descuento": Number((data['strAnswer'][0]['Descuento'] * 100)),
+              "Costo": Number(data['strAnswer'][0]['Costo']),
+              "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
+            };
+            this.dataSource.push(auxProducto);
+            //console.log(this.dataSource);
+            if (this.table) {
+              this.table.renderRows();
+            }
+            this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0].Costo);
+            this.total = Number(this.total.toFixed(2));
+            this.Cantidad.setValue('');
+            this.ID.setValue('');
+            this.cantidadInput?.nativeElement.focus();
           }
-        });
-      }else{
-        Swal.fire({
-          title: 'Error',
-          text: 'Favor de llenar todos los campos',
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-        this.ID.setValue('');
-        this.Cantidad.setValue('');
-      }
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se encontró el producto con clave "'+this.ID.value+'"',
+          });
+          this.Cantidad.setValue('');
+          this.ID.setValue('');
+        }
+      });
     }
   }
 
@@ -306,5 +358,9 @@ export class CotizadorComponent {
 
   isMaster(): boolean {
     return this.loginService.getAuthToken() == "master";
+  }
+
+  getType(){
+    return sessionStorage.getItem('type');
   }
 }

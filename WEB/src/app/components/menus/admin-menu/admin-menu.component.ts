@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ExcelService } from '../../../services/excel.service';
 
 @Component({
   selector: 'app-admin-menu',
@@ -11,5 +12,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './admin-menu.component.css'
 })
 export class AdminMenuComponent {
+  constructor(private excelService: ExcelService) { }
 
+
+  crearPlantilla(tipo: string){
+    this.excelService.crearPlantilla(tipo);
+  }
 }

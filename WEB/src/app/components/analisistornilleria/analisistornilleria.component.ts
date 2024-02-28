@@ -41,6 +41,7 @@ export class AnalisistornilleriaComponent {
   Partidas: DataAnalisis[] = [];
   Nombre = new FormControl('');
   mostrarSpinner = false;
+  mostrarCriterios = true;
 
   constructor(public dialog: MatDialog, private dataService: DataService) { }
 
@@ -61,7 +62,7 @@ export class AnalisistornilleriaComponent {
     });
   }
 
-  crearPDF(){
+  crearPDF(filename: string){
     if(this.Partidas.length > 0 && this.Nombre.value !== ''){
       this.mostrarSpinner = true;
       const cards = document.querySelectorAll('.cardPartida');
@@ -105,7 +106,7 @@ export class AnalisistornilleriaComponent {
         const promises = Array.from(cards).map((card) => captureAndAddPage(card));
       
         Promise.all(promises).then(() => {
-          doc.save('partidas.pdf');
+          doc.save(filename+'.pdf');
           this.mostrarSpinner = false;
         });
       }
@@ -119,14 +120,25 @@ export class AnalisistornilleriaComponent {
   }
 
   crearPDFVendedor(){
-    this.mostrarSpinner = true;
-    this.displayedColumns = ['Cantidad','Codigo','Proveedor','Descripcion','P. Venta']
-    
-    setTimeout(() => {
-      this.crearPDF();
-      this.Partidas = [];
-      this.Nombre.setValue('');
-      this.displayedColumns = ['Cantidad','Codigo','Proveedor','Descripcion','Costo','P. Venta'];
-    },1000);
+    if(this.Nombre.value != '' && this.Partidas.length > 0){
+      this.mostrarSpinner = true;
+      this.mostrarCriterios = false;
+      this.displayedColumns = ['Cantidad','Codigo','Proveedor','Descripcion','P. Venta']
+      
+      setTimeout(() => {
+        this.crearPDF('Cotizacion Final');
+        this.Partidas = [];
+        this.Nombre.setValue('');
+        this.mostrarSpinner = false;
+        this.mostrarCriterios = true;
+        this.displayedColumns = ['Cantidad','Codigo','Proveedor','Descripcion','Costo','P. Venta'];
+      },1000);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No existen partidas o no se ha ingresado el nombre del cliente',
+      });
+    }
   }
 }

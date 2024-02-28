@@ -8,7 +8,7 @@
     </div>
 
     <div class="totalContainer">
-        <button mat-raised-button color="primary" class="btnID" (click)="crearPDF()">PDF Analisis</button>
+        <button mat-raised-button color="primary" class="btnID" (click)="crearPDF('Analisis Cotizacion')">PDF Analisis</button>
         <button mat-raised-button color="primary" class="btnID" (click)="crearPDFVendedor()">PDF Vendedor</button>
     </div>
 </div>
@@ -56,8 +56,8 @@
             <br>
             <div>
                 <h2>Precio Venta Definido: {{partida.pVentaDef}}</h2>
-                <h2>Porcentaje de Utilidad: {{partida.utilidad}}%</h2>
-                <h2>Criterio de calculo: {{partida.criterio}}</h2>
+                <h2 *ngIf="mostrarCriterios">Porcentaje de Utilidad: {{partida.utilidad}}%</h2>
+                <h2 *ngIf="mostrarCriterios">Criterio de calculo: {{partida.criterio}}</h2>
             </div>
         </mat-card-content>
     </mat-card>

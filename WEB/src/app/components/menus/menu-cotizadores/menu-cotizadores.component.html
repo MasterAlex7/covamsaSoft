@@ -24,7 +24,7 @@
             <img src="assets/tornillo.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+                <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType()">Ver Mas</a>
             </div>
         </div>
     </div>

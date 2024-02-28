@@ -101,10 +101,10 @@ export class NuevapartidaComponent {
           if(this.table){
             this.table.renderRows();
           }
-          /* this.Cantidad.setValue('');
+          this.Cantidad.setValue('');
           this.Clave.setValue('');
           this.Proveedor.setValue('');
-          this.claveInput?.nativeElement.focus(); */ //descomenrtar
+          this.claveInput?.nativeElement.focus();
         }else{
           Swal.fire({
             icon: 'error',
@@ -137,7 +137,7 @@ export class NuevapartidaComponent {
         });
         this.pVentaDef = this.pVentaDef / this.dataSource.length;
         this.pVentaDef = Number(this.pVentaDef.toFixed(2));
-        this.criterio = 'PROMEDIO';
+        this.criterio = 'C. PROM';
       }else if(event.value == 'caro'){
         this.pVentaDef = 0;
         this.dataSource.forEach((data) => {
@@ -145,7 +145,7 @@ export class NuevapartidaComponent {
             this.pVentaDef = data.PVenta;
           }
         });
-        this.criterio = 'CARO';
+        this.criterio = 'C. MAXIMO';
       }
     }else{
       Swal.fire({

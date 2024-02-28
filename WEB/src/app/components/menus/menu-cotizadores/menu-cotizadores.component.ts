@@ -23,4 +23,8 @@ export class MenuCotizadoresComponent {
   getUser(){
     return this.loginService.getAuthToken();
   }
+
+  setType(){
+    sessionStorage.setItem('type', 'Tornilleria');
+  }
 }
