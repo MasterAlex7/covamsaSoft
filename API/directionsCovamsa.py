@@ -496,5 +496,31 @@ def getTornilleriaProd():
     except Exception as e:
         print("Error Get Tornilleria Prod: ",e)
 
+@app.route('/cvm/getLineasTor', methods=['GET'])
+def getLineasTor():
+    try:
+        objResult = callMethod.fnGetLineasTor()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Lineas Tornilleria: ",e)
+
+@app.route('/cvm/getCostosProveedor', methods=['POST'])
+def getCostosProveedor():
+    try:
+        tablaProv = request.json['tablaProv'] if ('tablaProv' in request.json) else None
+        arrayProductos = request.json['arrayProductos'] if ('arrayProductos' in request.json) else None
+        objResult = callMethod.fnGetCostosProveedor(tablaProv, arrayProductos)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Costos Provedor: ",e)
+
+@app.route('/cvm/getTornilleriaLinea/<linea>', methods=['GET'])
+def getTornilleriaLinea(linea):
+    try:
+        objResult = callMethod.fnGetTornilleriaLinea(linea)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Tornilleria Linea: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

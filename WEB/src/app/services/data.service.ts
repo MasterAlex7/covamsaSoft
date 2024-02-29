@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 const ip="192.168.100.17";
-//const ip="192.168.196.209"; Prod
+//const ip="192.168.196.209"; //Prod
 const port="9005";
 const path="/cvm/"
 
@@ -56,6 +56,10 @@ export class DataService {
   private apiUrlPostNuevoCatalogo = 'http://'+ip+':'+port+path+'nuevoCatalogoPrecios';
 
   private apiUrlGetTornilleriaProd = 'http://'+ip+':'+port+path+'getTornilleriaProd';
+
+  private apiUrlGetLineas = 'http://'+ip+':'+port+path+'getLineasTor';
+  private apiUrlGetCostosProv = 'http://'+ip+':'+port+path+'getCostosProveedor';
+  private apiUrlGetTornilleriaLinea = 'http://'+ip+':'+port+path+'getTornilleriaLinea';
 
   constructor(private http: HttpClient) { }
 
@@ -207,6 +211,20 @@ export class DataService {
   getTornilleriaProd(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetTornilleriaProd, datos);
   }
+
+  getLineas(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetLineas);
+  }
+
+  getCostosProveedor(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetCostosProv, datos);
+  }
+
+  getTornilleriaLinea(linea: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetTornilleriaLinea+'/'+linea);
+  }
+
+  //Datos entre componentes
 
   private modelosSubject = new BehaviorSubject<string[]>([]);
   modelos$: Observable<string[]> = this.modelosSubject.asObservable();

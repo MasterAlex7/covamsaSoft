@@ -1244,3 +1244,90 @@ def fnGetTornilleriaProd(idCovamsa, proveedor, tabla):
 	finally:
 		MysqlCnx.close()
 
+def fnGetLineasTor():
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		cursor.callproc('getLineasTor')
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay lineas.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetCostosProveedor(tablaProv, arrayProductos):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		response = []
+		for producto in arrayProductos:
+			#print(producto['idCovamsa'])
+			#print(tablaProv)
+			params = (
+				producto['idCovamsa'],
+				tablaProv
+			)
+			cursor.callproc('getCostosTornilleria',params)
+			costo = cursor.fetchall()
+			#print(params)
+			#print(costo)
+			if costo:
+				aux = {
+				"idCovamsa": producto['idCovamsa'],
+				"Costo": float(costo[0]['Costo']),
+				"Proveedor": tablaProv
+				}
+				#print(aux)
+				response.append(aux)
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetTornilleriaLinea(linea):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			linea,
+		)
+		cursor.callproc('getTornilleriaLinea',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
