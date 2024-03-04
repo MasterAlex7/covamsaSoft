@@ -24,7 +24,7 @@ export class MenuCotizadoresComponent {
     return this.loginService.getAuthToken();
   }
 
-  setType(){
-    sessionStorage.setItem('type', 'Tornilleria');
+  setType(type: string){
+    sessionStorage.setItem('type', type);
   }
 }

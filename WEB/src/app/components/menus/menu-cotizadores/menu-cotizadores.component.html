@@ -4,7 +4,7 @@
             <img src="assets/refaccion.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Herramientas Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+                <a [routerLink]="['/cotizadores', 'Herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Herramientas')">Ver Mas</a>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
             <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Muelles']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+                <a [routerLink]="['/cotizadores', 'Muelles']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Muelles')">Ver Mas</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <img src="assets/tornillo.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType()">Ver Mas</a>
+                <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Tornilleria')">Ver Mas</a>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
         <div class="card mb-3">
             <img src="assets/investigacion.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis de Precios Tornilleria</h3>
+                <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis Costos Tornilleria</h3>
                 <a [routerLink]="['/analisisTornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
             </div>
         </div>

@@ -69,7 +69,8 @@ export class CotizadorComponent {
     'P.Lista',
     'Descuento',
     'Costo',
-    'Importe'
+    'Importe',
+    'Eliminar'
   ];
 
   addProduct(){
@@ -324,6 +325,23 @@ export class CotizadorComponent {
         });
       }
     });
+  }
+
+  deleteProduct(element: Producto){
+    const index = this.dataSource.indexOf(element);
+    this.dataSource.splice(index, 1);
+    this.total = this.total - element.Importe;
+    this.total = Number(this.total.toFixed(2));
+    if(this.dataSource.length == 0){
+      this.total = 0;
+    }
+    if(this.getMoneda() == "Dolar"){
+      this.totalDolares = this.total * Number(this.Moneda.value);
+      this.totalDolares = Number(this.totalDolares.toFixed(2));
+      this.totalWImport = this.totalDolares+(this.totalDolares * (Number(this.Importacion.value)/100));
+      this.totalWImport = Number(this.totalWImport.toFixed(2));
+    }
+    this.table?.renderRows();
   }
 
   seleccionarArchivo(event: any): void {

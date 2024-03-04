@@ -58,8 +58,9 @@ export class DataService {
   private apiUrlGetTornilleriaProd = 'http://'+ip+':'+port+path+'getTornilleriaProd';
 
   private apiUrlGetLineas = 'http://'+ip+':'+port+path+'getLineasTor';
-  private apiUrlGetCostosProv = 'http://'+ip+':'+port+path+'getCostosProveedor';
-  private apiUrlGetTornilleriaLinea = 'http://'+ip+':'+port+path+'getTornilleriaLinea';
+  private apiUrlGetTabPrecios = 'http://'+ip+':'+port+path+'getTabPrecios';
+
+  private apiUrlGetCostosTornilleria = 'http://'+ip+':'+port+path+'getTornilleriaCostos';
 
   constructor(private http: HttpClient) { }
 
@@ -216,12 +217,12 @@ export class DataService {
     return this.http.get<any>(this.apiUrlGetLineas);
   }
 
-  getCostosProveedor(datos: any): Observable<any> {
-    return this.http.post<any>(this.apiUrlGetCostosProv, datos);
+  getTabPrecios(linea: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetTabPrecios+'/'+linea);
   }
 
-  getTornilleriaLinea(linea: string): Observable<any> {
-    return this.http.get<any>(this.apiUrlGetTornilleriaLinea+'/'+linea);
+  getCostosTornilleria(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetCostosTornilleria, datos);
   }
 
   //Datos entre componentes

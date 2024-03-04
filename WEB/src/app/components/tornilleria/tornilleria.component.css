@@ -26,3 +26,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.tableContainer{
+    width: 100%;
+    height: 65%;
+    overflow: auto;
+}

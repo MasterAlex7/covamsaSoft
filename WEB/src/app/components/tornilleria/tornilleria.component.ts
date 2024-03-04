@@ -13,11 +13,8 @@ import { DataService } from '../../services/data.service';
 import { Proveedores } from '../../interfaces/proveedores';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subject, finalize, takeUntil } from 'rxjs';
-
-interface Tornilleria {
-  idCovamsa: string;
-  Descripcion: string;
-}
+import {MatRadioModule} from '@angular/material/radio';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-tornilleria',
@@ -33,7 +30,8 @@ interface Tornilleria {
     RouterModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRadioModule
   ],
   templateUrl: './tornilleria.component.html',
   styleUrl: './tornilleria.component.css'
@@ -44,10 +42,14 @@ export class TornilleriaComponent {
   lineasTornillos: string[] = [];
   proveedores: Proveedores[] = [];
   displayedColumns: string[] = ['idCovamsa', 'Descripcion'];
-  dataSource: Tornilleria[] = [];
+  dataSource: any = [];
+  dataSourceAnterior: any = [];
   mostrarSpinner: boolean = false;
+  ID = new FormControl('');
+  tablas: string[] = [];
+  precios = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private excel: ExcelService) { }
 
   ngOnInit(): void {
     this.dataService.getProveedores("Tornilleria").subscribe((data: any) => {
@@ -59,10 +61,6 @@ export class TornilleriaComponent {
         this.lineasTornillos.push(element['Linea']);
       });
     });
-
-    this.linea.valueChanges.subscribe((value) => {
-      this.getProductos();
-    });
   }
 
   ngOnDestroy(): void {
@@ -70,59 +68,100 @@ export class TornilleriaComponent {
     this.destroy$.complete();
   }
 
-  prueba($event: MatCheckboxChange,tablaProv: string,nomProv: string){
-    if($event.checked){
-      if(this.linea.value != ''){
-        this.displayedColumns.push(nomProv);
-
-        this.mostrarSpinner = true;
-
-        const params={
-          arrayProductos: this.dataSource,
-          tablaProv: tablaProv
-        }
-        this.dataService.getCostosProveedor(params)
-        .pipe(
-          takeUntil(this.destroy$),
-          finalize(() => {
-            this.mostrarSpinner = false;
-          }))
-        .subscribe((data: any) => {
-          if(data['intStatus']==200){
-          this.dataSource = this.dataSource.map((element: any) => {
-            let nuevoElemento: any = {
-              idCovamsa: element.idCovamsa,
-              descripcion: element.descripcion,
-              ...this.dataSource.filter(item => item.idCovamsa === element.idCovamsa)
-                              .reduce((acc, item) => ({ ...acc, ...item }), {}),
-            };
-          
-            data['strAnswer'].forEach((datos: any) => {
-              if (datos['idCovamsa'] === element.idCovamsa) {
-                nuevoElemento[tablaProv] = datos['Costo'];
-              }
-            });
-          
-            return nuevoElemento;
-          });
-
-          console.log(this.dataSource);
-          }else{
-            Swal.fire('Error', 'No existen Costos', 'error');
-          }
-        });
-      }else{
-        Swal.fire('Error', 'Seleccione una linea', 'error');
+  putProveedores($event: MatCheckboxChange, tabla: string, nomProv: string) {
+    if ($event.checked) {
+      this.tablas.push(tabla);
+      this.displayedColumns.push(nomProv);
+    } else {
+      const tablaIndex = this.tablas.indexOf(tabla);
+      const nomProvIndex = this.displayedColumns.indexOf(nomProv);
+      if (tablaIndex !== -1) {
+          this.tablas.splice(tablaIndex, 1);
       }
-    }else{
-      //Swal.fire('Desactivado',nomProv);
-      this.displayedColumns = this.displayedColumns.filter((value) => value !== nomProv);
+      if (nomProvIndex !== -1) {
+          this.displayedColumns.splice(nomProvIndex, 1);
+      }
     }
   }
 
-  getProductos() {
-    this.dataService.getTornilleriaLinea(this.linea.value).subscribe((data: any) => {
-      this.dataSource = data['strAnswer'];
+  getCostos(){
+    if(this.linea.value != '' && this.ID.value != ''){
+      const params = {
+        idCovamsa: this.ID.value,
+        Linea: this.linea.value,
+        arrayProveedores: this.tablas
+      }
+  
+      //console.log(params);
+      this.mostrarSpinner = true;
+      this.dataService.getCostosTornilleria(params).pipe(
+        finalize(() => {
+          this.mostrarSpinner = false;
+          this.displayedColumns = this.displayedColumns.filter(col => col !== 'Publico' && col !== 'Mayoreo' && col !== 'Platino' && col !== 'Comercio' && col !== 'MAYOR');
+        }),
+        takeUntil(this.destroy$)
+      ).subscribe((data: any) => {
+        this.dataSource = data['strAnswer'];
+        //console.log(this.dataSource);
+      });
+  
+      this.dataService.getTabPrecios(this.linea.value).pipe(
+        takeUntil(this.destroy$)
+      ).subscribe((data: any) => {
+        this.precios = data['strAnswer'];
+      });
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Selecciona una linea y un ID'
+      });
+    }
+  }
+
+  getAnalisis(){
+    if(this.dataSource.length != 0){
+      this.displayedColumns.push('MAYOR', 'Publico', 'Mayoreo', 'Platino', 'Comercio');
+    //console.log(this.precios);
+
+    this.dataSourceAnterior = this.dataSource;
+    this.dataSource = this.dataSource.map((element: any) => {
+      let nuevoElemento: any = {
+        ...element,
+        costoMayor: 0,
+        publico: 0,
+        mayoreo: 0,
+        platino: 0,
+        comercio: 0,
+      };
+
+      this.tablas.forEach((tabla: string) => {
+        if (element[tabla] > nuevoElemento.costoMayor) {
+          nuevoElemento.costoMayor = element[tabla];
+        }
+      });
+
+      nuevoElemento.publico = (nuevoElemento.costoMayor * this.precios[0]['Publico']).toFixed(3);
+      nuevoElemento.mayoreo = (nuevoElemento.costoMayor * this.precios[0]['Mayoreo']).toFixed(3);
+      nuevoElemento.platino = (nuevoElemento.costoMayor * this.precios[0]['Platino']).toFixed(3);
+      nuevoElemento.comercio = (nuevoElemento.costoMayor * this.precios[0]['Comercio']).toFixed(3);
+
+      return nuevoElemento;
     });
+
+    //console.log(this.dataSource);
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se han cargado los costos'
+      });
+    
+    }
+  }
+
+  crearExcel(){
+    console.log(this.displayedColumns);
+    this.excel.crearExcelTornilleriaCostos(this.dataSource);
   }
 }

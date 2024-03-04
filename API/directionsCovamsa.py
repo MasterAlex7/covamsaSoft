@@ -504,23 +504,24 @@ def getLineasTor():
     except Exception as e:
         print("Error Get Lineas Tornilleria: ",e)
 
-@app.route('/cvm/getCostosProveedor', methods=['POST'])
-def getCostosProveedor():
+@app.route('/cvm/getTabPrecios/<linea>', methods=['GET'])
+def getTabPrecios(linea):
     try:
-        tablaProv = request.json['tablaProv'] if ('tablaProv' in request.json) else None
-        arrayProductos = request.json['arrayProductos'] if ('arrayProductos' in request.json) else None
-        objResult = callMethod.fnGetCostosProveedor(tablaProv, arrayProductos)
+        objResult = callMethod.fnGetTabPrecios(linea)
         return jsonify(objResult)
     except Exception as e:
-        print("Error Get Costos Provedor: ",e)
+        print("Error Get Tab Precios: ",e)
 
-@app.route('/cvm/getTornilleriaLinea/<linea>', methods=['GET'])
-def getTornilleriaLinea(linea):
+@app.route('/cvm/getTornilleriaCostos', methods=['POST'])
+def getTornilleriaCostos():
     try:
-        objResult = callMethod.fnGetTornilleriaLinea(linea)
+        idCovamsa = request.json['idCovamsa'] if ('idCovamsa' in request.json) else None
+        linea = request.json['Linea'] if ('Linea' in request.json) else None
+        arrayProveedores = request.json['arrayProveedores'] if ('arrayProveedores' in request.json) else None
+        objResult = callMethod.fnGetTornilleriaCostos(idCovamsa, linea, arrayProveedores)
         return jsonify(objResult)
     except Exception as e:
-        print("Error Get Tornilleria Linea: ",e)
+        print("Error Get Tornilleria ID: ",e)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

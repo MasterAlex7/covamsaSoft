@@ -1266,47 +1266,7 @@ def fnGetLineasTor():
 	finally:
 		MysqlCnx.close()
 
-def fnGetCostosProveedor(tablaProv, arrayProductos):
-	try:
-		MysqlCnx = pymysql.connect(host=strMysqlHost,
-						port=strMysqlPort,
-						user=strMysqluUser,
-						password=strMysqlPassword,
-						db=strMysqlDB,
-						charset='utf8mb4',
-						cursorclass=pymysql.cursors.DictCursor)
-
-		cursor = MysqlCnx.cursor()
-		response = []
-		for producto in arrayProductos:
-			#print(producto['idCovamsa'])
-			#print(tablaProv)
-			params = (
-				producto['idCovamsa'],
-				tablaProv
-			)
-			cursor.callproc('getCostosTornilleria',params)
-			costo = cursor.fetchall()
-			#print(params)
-			#print(costo)
-			if costo:
-				aux = {
-				"idCovamsa": producto['idCovamsa'],
-				"Costo": float(costo[0]['Costo']),
-				"Proveedor": tablaProv
-				}
-				#print(aux)
-				response.append(aux)
-		if response:
-			return {'intStatus':200, 'strAnswer': response}
-		else:
-			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
-	except Exception as e:
-		return {'intStatus':500, 'strAnswer': str(e)}
-	finally:
-		MysqlCnx.close()
-
-def fnGetTornilleriaLinea(linea):
+def fnGetTabPrecios(linea):
 	try:
 		MysqlCnx = pymysql.connect(host=strMysqlHost,
 						port=strMysqlPort,
@@ -1320,7 +1280,7 @@ def fnGetTornilleriaLinea(linea):
 		params = (
 			linea,
 		)
-		cursor.callproc('getTornilleriaLinea',params)
+		cursor.callproc('getTabuladorPrecios',params)
 		response = cursor.fetchall()
 		if response:
 			return {'intStatus':200, 'strAnswer': response}
@@ -1330,4 +1290,43 @@ def fnGetTornilleriaLinea(linea):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetTornilleriaCostos(idCovamsa, linea, arrayProveedores):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		response = []
+		params = (
+			linea,
+			idCovamsa
+		)
+		cursor.callproc('getTornilleriaLinea',params)
+		ids = cursor.fetchall()
+
+		for id in ids:
+			aux = {
+				"idCovamsa": id['idCovamsa'],
+				"Descripcion": id['Descripcion'],
+			}
+			for proveedor in arrayProveedores:
+				params = (
+					id['idCovamsa'],
+					proveedor
+				)
+				#print(params)
+				cursor.callproc('getCostosTornilleria',params)
+				costo = cursor.fetchall()
+				if costo:
+					aux.update({proveedor: float(costo[0]['Costo'])})
+			response.append(aux)
+		return {'intStatus':200, 'strAnswer': response}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
 

@@ -123,4 +123,39 @@ export class ExcelService {
       saveAs(blob, `Plantilla_${tipo}.xlsx`);
     });
   }
+
+  crearExcelTornilleriaCostos(data: any[]){
+    const fecha = new Date();
+    const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Costos Tornilleria '+ fechaString);
+
+    const headers = Object.keys(data?.[0] ?? {});
+    worksheet.addRow(headers);
+
+    data?.forEach((item) => {
+      const row:any = [];
+      headers.forEach((header) => {
+        row.push(item[header]);
+      });
+      worksheet.addRow(row);
+    });
+
+    worksheet.columns = [
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+      { width: 30 },
+    ];
+
+    workbook.xlsx.writeBuffer().then((buffer: any) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, `Costos_Tornilleria_${fechaString}.xlsx`);
+    });
+  }
 }
