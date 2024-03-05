@@ -116,6 +116,9 @@ export class ExcelService {
     }else if(tipo == 'Refacciones'){
       const headers = ['idModelo', 'Descripcion', 'Tipo Refaccion', 'Tipo Forma', 'Unidad', 'Modelo', 'Anio', 'Posicion', 'Diametro Int', 'Diametro Ext', 'Largo', 'LargoTot', 'info'];
       worksheet.addRow(headers);
+    }else if(tipo == 'Cotizadores'){
+      const headers = ['CLAVE',	'DESCRIPCION',	'Pza. Caja',	'DESC',	'COSTO',	'P. LISTA'];
+      worksheet.addRow(headers);
     }
 
     workbook.xlsx.writeBuffer().then((buffer: any) => {
