@@ -115,3 +115,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.warnEmp{
+    background-color: #dc3545;
+    color: white;
+    border-radius: 20px;
+}
+
+.warnCant{
+    background-color: #ffc107;
+    border-radius: 20px;
+}
