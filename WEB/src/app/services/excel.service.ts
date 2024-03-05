@@ -124,17 +124,16 @@ export class ExcelService {
     });
   }
 
-  crearExcelTornilleriaCostos(data: any[]){
+  crearExcelTornilleriaCostos(data: any[], headers: any[]){
     const fecha = new Date();
     const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
 
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Costos Tornilleria '+ fechaString);
+    const worksheet = workbook.addWorksheet('Analisis de Costos '+ fechaString);
 
-    const headers = Object.keys(data?.[0] ?? {});
     worksheet.addRow(headers);
 
-    data?.forEach((item) => {
+    data.forEach((item) => {
       const row:any = [];
       headers.forEach((header) => {
         row.push(item[header]);
@@ -144,18 +143,17 @@ export class ExcelService {
 
     worksheet.columns = [
       { width: 30 },
-      { width: 30 },
-      { width: 30 },
-      { width: 30 },
-      { width: 30 },
-      { width: 30 },
-      { width: 30 },
-      { width: 30 },
+      { width: 50 },
     ];
+
+    for (let i = 3; i <= headers.length; i++) {
+      worksheet.getColumn(i).alignment = { horizontal: 'right' };
+      worksheet.getColumn(i).width = 20;
+    }
 
     workbook.xlsx.writeBuffer().then((buffer: any) => {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      saveAs(blob, `Costos_Tornilleria_${fechaString}.xlsx`);
+      saveAs(blob, `Analisis de Costos ${fechaString}.xlsx`);
     });
   }
 }

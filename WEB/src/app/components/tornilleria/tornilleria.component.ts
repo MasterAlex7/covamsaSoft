@@ -68,13 +68,13 @@ export class TornilleriaComponent {
     this.destroy$.complete();
   }
 
-  putProveedores($event: MatCheckboxChange, tabla: string, nomProv: string) {
+  putProveedores($event: MatCheckboxChange, tabla: string) {
     if ($event.checked) {
       this.tablas.push(tabla);
-      this.displayedColumns.push(nomProv);
+      this.displayedColumns.push(tabla);
     } else {
       const tablaIndex = this.tablas.indexOf(tabla);
-      const nomProvIndex = this.displayedColumns.indexOf(nomProv);
+      const nomProvIndex = this.displayedColumns.indexOf(tabla);
       if (tablaIndex !== -1) {
           this.tablas.splice(tablaIndex, 1);
       }
@@ -97,7 +97,7 @@ export class TornilleriaComponent {
       this.dataService.getCostosTornilleria(params).pipe(
         finalize(() => {
           this.mostrarSpinner = false;
-          this.displayedColumns = this.displayedColumns.filter(col => col !== 'Publico' && col !== 'Mayoreo' && col !== 'Platino' && col !== 'Comercio' && col !== 'MAYOR');
+          this.displayedColumns = this.displayedColumns.filter(col => col !== 'publico' && col !== 'mayoreo' && col !== 'platino' && col !== 'comercio' && col !== 'costoMayor');
         }),
         takeUntil(this.destroy$)
       ).subscribe((data: any) => {
@@ -121,7 +121,7 @@ export class TornilleriaComponent {
 
   getAnalisis(){
     if(this.dataSource.length != 0){
-      this.displayedColumns.push('MAYOR', 'Publico', 'Mayoreo', 'Platino', 'Comercio');
+      this.displayedColumns.push('costoMayor', 'publico', 'mayoreo', 'platino', 'comercio');
     //console.log(this.precios);
 
     this.dataSourceAnterior = this.dataSource;
@@ -162,6 +162,7 @@ export class TornilleriaComponent {
 
   crearExcel(){
     console.log(this.displayedColumns);
-    this.excel.crearExcelTornilleriaCostos(this.dataSource);
+    console.log(Object.keys(this.dataSource[0]));
+    this.excel.crearExcelTornilleriaCostos(this.dataSource, this.displayedColumns);
   }
 }
