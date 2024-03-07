@@ -62,6 +62,10 @@ export class DataService {
 
   private apiUrlGetCostosTornilleria = 'http://'+ip+':'+port+path+'getTornilleriaCostos';
 
+  private apiUrlPostVerificarCoincidencias = 'http://'+ip+':'+port+path+'verificarCoincidencias';
+  private apiUrlPostAddCoincidencias = 'http://'+ip+':'+port+path+'addCoincidencias';
+  private apiUrlPostAddProductTor = 'http://'+ip+':'+port+path+'addProductTor';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -223,6 +227,18 @@ export class DataService {
 
   getCostosTornilleria(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetCostosTornilleria, datos);
+  }
+
+  postVerificarCoincidencias(formData: any,proveedor: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostVerificarCoincidencias+'/'+proveedor, formData);
+  }
+
+  postAddCoincidencias(formData: any,proveedor: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostAddCoincidencias+'/'+proveedor, formData);
+  }
+
+  postAddProductTor(formData: any, linea: string, proveedor: string): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostAddProductTor+'/'+linea+'/'+proveedor, formData);
   }
 
   //Datos entre componentes

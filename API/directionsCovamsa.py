@@ -523,5 +523,38 @@ def getTornilleriaCostos():
     except Exception as e:
         print("Error Get Tornilleria ID: ",e)
 
+@app.route('/cvm/verificarCoincidencias/<proveedor>', methods=['POST'])
+def postVerificarCoincidencias(proveedor):
+    try:
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnPostVerificarCoincidencias(filename,proveedor)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error al Verificar: ",e)
+
+@app.route('/cvm/addCoincidencias/<proveedor>', methods=['POST'])
+def postAddCoincidencias(proveedor):
+    try:
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnPostAddCoincidencias(filename,proveedor)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error al Añadir: ",e)
+
+@app.route('/cvm/addProductTor/<linea>/<proveedor>', methods=['POST'])
+def postAddProductoTor(linea,proveedor):
+    try:
+        file = request.files['file']
+        file.save(file.filename)
+        filename = file.filename
+        objResult = callMethod.fnPostAddProductoTor(filename,linea,proveedor)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error al Añadir: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

@@ -21,7 +21,7 @@
 
     <div class="col-sm-2 py-4">
       <div class="card mb-3">
-          <img src="assets/carro.png" class="card-img-top py-2" alt="...">
+          <img src="assets/coche.gif" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Ligero</h3>
             <a href="/servicioLigero" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
@@ -51,7 +51,7 @@
 
     <div class="col-sm-2 py-4" *ngIf="isMaster()">
       <div class="card mb-3">
-          <img src="assets/ajuste.png" class="card-img-top py-2" alt="...">
+          <img src="assets/opciones.gif" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Administrador</h3>
             <a href="/adminMenu" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
@@ -61,9 +61,9 @@
 </div>
 
 <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'ventas' && getUser() != 'admin'">
-  <div class="col-sm-2 py-4">
+  <div class="col-sm-2 py-4" *ngIf="isMaster()">
       <div class="card mb-3">
-          <img src="assets/tornillo.png" class="card-img-top py-2" alt="...">
+          <img src="assets/bolsa-de-dinero.gif" class="card-img-top py-2" alt="...">
           <div class="card-body">
             <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis de Precios</h3>
             <a href="/tornilleria" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
@@ -73,7 +73,7 @@
 
   <div class="col-sm-2 py-4">
     <div class="card mb-3">
-        <img src="assets/cotizador.png" class="card-img-top py-2" alt="...">
+        <img src="assets/documento.gif" class="card-img-top py-2" alt="...">
         <div class="card-body">
           <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
           <a href="/menuCotizadores" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>

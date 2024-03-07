@@ -119,6 +119,27 @@ export class ExcelService {
     }else if(tipo == 'Cotizadores'){
       const headers = ['CLAVE',	'DESCRIPCION',	'Pza. Caja',	'DESC',	'COSTO',	'P. LISTA'];
       worksheet.addRow(headers);
+    }else if(tipo == 'coincidenciasVerificar'){
+      const headers = ['CLAVE'];
+      worksheet.addRow(headers);
+    }else if(tipo == 'coincidenciasAdd'){
+      const headers = ['CLAVE', 'Nombre','idCovamsa'];
+      worksheet.addRow(headers);
+
+      worksheet.columns = [
+        { width: 20 },
+        { width: 80 },
+        { width: 20 }
+      ];
+    }else if(tipo == 'addProdTor'){
+      const headers = ['idCovamsa', 'Descripcion', 'Clave Proveedor'];
+      worksheet.addRow(headers);
+
+      worksheet.columns = [
+        { width: 20 },
+        { width: 80 },
+        { width: 20 }
+      ];
     }
 
     workbook.xlsx.writeBuffer().then((buffer: any) => {
@@ -157,6 +178,32 @@ export class ExcelService {
     workbook.xlsx.writeBuffer().then((buffer: any) => {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, `Analisis de Costos ${fechaString}.xlsx`);
+    });
+  }
+
+  crearExcelNoCoincidencia(data: any[], headers: any[]){
+    const fecha = new Date();
+    const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('No Coinciden '+ fechaString);
+
+    worksheet.addRow(headers);
+
+    data.forEach((item) => {
+      const row:any = [];
+      row.push(item['CLAVE'], item['Nombre']);
+      worksheet.addRow(row);
+    });
+
+    worksheet.columns = [
+      { width: 20 },
+      { width: 80 }
+    ];
+
+    workbook.xlsx.writeBuffer().then((buffer: any) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, `No Coincidencias ${fechaString}.xlsx`);
     });
   }
 }

@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center py-2">
+    <div class="containerFile">
+        <form class="formFile">
+            <div class="form-group">
+                <label for="archivo" class="labelFile">Verificar Coincidencias</label>
+                <mat-form-field class="inputID">
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select [formControl]="Proveedor">
+                        <mat-option *ngFor="let opcion of nomProv" [value]="opcion">{{opcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <input type="file" id="archivo" class="inputFile" accept=".xlsx" (change)="seleccionarArchivoVerificar($event)" />
+            </div>
+            <button type="submit" class="btnFile" (click)="subirArchivoVerificar($event)">Comprobar Coincidencias</button>
+            <button class="btnPlantilla" (click)="crearPlantilla('coincidenciasVerificar')">Plantilla</button>
+        </form>
+    </div>
+
+    <div class="containerFile">
+        <form class="formFile">
+            <div class="form-group">
+                <label for="archivo" class="labelFile">Añadir Nuevas Coincidencias</label>
+                <mat-form-field class="inputID">
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select [formControl]="Proveedor">
+                        <mat-option *ngFor="let opcion of nomProv" [value]="opcion">{{opcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <input type="file" id="archivo" class="inputFile" accept=".xlsx" (change)="seleccionarArchivoAnadir($event)" />
+            </div>
+            <button type="submit" class="btnFile" (click)="subirArchivoAnadir($event)">Añadir Coincidencias</button>
+            <button class="btnPlantilla" (click)="crearPlantilla('coincidenciasAdd')">Plantilla</button>
+        </form>
+    </div>
+
+    <div class="containerFile">
+        <form class="formFile">
+            <div class="form-group">
+                <label for="archivo" class="labelFile">Añadir Productos Tornilleria</label>
+                <mat-form-field class="inputID">
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select [formControl]="Proveedor">
+                        <mat-option *ngFor="let opcion of nomProv" [value]="opcion">{{opcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="inputID">
+                    <mat-label>Linea</mat-label>
+                    <mat-select [formControl]="Linea">
+                        <mat-option *ngFor="let opcion of lineas" [value]="opcion">{{opcion}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <input type="file" id="archivo" class="inputFile" accept=".xlsx" (change)="seleccionarArchivoAddProduct($event)" />
+            </div>
+            <button type="submit" class="btnFile" (click)="subirArchivoAddProduct($event)">Añadir Productos</button>
+            <button class="btnPlantilla" (click)="crearPlantilla('addProdTor')">Plantilla</button>
+        </form>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="mostrarSpinner">
+    <div class="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>

@@ -1329,4 +1329,138 @@ def fnGetTornilleriaCostos(idCovamsa, linea, arrayProveedores):
 		return {'intStatus':200, 'strAnswer': response}
 	except Exception as e:
 		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+	
+def fnPostVerificarCoincidencias(filename, proveedor):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+
+		datosExcel = []
+		data = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Plantilla'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			if fila[hoja_trabajo[f"{columnasDeseadas[0]}1"].column - 1] != None:
+				datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+				datosExcel.append(datosfila)
+
+		for fila in datosExcel:
+			params = (
+				fila[0],
+				proveedor
+			)
+			cursor.callproc('postVerificarCoincidencias',params)
+			response = cursor.fetchall()
+			if(response[0]['idCovamsa'] == None):
+				aux = {
+					"CLAVE": fila[0],
+					"Nombre": response[0]['Nombre'],
+				}
+				data.append(aux)
+		print(data)
+		archivo_excel.close()
+		os.remove(filename)
+		return {'intStatus':200, 'strAnswer': data}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnPostAddCoincidencias(filename,proveedor):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+
+		datosExcel = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Plantilla'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A','C']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			if fila[hoja_trabajo[f"{columnasDeseadas[0]}1"].column - 1] != None:
+				datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+				datosExcel.append(datosfila)
+
+		for fila in datosExcel:
+			params = (
+				fila[0],
+				proveedor,
+				fila[1]
+			)
+			cursor.callproc('postAddCoincidencias',params)
+
+		MysqlCnx.commit()
+		archivo_excel.close()
+		os.remove(filename)
+
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnPostAddProductoTor(filename,linea,proveedor):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+
+		datosExcel = []
+		archivo_excel = openpyxl.load_workbook(filename)
+		nombreHoja = 'Plantilla'
+		hoja_trabajo = archivo_excel[nombreHoja]
+
+		columnasDeseadas = ['A','B','C']
+
+		for fila in archivo_excel[nombreHoja].iter_rows(min_row=2,values_only=True):
+			if fila[hoja_trabajo[f"{columnasDeseadas[0]}1"].column - 1] != None:
+				datosfila = [fila[hoja_trabajo[f"{col}1"].column - 1] for col in columnasDeseadas]
+				datosExcel.append(datosfila)
+
+		for fila in datosExcel:
+			params = (
+				fila[0], #idCovamsa
+				fila[1], #Descripcion
+				linea, #Linea
+				fila[2], #Clave
+				proveedor	 #Proveedor
+			)
+			cursor.callproc('postAddProductTor',params)
+
+		MysqlCnx.commit()
+		archivo_excel.close()
+		os.remove(filename)
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
 
