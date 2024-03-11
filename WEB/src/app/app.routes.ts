@@ -21,6 +21,7 @@ import { CotizadorComponent } from './components/cotizador/cotizador.component';
 import { CotizadoresComponent } from './components/menus/cotizadores/cotizadores.component';
 import { AnalisistornilleriaComponent } from './components/analisistornilleria/analisistornilleria.component';
 import { AddTorComponent } from './components/adds/add-tor/add-tor.component';
+import { RelacionHerramientaComponent } from './components/relacion-herramienta/relacion-herramienta.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -49,5 +50,6 @@ export const routes: Routes = [
     { path: 'cotizador/:nombre/:id', component: CotizadorComponent, canActivate: [AuthGuard] },
     { path: 'cotizadores/:tipo', component: CotizadoresComponent, canActivate: [AuthGuard] },
     { path: 'analisisTornilleria', component: AnalisistornilleriaComponent, canActivate: [AuthGuard] },
-    { path: 'addTor', component: AddTorComponent, canActivate: [AuthGuard] }
+    { path: 'addTor', component: AddTorComponent, canActivate: [AuthGuard] },
+    { path: 'relacionHerra', component: RelacionHerramientaComponent, canActivate: [AuthGuard] },
 ];

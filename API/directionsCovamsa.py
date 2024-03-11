@@ -556,5 +556,15 @@ def postAddProductoTor(linea,proveedor):
     except Exception as e:
         print("Error al Añadir: ",e)
 
+@app.route('/cvm/getProdHerramientasProv', methods=['POST'])
+def getProdHerramientasProv():
+    try:
+        tabla = request.json['tabla'] if ('tabla' in request.json) else None
+        descripcion = request.json['descripcion'] if ('descripcion' in request.json) else None
+        objResult = callMethod.fnGetProdHerramientasProv(tabla,descripcion)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Prod Herramientas Prov: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

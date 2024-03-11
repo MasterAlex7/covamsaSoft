@@ -31,7 +31,7 @@
                 <a [routerLink]="['/addSL','add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
                 <a href="/servicioLigero" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
                 <a (click)="crearPlantilla('SL')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-        </div>
+            </div>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
                 <a [routerLink]="['/addMue', 'add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
                 <a href="/menuMuelles" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
                 <a (click)="crearPlantilla('Muelles')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-        </div>
+            </div>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
                 <a [routerLink]="['/addRefa', 'add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
                 <a href="/menuRefacciones" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
                 <a (click)="crearPlantilla('Refacciones')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-        </div>
+            </div>
         </div>
     </div>
 
@@ -65,7 +65,7 @@
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
                 <a (click)="crearPlantilla('Cotizadores')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-        </div>
+            </div>
         </div>
     </div>
 
@@ -76,6 +76,17 @@
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Coincidencias</h3>
                 <a href="/addTor" class="d-flex justify-content-center btn btn-success mt-1">Ver Mas</a>
             </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4">
+        <div class="card mb-3">
+            <img src="assets/relaciones.gif" class="card-img-top py-2" alt="...">
+            <div class="card-body">
+                <h3 class="card-title d-flex justify-content-center fw-bolder">Relacionar Herramientas</h3>
+                <a href="/relacionHerra" class="d-flex justify-content-center btn btn-success mt-1">Ver Mas</a>
             </div>
         </div>
+    </div>
+
 </div>

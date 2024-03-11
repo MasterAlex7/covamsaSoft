@@ -1,0 +1,48 @@
+<mat-dialog-content>
+    <h2 mat-dialog-title>Agregar Partida</h2>
+    <div class="container d-flex">
+        <mat-form-field class="mx-2 containerProv">
+            <mat-label>Proveedor</mat-label>
+            <mat-select [formControl]="Proveedor">
+                <mat-option *ngFor="let opcion of nomProveedores" [value]="opcion">{{ opcion }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field class="mx-2 containerDesc">
+            <mat-label>Descripcion</mat-label>
+            <input matInput [formControl]="Descripcion" (keydown.enter)="buscar()">
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" (click)="buscar()">Buscar</button>
+    </div>
+    <br>
+    <div class="containerTable">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="Seleccion">
+                <th mat-header-cell *matHeaderCellDef>Seleccion</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox (change)="addProducto($event,element)"></mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Codigo">
+              <th mat-header-cell *matHeaderCellDef>Codigo</th>
+              <td mat-cell *matCellDef="let element">{{element.CLAVE}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="Descripcion">
+              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+              <td mat-cell *matCellDef="let element">{{element.Descripcion}}</td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button mat-dialog-close (click)="agregar()">Guardar</button>
+</mat-dialog-actions>

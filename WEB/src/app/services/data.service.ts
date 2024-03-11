@@ -66,6 +66,8 @@ export class DataService {
   private apiUrlPostAddCoincidencias = 'http://'+ip+':'+port+path+'addCoincidencias';
   private apiUrlPostAddProductTor = 'http://'+ip+':'+port+path+'addProductTor';
 
+  private apiUrlGetProdHerramientasProv = 'http://'+ip+':'+port+path+'getProdHerramientasProv';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -241,6 +243,10 @@ export class DataService {
     return this.http.post<any>(this.apiUrlPostAddProductTor+'/'+linea+'/'+proveedor, formData);
   }
 
+  getProdHerramientasProv(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetProdHerramientasProv, datos);
+  }
+
   //Datos entre componentes
 
   private modelosSubject = new BehaviorSubject<string[]>([]);
@@ -255,5 +261,12 @@ export class DataService {
 
   enviarAnalisis(datos: {}): void {
     this.datosAnalisis.next(datos);
+  }
+
+  private datosRelaciones = new BehaviorSubject<{}>({});
+  datosRelacionesActuales = this.datosRelaciones.asObservable();
+
+  enviarRelaciones(datos: {}): void {
+    this.datosRelaciones.next(datos);
   }
 }

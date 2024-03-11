@@ -1370,7 +1370,6 @@ def fnPostVerificarCoincidencias(filename, proveedor):
 					"Nombre": response[0]['Nombre'],
 				}
 				data.append(aux)
-		print(data)
 		archivo_excel.close()
 		os.remove(filename)
 		return {'intStatus':200, 'strAnswer': data}
@@ -1464,3 +1463,28 @@ def fnPostAddProductoTor(filename,linea,proveedor):
 	finally:
 		MysqlCnx.close()
 
+def fnGetProdHerramientasProv(tabla,descripcion):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			tabla,
+			descripcion
+		)
+		cursor.callproc('getProdHerramientasProv',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
