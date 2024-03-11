@@ -566,5 +566,15 @@ def getProdHerramientasProv():
     except Exception as e:
         print("Error Get Prod Herramientas Prov: ",e)
 
+@app.route('/cvm/postHerramientasRelacion', methods=['POST'])
+def postHerramientasRelacion():
+    try:
+        descripcion = request.json['descripcion'] if ('descripcion' in request.json) else None
+        datos = request.json['data'] if ('data' in request.json) else None
+        objResult = callMethod.fnPostHerramientasRelacion(descripcion,datos)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Post Herramientas Relacion: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

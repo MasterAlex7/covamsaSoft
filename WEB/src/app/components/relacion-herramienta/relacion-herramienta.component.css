@@ -8,3 +8,16 @@
     margin-left: 1%;
     margin-right: 1%;
 }
+
+.sideNavCont{
+    background-color: white;
+}
+
+mat-drawer-container{
+    height: 85.5%;
+}
+
+mat-drawer-content{
+    max-height: fit-content;
+    overflow-y: auto;
+}

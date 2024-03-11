@@ -67,6 +67,7 @@ export class DataService {
   private apiUrlPostAddProductTor = 'http://'+ip+':'+port+path+'addProductTor';
 
   private apiUrlGetProdHerramientasProv = 'http://'+ip+':'+port+path+'getProdHerramientasProv';
+  private apiUrlPostRelacionHerramientas = 'http://'+ip+':'+port+path+'postHerramientasRelacion';
 
   constructor(private http: HttpClient) { }
 
@@ -245,6 +246,10 @@ export class DataService {
 
   getProdHerramientasProv(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetProdHerramientasProv, datos);
+  }
+
+  postRelacionHerramientas(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPostRelacionHerramientas, datos);
   }
 
   //Datos entre componentes

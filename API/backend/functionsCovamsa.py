@@ -1488,3 +1488,33 @@ def fnGetProdHerramientasProv(tabla,descripcion):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnPostHerramientasRelacion(descripcion,datos):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			descripcion,
+		)
+		cursor.callproc('postAddHerramientas',params)
+		id = cursor.fetchall()
+		for dato in datos:
+			params = (
+				id[0]['id'],
+				dato['CLAVE'],
+				dato['proveedor']
+			)
+			cursor.callproc('postAddRelacionHerra',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

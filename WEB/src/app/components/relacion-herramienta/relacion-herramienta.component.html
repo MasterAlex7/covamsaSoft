@@ -1,24 +1,14 @@
-<div class="containerTop">
-    <div>
-        <button mat-raised-button color="primary" class="btnID" (click)="nuevaPartida()">Nuevo Proveedor</button>
-    </div>
-</div>
+<mat-drawer-container>
+    <mat-drawer #drawer mode="over">
+        <div class="py-2 mx-2">
+            <div class="row mx-2 py-2 d-flex justify-content-center">
+                <mat-form-field class="mx-2">
+                    <mat-label>Descripcion Unificada</mat-label>
+                    <input matInput [formControl]="desUnificada">
+                </mat-form-field>
+            </div>
 
-<div class="row mx-5 py-5 d-flex justify-content-center">
-    <mat-card class="col-sm-5 py-6 cardPart" *ngFor="let partida of Partidas; let i = index">
-        <mat-card-content>
-            <mat-card-title>
-                <h2>Proveedor {{partida.proveedor}}</h2>
-            </mat-card-title>
-
-            <table mat-table *ngIf="partida.datos.length" [dataSource]="partida.datos" class="mat-elevation-z8">
-                <ng-container matColumnDef="Seleccion">
-                    <th mat-header-cell *matHeaderCellDef>Seleccion</th>
-                    <td mat-cell *matCellDef="let element">
-                        <mat-checkbox (change)="addProduct($event,partida.proveedor,element.CLAVE,element.Descripcion)"></mat-checkbox>
-                    </td>
-                </ng-container>
-
+            <table mat-table [dataSource]="dataEnviar" class="mat-elevation-z8">
                 <ng-container matColumnDef="Codigo">
                   <th mat-header-cell *matHeaderCellDef> Codigo </th>
                   <td mat-cell *matCellDef="let element"> {{element.CLAVE}} </td>
@@ -28,10 +18,68 @@
                   <th mat-header-cell *matHeaderCellDef> Descripcion </th>
                   <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="Proveedor">
+                    <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+                    <td mat-cell *matCellDef="let element"> {{element.proveedor}} </td>
+                </ng-container>
             
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
-        </mat-card-content>
-    </mat-card>
-</div>
+        </div>
+
+        <div class="d-flex justify-content-center py-2 mx-2">
+            <button mat-raised-button color="primary" class="btnID" (click)="guardarRelacion()">Guardar Relacion</button>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="column d-flex mx-2 py-2 justify-content-between">
+            <button mat-raised-button color="primary" class="btnID" (click)="nuevaPartida()">Nuevo Proveedor</button>
+            <button mat-raised-button color="primary" class="btnID" (click)="drawer.toggle()">Agregar Relacion</button>
+        </div>
+        
+        <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="Partidas.length > 0; else noPartidas">
+            <mat-card class="col-sm-5 py-6 cardPart" *ngFor="let partida of Partidas; let i = index">
+                <mat-card-content>
+                    <mat-card-title>
+                        <h2>Proveedor {{partida.proveedor}}</h2>
+                    </mat-card-title>
+        
+                    <table mat-table *ngIf="partida.datos.length" [dataSource]="partida.datos" class="mat-elevation-z8">
+                        <ng-container matColumnDef="Seleccion">
+                            <th mat-header-cell *matHeaderCellDef>Seleccion</th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-checkbox (change)="addProduct($event,partida.proveedor,element.CLAVE,element.Descripcion)"></mat-checkbox>
+                            </td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="Codigo">
+                          <th mat-header-cell *matHeaderCellDef> Codigo </th>
+                          <td mat-cell *matCellDef="let element"> {{element.CLAVE}} </td>
+                        </ng-container>
+                    
+                        <ng-container matColumnDef="Descripcion">
+                          <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                          <td mat-cell *matCellDef="let element"> {{element.Descripcion}} </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <ng-template #noPartidas>
+            <div class="row mx-5 py-5 d-flex justify-content-center">
+                <mat-card>
+                    <mat-card-title>
+                        <h2>Sin Partidas</h2>
+                    </mat-card-title>
+                </mat-card>
+            </div>
+        </ng-template>
+
+    </mat-drawer-content>
+</mat-drawer-container>
