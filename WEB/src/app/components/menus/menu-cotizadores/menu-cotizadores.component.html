@@ -29,6 +29,16 @@
         </div>
     </div>
 
+    <div class="col-sm-2 py-4">
+        <div class="card mb-3">
+            <img src="assets/herramientas.png" class="card-img-top py-2" alt="...">
+            <div class="card-body">
+                <h3 class="card-title d-flex justify-content-center fw-bolder">Buscar Heramientas</h3>
+                <a [routerLink]="['/herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+
     <div class="col-sm-2 py-4" *ngIf="getUser() === 'master'">
         <div class="card mb-3">
             <img src="assets/investigacion.png" class="card-img-top py-2" alt="...">

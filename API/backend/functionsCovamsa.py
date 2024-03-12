@@ -1478,10 +1478,25 @@ def fnGetProdHerramientasProv(tabla,descripcion):
 			tabla,
 			descripcion
 		)
+		answer = []
 		cursor.callproc('getProdHerramientasProv',params)
 		response = cursor.fetchall()
+
+		for resp in response:
+			params = (
+				resp['CLAVE'],
+			)
+			cursor.callproc('comprobarHerramienta',params)
+			response2 = cursor.fetchall()
+			if response2[0]['clave_existente'] != 1:
+				aux = {
+					"CLAVE": resp['CLAVE'],
+					"Descripcion": resp['Descripcion']
+				}
+				answer.append(aux)
+
 		if response:
-			return {'intStatus':200, 'strAnswer': response}
+			return {'intStatus':200, 'strAnswer': answer}
 		else:
 			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
 	except Exception as e:
@@ -1514,6 +1529,40 @@ def fnPostHerramientasRelacion(descripcion,datos):
 			cursor.callproc('postAddRelacionHerra',params)
 		MysqlCnx.commit()
 		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetHerramientasCoincidencia(CLAVE):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			CLAVE,
+		)
+		cursor.callproc('getHerramientaID',params)
+		id = cursor.fetchall()
+
+		if id:
+			params = (
+				id[0]['idCovamsa'],
+			)
+			cursor.callproc('getHerramientasCoincidencia',params)
+			response = cursor.fetchall()
+			if response:
+				return {'intStatus':200, 'strAnswer': response}
+			else:
+				return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
 	except Exception as e:
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:

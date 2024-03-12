@@ -15,7 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import Swal from 'sweetalert2';
 import { DataRelacion } from '../../interfaces/data-relacion';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 interface DataRelaciones{
   datos: DataRelacion[];
