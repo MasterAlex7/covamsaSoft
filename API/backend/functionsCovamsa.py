@@ -1567,3 +1567,28 @@ def fnGetHerramientasCoincidencia(CLAVE):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnPutHerramientasCoincidencia(idCovamsa,Proveedor,CLAVE):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		
+		params = (
+			idCovamsa,
+			CLAVE,
+			Proveedor
+		)
+		cursor.callproc('putHerramientasCoincidencia',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

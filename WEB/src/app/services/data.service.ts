@@ -69,6 +69,7 @@ export class DataService {
   private apiUrlGetProdHerramientasProv = 'http://'+ip+':'+port+path+'getProdHerramientasProv';
   private apiUrlPostRelacionHerramientas = 'http://'+ip+':'+port+path+'postHerramientasRelacion';
   private apiUrlGetHerramientaCoincidencia = 'http://'+ip+':'+port+path+'getHerramientasCoincidencia';
+  private apiUrlPutHerramientaCoincidencia = 'http://'+ip+':'+port+path+'putHerramientasCoincidencia';
 
   constructor(private http: HttpClient) { }
 
@@ -255,6 +256,10 @@ export class DataService {
 
   getHerramientaCoincidencia(CLAVE: string): Observable<any> {
     return this.http.get<any>(this.apiUrlGetHerramientaCoincidencia+'/'+CLAVE);
+  }
+
+  putHerramientaCoincidencia(datos: any): Observable<any> {
+    return this.http.put<any>(this.apiUrlPutHerramientaCoincidencia, datos);
   }
 
   //Datos entre componentes

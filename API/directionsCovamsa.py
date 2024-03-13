@@ -584,5 +584,16 @@ def getHerramientasCoincidencia(CLAVE):
     except Exception as e:
         print("Error Get Herramientas Coincidencia: ",e)
 
+@app.route('/cvm/putHerramientasCoincidencia', methods=['PUT'])
+def putHerramientasCoincidencia():
+    try:
+        idCovamsa = request.json['idCovamsa'] if ('idCovamsa' in request.json) else None
+        Proveedor = request.json['Proveedor'] if ('Proveedor' in request.json) else None
+        CLAVE = request.json['CLAVE'] if ('CLAVE' in request.json) else None
+        objResult = callMethod.fnPutHerramientasCoincidencia(idCovamsa,Proveedor,CLAVE)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Put Herramientas Coincidencia: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
