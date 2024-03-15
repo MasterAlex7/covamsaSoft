@@ -788,7 +788,7 @@ def fnAddProductMue(filename):
 		
 		datosExcel = []
 		archivo_excel = openpyxl.load_workbook(filename)
-		nombreHoja = 'Hoja1'
+		nombreHoja = 'Plantilla'
 		hoja_trabajo = archivo_excel[nombreHoja]
 
 		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L']
@@ -976,7 +976,7 @@ def fnAddProductRefa(filename):
 		
 		datosExcel = []
 		archivo_excel = openpyxl.load_workbook(filename)
-		nombreHoja = 'Hoja1'
+		nombreHoja = 'Plantilla'
 		hoja_trabajo = archivo_excel[nombreHoja]
 
 		columnasDeseadas = ['A','B','C','D','E','F','G','H','I','J','K','L','M']
@@ -1184,7 +1184,7 @@ def fnPostNuevoCatalogo(filename,table):
 
 		datosExcel = []
 		archivo_excel = openpyxl.load_workbook(filename)
-		nombreHoja = 'Hoja1'
+		nombreHoja = 'Plantilla'
 		hoja_trabajo = archivo_excel[nombreHoja]
 
 		columnasDeseadas = ['A','B','C','D','E','F']
@@ -1588,6 +1588,32 @@ def fnPutHerramientasCoincidencia(idCovamsa,Proveedor,CLAVE):
 		cursor.callproc('putHerramientasCoincidencia',params)
 		MysqlCnx.commit()
 		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnGetDescripcionBarcode(clave,tabla):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		params = (
+			tabla,
+			clave
+		)
+		cursor.callproc('getDescripcionBarcode',params)
+		response = cursor.fetchall()
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
 	except Exception as e:
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:

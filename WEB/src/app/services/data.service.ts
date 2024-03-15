@@ -71,6 +71,8 @@ export class DataService {
   private apiUrlGetHerramientaCoincidencia = 'http://'+ip+':'+port+path+'getHerramientasCoincidencia';
   private apiUrlPutHerramientaCoincidencia = 'http://'+ip+':'+port+path+'putHerramientasCoincidencia';
 
+  private apiUrlGetDescripcionBarcode = 'http://'+ip+':'+port+path+'getDescripcionBarcode';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -260,6 +262,10 @@ export class DataService {
 
   putHerramientaCoincidencia(datos: any): Observable<any> {
     return this.http.put<any>(this.apiUrlPutHerramientaCoincidencia, datos);
+  }
+
+  getDescripcionBarcode(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetDescripcionBarcode, datos);
   }
 
   //Datos entre componentes

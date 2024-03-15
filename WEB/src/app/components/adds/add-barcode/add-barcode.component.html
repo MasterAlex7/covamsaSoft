@@ -1,0 +1,23 @@
+<div class="py-2 mx-2 d-flex">
+    <mat-form-field class="mx-2">
+        <mat-label>Tipo</mat-label>
+        <mat-select [formControl]="Tipo">
+          <mat-option *ngFor="let opcion of Tipos" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mx-2 idInput">
+        <mat-label>CLAVE</mat-label>
+        <input matInput [formControl]="id" (keydown.enter)="generar()">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="generar()">Generar</button>
+    <button mat-raised-button color="primary" (click)="print()">Print</button>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div id="barcode2">
+        <h2 class="d-flex justify-content-center">{{this.descripcion}}</h2>
+        <img id="barcode" (load)="escalarDiv()">
+    </div>
+</div>

@@ -23,6 +23,7 @@ import { AnalisistornilleriaComponent } from './components/analisistornilleria/a
 import { AddTorComponent } from './components/adds/add-tor/add-tor.component';
 import { RelacionHerramientaComponent } from './components/relacion-herramienta/relacion-herramienta.component';
 import { HerramientasComponent } from './components/herramientas/herramientas.component';
+import { AddBarcodeComponent } from './components/adds/add-barcode/add-barcode.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -53,5 +54,6 @@ export const routes: Routes = [
     { path: 'analisisTornilleria', component: AnalisistornilleriaComponent, canActivate: [AuthGuard] },
     { path: 'addTor', component: AddTorComponent, canActivate: [AuthGuard] },
     { path: 'relacionHerra', component: RelacionHerramientaComponent, canActivate: [AuthGuard] },
-    { path: 'herramientas', component: HerramientasComponent, canActivate: [AuthGuard] }
+    { path: 'herramientas', component: HerramientasComponent, canActivate: [AuthGuard] },
+    { path: 'addBarcode', component: AddBarcodeComponent, canActivate: [AuthGuard] }
 ];

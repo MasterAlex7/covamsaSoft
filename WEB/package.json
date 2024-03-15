@@ -26,6 +26,7 @@
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "jquery": "^3.7.1",
+    "jsbarcode": "^3.11.6",
     "jspdf": "^2.5.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.10.4",

@@ -595,5 +595,15 @@ def putHerramientasCoincidencia():
     except Exception as e:
         print("Error Put Herramientas Coincidencia: ",e)
 
+@app.route('/cvm/getDescripcionBarcode', methods=['POST'])
+def getDescripcionBarcode():
+    try:
+        tabla = request.json['tabla'] if ('tabla' in request.json) else None
+        clave = request.json['clave'] if ('clave' in request.json) else None
+        objResult = callMethod.fnGetDescripcionBarcode(clave,tabla)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Descripcion Barcode: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
