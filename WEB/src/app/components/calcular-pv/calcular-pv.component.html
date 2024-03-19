@@ -1,0 +1,70 @@
+<div class="py-2 mx-2 d-flex justify-content-between">
+    <div>
+        <mat-form-field class="mx-2 containerProv">
+            <mat-label>Tipo</mat-label>
+            <mat-select [formControl]="Tipo">
+                <mat-option *ngFor="let opcion of tipos" [value]="opcion">{{ opcion }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mx-2 containerProv">
+            <mat-label>Proveedor</mat-label>
+            <mat-select [formControl]="Proveedor">
+                <mat-option *ngFor="let opcion of nomProveedor" [value]="opcion">{{ opcion }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="option">
+            <mat-radio-button value="Descripcion">Descripcion</mat-radio-button>
+            <mat-radio-button value="Codigo">Codigo</mat-radio-button>
+        </mat-radio-group>
+    
+        <mat-form-field class="mx-2" *ngIf="option == 'Descripcion'">
+            <mat-label>Descripcion</mat-label>
+            <input matInput [formControl]="Descripcion">
+        </mat-form-field>
+    
+        <mat-form-field class="mx-2" *ngIf="option == 'Codigo'">
+            <mat-label>Codigo</mat-label>
+            <input matInput [formControl]="Codigo">
+        </mat-form-field>
+    
+        <button mat-raised-button color="accent" (click)="buscar()" *ngIf="option != ''">Buscar</button>
+    </div>
+
+    <div>
+        <mat-form-field class="mx-2">
+            <mat-label>% Utilidad</mat-label>
+            <input matInput [formControl]="Utilidad">
+        </mat-form-field>
+    
+        <button mat-raised-button color="accent" (click)="crearExcel()">Crear Excel</button>
+    </div>
+</div>
+
+<div class="tableCont">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="Codigo">
+            <th mat-header-cell *matHeaderCellDef>Codigo</th>
+            <td mat-cell *matCellDef="let element">{{element.CLAVE}}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="Descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+            <td mat-cell *matCellDef="let element">{{element.Descripcion}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Costo">
+            <th mat-header-cell *matHeaderCellDef> Costo </th>
+            <td mat-cell *matCellDef="let element">{{element.Costo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="PrecioVenta">
+            <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
+            <td mat-cell *matCellDef="let element">{{element.PrecioVenta}}</td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

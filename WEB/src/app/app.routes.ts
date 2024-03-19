@@ -24,6 +24,7 @@ import { AddTorComponent } from './components/adds/add-tor/add-tor.component';
 import { RelacionHerramientaComponent } from './components/relacion-herramienta/relacion-herramienta.component';
 import { HerramientasComponent } from './components/herramientas/herramientas.component';
 import { AddBarcodeComponent } from './components/adds/add-barcode/add-barcode.component';
+import { CalcularPVComponent } from './components/calcular-pv/calcular-pv.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -55,5 +56,6 @@ export const routes: Routes = [
     { path: 'addTor', component: AddTorComponent, canActivate: [AuthGuard] },
     { path: 'relacionHerra', component: RelacionHerramientaComponent, canActivate: [AuthGuard] },
     { path: 'herramientas', component: HerramientasComponent, canActivate: [AuthGuard] },
-    { path: 'addBarcode', component: AddBarcodeComponent, canActivate: [AuthGuard] }
+    { path: 'addBarcode', component: AddBarcodeComponent, canActivate: [AuthGuard] },
+    { path: 'calcularPV', component: CalcularPVComponent, canActivate: [AuthGuard] }
 ];

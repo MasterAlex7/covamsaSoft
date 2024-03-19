@@ -11,6 +11,26 @@
 
     <div class="col-sm-2 py-4">
         <div class="card mb-3">
+            <img src="assets/herramientas.png" class="card-img-top py-2" alt="...">
+            <div class="card-body">
+                <h3 class="card-title d-flex justify-content-center fw-bolder">Buscar Heramientas</h3>
+                <a [routerLink]="['/herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4">
+        <div class="card mb-3">
+            <img src="assets/calculadora.gif" class="card-img-top py-2" alt="...">
+            <div class="card-body">
+                <h3 class="card-title d-flex justify-content-center fw-bolder">Calcular Precio Venta</h3>
+                <a [routerLink]="['/calcularPV']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4">
+        <div class="card mb-3">
             <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles Cotizador</h3>
@@ -25,16 +45,6 @@
             <div class="card-body">
                 <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria Cotizador</h3>
                 <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Tornilleria')">Ver Mas</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/herramientas.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Buscar Heramientas</h3>
-                <a [routerLink]="['/herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
             </div>
         </div>
     </div>
