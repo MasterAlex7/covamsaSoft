@@ -605,5 +605,16 @@ def getDescripcionBarcode():
     except Exception as e:
         print("Error Get Descripcion Barcode: ",e)
 
+@app.route('/cvm/getProductosProv', methods=['POST'])
+def getProductosProv():
+    try:
+        tabla = request.json['tabla'] if ('tabla' in request.json) else None
+        datos = request.json['datos'] if ('datos' in request.json) else None
+        tipoBusqueda = request.json['tipoBusqueda'] if ('tipoBusqueda' in request.json) else None
+        objResult = callMethod.fnGetProductosProv(tabla,datos,tipoBusqueda)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Productos Prov: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

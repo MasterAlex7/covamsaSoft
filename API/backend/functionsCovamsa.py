@@ -1618,3 +1618,41 @@ def fnGetDescripcionBarcode(clave,tabla):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetProductosProv(tabla,datos,tipoBusqueda):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		response = []
+		if tipoBusqueda == "Codigo":
+			params = (
+				tabla,
+				datos
+			)
+			cursor.callproc('getProductoProvClave',params)
+			response = cursor.fetchall()
+		elif tipoBusqueda == "Descripcion":
+			params = (
+				tabla,
+				datos
+			)
+			cursor.callproc('getProductoProvDesc',params)
+			response = cursor.fetchall()
+		else:
+			return {'intStatus':202, 'strAnswer': 'Tipo de busqueda no valido.'}
+
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

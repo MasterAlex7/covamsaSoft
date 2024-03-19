@@ -206,4 +206,33 @@ export class ExcelService {
       saveAs(blob, `No Coincidencias ${fechaString}.xlsx`);
     });
   }
+
+  crearExcelPrecioVenta(data: any[], headers: any[]){
+    const fecha = new Date();
+    const fechaString = fecha.toLocaleDateString("es-MX", {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\//g, "-");
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Precio de Venta '+ fechaString);
+
+    worksheet.addRow(headers);
+
+    data.forEach((item) => {
+      const row:any = [];
+      headers.forEach((header) => {
+        row.push(item[header]);
+      });
+      worksheet.addRow(row);
+    });
+
+    worksheet.columns = [
+      { width: 20 },
+      { width: 80 },
+      { width: 20 },
+    ];
+
+    workbook.xlsx.writeBuffer().then((buffer: any) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, `Precio de Venta ${fechaString}.xlsx`);
+    });
+  }
 }

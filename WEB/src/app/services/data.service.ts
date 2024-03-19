@@ -73,6 +73,8 @@ export class DataService {
 
   private apiUrlGetDescripcionBarcode = 'http://'+ip+':'+port+path+'getDescripcionBarcode';
 
+  private apiUrlGetProductosProv = 'http://'+ip+':'+port+path+'getProductosProv';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -266,6 +268,10 @@ export class DataService {
 
   getDescripcionBarcode(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetDescripcionBarcode, datos);
+  }
+
+  getProductosProv(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetProductosProv, datos);
   }
 
   //Datos entre componentes
