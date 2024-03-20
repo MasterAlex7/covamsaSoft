@@ -246,11 +246,48 @@
         </a>
       </div>
 
+      <!-- Menu de Cotizadores Componente-->
       <div *ngIf="getUser() === 'compras' || getUser() === 'master'">
-        <a mat-list-item href="/menuCotizadores">
-          <img src="assets/Icons/cotizadoresIcon.png" alt="">
-          Cotizadores
-        </a>
+        <mat-list-item (click)="toggleSubmenu('cotizadores')">
+          <span>
+            <img src="assets/Icons/cotizadoresIcon.png" alt="">
+            Cotizadores
+            <mat-icon class="py-2">{{ isSubmenuOpen('cotizadores') ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </span>
+        </mat-list-item>
+        <div *ngIf="isSubmenuOpen('cotizadores')" style="margin-left: 10%;">
+          <a mat-list-item [routerLink]="['/cotizadores', 'Herramientas']" (click)="setType('Herramientas')">
+            <img src="assets/Icons/herramientaIcon.png" alt="">
+            Herramientas Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/cotizadores', 'Muelles']" (click)="setType('Muelles')">
+            <img src="assets/Icons/mueIcon.png" alt="">
+            Muelles Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/cotizadores', 'Tornilleria']" (click)="setType('Tornilleria')">
+            <img src="assets/Icons/tornilloIcon.png" alt="">
+            Tornilleria Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/herramientas']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>search</mat-icon>
+            Buscar Herramienta
+          </a>
+
+          <a mat-list-item [routerLink]="['/calcularPV']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>calculate</mat-icon>
+            Calcular Precio Venta
+          </a>
+
+          <a mat-list-item [routerLink]="['/analisisTornilleria']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>search</mat-icon>
+            Analisis Costo Tornilleria
+          </a>
+        </div>
+
+
         <a mat-list-item href="/addBarcode" (click)="drawer.close()">
           <img src="assets/Icons/barcodeIcon.png" alt="">
           Generar Codigo de Barras

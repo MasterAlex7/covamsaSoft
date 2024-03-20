@@ -47,15 +47,18 @@ export class AppComponent {
     subMenuRef: false,
     subMenuCot: false,
     subMenuRelacion: false,
+    cotizadores: false,
   };
-  isVentas = false;
-  isCompras = false;
-  isMaster = false;
 
   constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService, private dialog: MatDialog) {}
 
   abrirRefa(){
     const dialogRef = this.dialog.open(MenuRefaccionesComponent)
+  }
+
+  setType(type: string){
+    sessionStorage.setItem('type', type);
+    this.drawer?.close();
   }
 
   getUser(){
