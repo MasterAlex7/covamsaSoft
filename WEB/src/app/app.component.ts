@@ -52,18 +52,6 @@ export class AppComponent {
 
   constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService) {}
 
-  ngOnInit() {
-    if (this.getUser() == 'ventas'){
-      this.isVentas = true;
-    }else if(this.getUser() == 'compras'){
-      this.isCompras = true;
-    }else if(this.getUser() == 'admin' || this.getUser() == 'master'){
-      this.isVentas = true;
-      this.isCompras = true;
-      this.isMaster = true;
-    }
-  }
-
   getUser(){
     return sessionStorage.getItem('user');
   }
@@ -88,8 +76,5 @@ export class AppComponent {
     this.loginService.removeAuthToken();
     this.router.navigate(['/login']);
     this.drawer?.close();
-    this.isCompras = false;
-    this.isVentas = false;
-    this.isMaster = false;
   }
 }
