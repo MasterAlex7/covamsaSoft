@@ -1,99 +1,55 @@
 <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'compras' || getUser() === 'admin'">
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/semi.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-              <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Pesado</h3>
-              <a href="/servicioPesado" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-            </div>
-          </div>
+      <a href="/servicioPesado"><img src="assets/semi.png" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Servicio Pesado</h2>
     </div>
 
     <div class="col-sm-2 py-4">
-      <div class="card mb-3">
-          <img src="assets/bolsaaire.png" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Bolsas de Aire</h3>
-            <a href="/bolsasdeaire" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+      <a href="/bolsasdeaire"><img src="assets/bolsaaire.png" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Bolsas de Aire</h2>
     </div>
 
     <div class="col-sm-2 py-4">
-      <div class="card mb-3">
-          <img src="assets/coche.gif" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Ligero</h3>
-            <a href="/servicioLigero" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+      <a href="/servicioLigero"><img src="assets/coche.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Servicio Ligero</h2>
     </div>
 
     <div class="col-sm-2 py-4">
-      <div class="card mb-3">
-          <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles</h3>
-            <a href="/menuMuelles" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+      <a href="/menuMuelles"><img src="assets/muelles.png" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Muelles</h2>
     </div>
 
     <div class="col-sm-2 py-4">
-      <div class="card mb-3">
-          <img src="assets/perno.png" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Refacciones</h3>
-            <a href="/menuRefacciones" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+      <a href="/menuRefacciones"><img src="assets/perno.png" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Refacciones</h2>
     </div>
 
     <div class="col-sm-2 py-4" *ngIf="isMaster()">
-      <div class="card mb-3">
-          <img src="assets/opciones.gif" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Administrador</h3>
-            <a href="/adminMenu" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+      <a href="/adminMenu"><img src="assets/opciones.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Administrador</h2>
     </div>
 </div>
 
 <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'ventas' && getUser() != 'admin'">
+
   <div class="col-sm-2 py-4" *ngIf="isMaster()">
-      <div class="card mb-3">
-          <img src="assets/bolsa-de-dinero.gif" class="card-img-top py-2" alt="...">
-          <div class="card-body">
-            <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis de Precios</h3>
-            <a href="/tornilleria" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-          </div>
-        </div>
+    <a href="/tornilleria"><img src="assets/bolsa-de-dinero.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+    <h2 class="d-flex justify-content-center fw-bolder">Analisis de Precios</h2>
   </div>
 
   <div class="col-sm-2 py-4">
-    <div class="card mb-3">
-        <img src="assets/documento.gif" class="card-img-top py-2" alt="...">
-        <div class="card-body">
-          <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
-          <a href="/menuCotizadores" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-        </div>
-      </div>
+    <a href="/menuCotizadores"><img src="assets/documento.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+    <h2 class="d-flex justify-content-center fw-bolder">Cotizadores</h2>
   </div>
 
   <div class="col-sm-2 py-4">
-    <div class="card mb-3">
-        <img src="assets/barcode.gif" class="card-img-top py-2" alt="...">
-        <div class="card-body">
-          <h3 class="card-title d-flex justify-content-center fw-bolder">Generar Codigo de Barras</h3>
-          <a href="/addBarcode" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-        </div>
-      </div>
+    <a href="/addBarcode"><img src="assets/barcode.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+    <h2 class="d-flex justify-content-center fw-bolder">Generar Codigo de Barras</h2>
   </div>
 </div>
 
-<div class="d-flex justify-content-center">
+<!-- <div class="d-flex justify-content-center">
   <footer>
     <a mat-raised-button color="primary" class="d-flex justify-content-center" (click)="logout()">Cerrar Sesion</a>
   </footer>
-</div>
+</div> -->
