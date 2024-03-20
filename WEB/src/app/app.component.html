@@ -1,20 +1,8 @@
-<div *ngIf="getUser() === 'ventas'">
+<!-- <div *ngIf="getUser() === 'ventas'">
   <nav class="navbar  bgColorNav">
     <div class="container-fluid">
       <a class="navbar-brand" href="/home"><img src="assets/logo_covamsa_clasico.png" alt="" height="100" width="170"></a>
       <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a>
-      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="50" width="165"></a> -->
     </div>
   </nav>
 </div>
@@ -23,7 +11,6 @@
   <nav class="navbar navbar-expand-lg bgColorNav">
     <div class="container-fluid">
       <a class="navbar-brand" href="/home"><img src="assets/covamsa_logotipo.png" alt="" height="86" width="300"></a>
-      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
     </div>
   </nav>
 </div>
@@ -31,10 +18,9 @@
 <div *ngIf="getUser() === 'admin' || getUser() === 'master'">
   <nav class="navbar navbar-expand-lg bgColorNav">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/home"><img src="assets/apoyo.png" alt="" height="110" width="110"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/logo_covamsa_clasico.png" alt="" height="100" width="170"></a>
-      <a class="navbar-brand" href="/home"><img src="assets/covamsa_logotipo.png" alt="" height="86" width="300"></a>
-      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
+      <a class="navbar-brand" href="/home"><img src="assets/apoyo.png" alt="" height="55" width="55"></a>
+      <a class="navbar-brand" href="/home"><img src="assets/logo_covamsa_clasico.png" alt="" height="50" width="85"></a>
+      <a class="navbar-brand" href="/home"><img src="assets/covamsa_logotipo.png" alt="" height="43" width="150"></a>
     </div>
   </nav>
 </div>
@@ -44,9 +30,246 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="/home"><img src="assets/logo_covamsa_clasico.png" alt="" height="100" width="170"></a>
       <a class="navbar-brand" href="/home"><img src="assets/covamsa_logotipo.png" alt="" height="86" width="300"></a>
-      <!-- <a class="navbar-brand" href="/home"><img src="assets/gabriel_logo.png" alt="" height="100" width="330"></a> -->
     </div>
   </nav>
-</div>
+</div> -->
+<mat-toolbar class="d-flex justify-content-between" *ngIf="isLogged()">
+  <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="title">COVAMSA SEARCH</span>
+  <span class="example-spacer"></span>
+  <a href="/home" mat-icon-button class="example-icon favorite-icon" >
+    <mat-icon>home</mat-icon>
+  </a>
+</mat-toolbar>
 
-<router-outlet></router-outlet>
+<mat-toolbar class="d-flex justify-content-center"*ngIf="!isLogged()">
+  <span>COVAMSA SEARCH</span>
+</mat-toolbar>
+
+<mat-drawer-container class="matDrawerCont" [hasBackdrop]="true">
+  <mat-drawer #drawer mode='over'>
+    <mat-nav-list>
+      <a mat-list-item href="/home">
+        <img src="assets/Icons/home.png" alt="">
+        Inicio
+      </a>
+      
+      <div *ngIf="getUser() === 'ventas' || getUser() === 'master'">
+        <a mat-list-item href="/servicioPesado">
+          <img src="assets/Icons/spIcon.png" alt="">
+          Servicio Pesado
+        </a>
+        <a mat-list-item href="/bolsasdeaire">
+          <img src="assets/Icons/baIcon.png" alt="">
+          Bolsas de Aire
+        </a>
+        <a mat-list-item href="/servicioLigero">
+          <img src="assets/Icons/slIcon.png" alt="">
+          Servicio Ligero
+        </a>
+        <a mat-list-item href="/menuMuelles">
+          <img src="assets/Icons/mueIcon.png" alt="">
+          Muelles
+        </a>
+        <a mat-list-item href="/menuRefacciones">
+          <img src="assets/Icons/refIcon.png" alt="">
+          Refacciones
+        </a>
+      </div>
+
+      <!-- Menu de Admin -->
+      <div *ngIf="getUser() === 'master'">
+        <mat-list-item (click)="toggleSubmenu('admin')">
+          <span>
+            <img src="assets/Icons/administracion.png" alt="">
+            Administrador
+            <mat-icon class="py-2">{{ isSubmenuOpen('admin') ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </span>
+        </mat-list-item>
+        <div *ngIf="isSubmenuOpen('admin')">
+
+          <!-- Menu de Servicio Pesado -->
+          <mat-list-item (click)="toggleSubmenu('subMenuSP')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/spIcon.png" alt="">
+              Servicio Pesado
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuSP') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuSP')" style="margin-left: 15%;">
+            <a mat-list-item [routerLink]="['/addSP','add']">
+              <mat-icon>add</mat-icon>
+              Nuevo
+            </a>
+            <a mat-list-item href="/servicioPesado">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <a mat-list-item (click)="crearPlantilla('SP')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Bolsas de Aire -->
+          <mat-list-item (click)="toggleSubmenu('subMenuBA')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/baIcon.png" alt="">
+              Bolsas de Aire
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuBA') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuBA')" style="margin-left: 15%;">
+            <a mat-list-item [routerLink]="['/addBA','add']">
+              <mat-icon>add</mat-icon>
+              Nuevo
+            </a>
+            <a mat-list-item href="/bolsasdeaire">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <a mat-list-item (click)="crearPlantilla('BA')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Servicio Ligero -->
+          <mat-list-item (click)="toggleSubmenu('subMenuSL')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/slIcon.png" alt="">
+              Servicio Ligero
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuSL') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuSL')" style="margin-left: 15%;">
+            <a mat-list-item [routerLink]="['/addSL','add']">
+              <mat-icon>add</mat-icon>
+              Nuevo
+            </a>
+            <a mat-list-item href="/servicioLigero">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <a mat-list-item (click)="crearPlantilla('SL')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Muelles -->
+          <mat-list-item (click)="toggleSubmenu('subMenuMue')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/mueIcon.png" alt="">
+              Muelles
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuMue') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuMue')" style="margin-left: 15%;">
+            <a mat-list-item [routerLink]="['/addMue', 'add']">
+              <mat-icon>add</mat-icon>
+              Nuevo
+            </a>
+            <a mat-list-item href="/menuMuelles">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <a mat-list-item (click)="crearPlantilla('Muelles')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Refacciones -->
+          <mat-list-item (click)="toggleSubmenu('subMenuRef')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/refIcon.png" alt="">
+              Refacciones
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuRef') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuRef')" style="margin-left: 15%;">
+            <a mat-list-item [routerLink]="['/addRefa', 'add']">
+              <mat-icon>add</mat-icon>
+              Nuevo
+            </a>
+            <a mat-list-item href="/menuRefacciones">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <a mat-list-item (click)="crearPlantilla('Refacciones')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Cotizadores -->
+          <mat-list-item (click)="toggleSubmenu('subMenuCot')" style="margin-left: 10%;">
+            <span>
+              <img src="assets/Icons/cotizadoresIcon.png" alt="">
+              Cotizadores
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuCot') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuCot')" style="margin-left: 15%;">
+            <a mat-list-item (click)="crearPlantilla('Cotizadores')">
+              <mat-icon>description</mat-icon>
+              Plantilla
+            </a>
+          </div>
+
+          <!-- Menu de Relaciones -->
+          <mat-list-item (click)="toggleSubmenu('subMenuRelacion')" style="margin-left: 10%;">
+            <span>
+              <mat-icon>link</mat-icon>
+              Relacionar
+              <mat-icon class="py-2">{{ isSubmenuOpen('subMenuRelacion') ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </span>
+          </mat-list-item>
+          <div *ngIf="isSubmenuOpen('subMenuRelacion')" style="margin-left: 15%;">
+            <a mat-list-item href="/addTor">
+              <img src="assets/Icons/tornilloIcon.png" alt="">
+              Tornilleria
+            </a>
+            <a mat-list-item href="/relacionHerra">
+              <img src="assets/Icons/herramientaIcon.png" alt="">
+              Herramienta
+            </a>
+          </div>
+        </div>
+
+        <a mat-list-item href="/tornilleria">
+          <img src="assets/Icons/analisisIcon.png" alt="">
+          Analisis de Precios
+        </a>
+      </div>
+
+      <div *ngIf="getUser() === 'compras' || getUser() === 'master'">
+        <a mat-list-item href="/menuCotizadores">
+          <img src="assets/Icons/cotizadoresIcon.png" alt="">
+          Cotizadores
+        </a>
+        <a mat-list-item href="/addBarcode">
+          <img src="assets/Icons/barcodeIcon.png" alt="">
+          Generar Codigo de Barras
+        </a>
+      </div>
+
+    </mat-nav-list>
+
+    <div class="d-flex justify-content-center">
+      <footer>
+        <a mat-raised-button color="primary" class="d-flex justify-content-center" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Cerrar Sesion
+        </a>
+      </footer>
+    </div>
+  </mat-drawer>
+
+  <mat-drawer-content class="matDrawerContent">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
