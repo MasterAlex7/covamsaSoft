@@ -13,6 +13,8 @@ import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { ExcelService } from './services/excel.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuRefaccionesComponent } from './components/menus/menu-refacciones/menu-refacciones.component';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +52,11 @@ export class AppComponent {
   isCompras = false;
   isMaster = false;
 
-  constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService) {}
+  constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService, private dialog: MatDialog) {}
+
+  abrirRefa(){
+    const dialogRef = this.dialog.open(MenuRefaccionesComponent)
+  }
 
   getUser(){
     return sessionStorage.getItem('user');

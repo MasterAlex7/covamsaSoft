@@ -3,6 +3,8 @@ import { DataService } from '../../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-menu-refacciones',
@@ -10,7 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     CommonModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule, 
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './menu-refacciones.component.html',
   styleUrl: './menu-refacciones.component.css'

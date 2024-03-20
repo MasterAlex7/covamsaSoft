@@ -5,7 +5,10 @@
             <div class="card-body">
                 <div class="card-text">Fecha de Modificacion: </div>
                 <div class="card-text">{{prov.fechaModificacion}}</div>
-                <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setMoneda(prov.TipoMoneda)">Cotizar</a>
+                <a [routerLink]="['/cotizador', prov.NombreProv ,prov.TablaProv]" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setMoneda(prov.TipoMoneda)">
+                    <mat-icon>attach_money</mat-icon>
+                    Cotizar
+                </a>
             </div>
         </div>
     </div>

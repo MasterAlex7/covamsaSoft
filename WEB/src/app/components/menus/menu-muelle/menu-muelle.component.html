@@ -1,19 +1,19 @@
 <div class="row mx-5 py-5 d-flex justify-content-center">
     <div class="col-sm-2 py-4">
-        <div class="card">
-            <h2 class="card-header">Busqueda General</h2>
-            <div class="card-body">
-                <a [routerLink]="['/muelles', 'all']" mat-raised-button color="primary">Ver Mas</a>
-            </div>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/muelles', 'all']" mat-raised-button color="primary" style="width: 80%;">
+                <mat-icon>search</mat-icon>
+                Busqueda General
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4" *ngFor="let marca of dataSource">
-        <div class="card">
-            <h2 class="card-header">{{ marca.marca }}</h2>
-            <div class="card-body">
-                <a [routerLink]="['/muelles', marca.marca]" mat-raised-button color="primary">Ver Mas</a>
-            </div>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/muelles', marca.marca]" mat-raised-button color="primary" style="width: 80%;">
+                <mat-icon>search</mat-icon>
+                {{ marca.marca }}
+            </a>
         </div>
     </div>
 </div>
