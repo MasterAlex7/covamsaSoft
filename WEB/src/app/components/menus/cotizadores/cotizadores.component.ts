@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { Proveedores } from '../../../interfaces/proveedores';
 import { ActivatedRoute } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cotizadores',
@@ -13,7 +14,8 @@ import {MatButtonModule} from '@angular/material/button';
   imports: [
     CommonModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './cotizadores.component.html',
   styleUrl: './cotizadores.component.css'

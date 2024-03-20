@@ -13,6 +13,8 @@ import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { ExcelService } from './services/excel.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuRefaccionesComponent } from './components/menus/menu-refacciones/menu-refacciones.component';
 
 @Component({
   selector: 'app-root',
@@ -45,23 +47,18 @@ export class AppComponent {
     subMenuRef: false,
     subMenuCot: false,
     subMenuRelacion: false,
+    cotizadores: false,
   };
-  isVentas = false;
-  isCompras = false;
-  isMaster = false;
 
-  constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService) {}
+  constructor(private loginService: LoginService, private router:Router, private excelService: ExcelService, private dialog: MatDialog) {}
 
-  ngOnInit() {
-    if (this.getUser() == 'ventas'){
-      this.isVentas = true;
-    }else if(this.getUser() == 'compras'){
-      this.isCompras = true;
-    }else if(this.getUser() == 'admin' || this.getUser() == 'master'){
-      this.isVentas = true;
-      this.isCompras = true;
-      this.isMaster = true;
-    }
+  abrirRefa(){
+    const dialogRef = this.dialog.open(MenuRefaccionesComponent)
+  }
+
+  setType(type: string){
+    sessionStorage.setItem('type', type);
+    this.drawer?.close();
   }
 
   getUser(){
@@ -88,8 +85,5 @@ export class AppComponent {
     this.loginService.removeAuthToken();
     this.router.navigate(['/login']);
     this.drawer?.close();
-    this.isCompras = false;
-    this.isVentas = false;
-    this.isMaster = false;
   }
 }

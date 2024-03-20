@@ -1,20 +1,20 @@
-<div class="row mx-5 py-5 d-flex justify-content-center">
-    <div class="col-sm-2 py-4">
-        <div class="card">
-            <h2 class="card-header">Busqueda General</h2>
-            <div class="card-body">
-                <a [routerLink]="['/refacciones', 'all']" mat-raised-button color="primary">Ver Mas</a>
+<h2 mat-dialog-title>Tipos de Refacciones</h2>
+<mat-dialog-content>
+    <div class="row mx-5 py-5 d-flex justify-content-center">
+        <div class="col-sm-2 py-4">
+            <div class="row d-flex justify-content-center">
+                <a [routerLink]="['/refacciones', 'all']" mat-raised-button color="primary" style="width: 80%;" matDialogClose="true">
+                    General
+                </a>
             </div>
         </div>
-    </div>
-
-    <div class="col-sm-2 py-4" *ngFor="let tipo of tipos">
-        <div class="card">
-            <h2 class="card-header">{{ tipo.TipoRefaccion }}</h2>
-            <div class="card-body">
-                <a [routerLink]="['/refacciones', tipo.TipoRefaccion]" mat-raised-button color="primary">Ver Mas</a>
+    
+        <div class="col-sm-2 py-4" *ngFor="let tipo of tipos">
+            <div class="row d-flex justify-content-center">
+                <a [routerLink]="['/refacciones', tipo.TipoRefaccion]" mat-raised-button color="primary" style="width: 80%;" matDialogClose="true">
+                    {{ tipo.TipoRefaccion }}
+                </a>
             </div>
         </div>
-    </div>
-</div>
-
+    </div> 
+</mat-dialog-content>

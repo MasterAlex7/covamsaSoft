@@ -4,6 +4,7 @@ import { LoginService } from '../../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface DataMuellesMarca {
   marca: string
@@ -15,7 +16,8 @@ export interface DataMuellesMarca {
   imports: [
     CommonModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './menu-muelle.component.html',
   styleUrl: './menu-muelle.component.css'

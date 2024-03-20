@@ -1,61 +1,67 @@
 <div class="row mx-5 py-5 d-flex justify-content-center">
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/refaccion.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Herramientas Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Herramientas')">Ver Mas</a>
-            </div>
+        <img src="assets/refaccion.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Herramientas Cotizador</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/cotizadores', 'Herramientas']" mat-raised-button color="primary" (click)="setType('Herramientas')" style="width: 60%;">
+                <mat-icon>attach_money</mat-icon>
+                Cotizar
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/herramientas.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Buscar Heramientas</h3>
-                <a [routerLink]="['/herramientas']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-            </div>
+        <img src="assets/muelles.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles Cotizador</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/cotizadores', 'Muelles']" mat-raised-button color="primary" (click)="setType('Muelles')" style="width: 60%;">
+                <mat-icon>attach_money</mat-icon>
+                Cotizar
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/calculadora.gif" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Calcular Precio Venta</h3>
-                <a [routerLink]="['/calcularPV']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Muelles']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Muelles')">Ver Mas</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/tornillo.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria Cotizador</h3>
-                <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center" (click)="setType('Tornilleria')">Ver Mas</a>
-            </div>
+        <img src="assets/tornillo.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Tornilleria Cotizador</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/cotizadores', 'Tornilleria']" mat-raised-button color="primary" (click)="setType('Tornilleria')" style="width: 60%;">
+                <mat-icon>attach_money</mat-icon>
+                Cotizar
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4" *ngIf="getUser() === 'master'">
-        <div class="card mb-3">
-            <img src="assets/investigacion.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis Costos Tornilleria</h3>
-                <a [routerLink]="['/analisisTornilleria']" mat-raised-button color="primary" class="d-flex justify-content-center">Ver Mas</a>
-            </div>
+        <img src="assets/herramientas.png" class="img-fluid" alt="Responsive image" width="256" height="256">  
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Buscar Heramientas</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/herramientas']" mat-raised-button color="primary" style="width: 60%;">
+                <mat-icon>search</mat-icon>
+                Buscar
+            </a>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4" *ngIf="getUser() === 'master'">
+        <img src="assets/calculadora.gif" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Calcular Precio Venta</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/calcularPV']" mat-raised-button color="primary" style="width: 60%;">
+                <mat-icon>calculate</mat-icon>
+                Calcular
+            </a>
+        </div>
+    </div>
+
+    <div class="col-sm-2 py-4" *ngIf="getUser() === 'master'">
+        <img src="assets/investigacion.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Analisis Costos Tornilleria</h3>
+        <div class="row d-flex justify-content-center">
+            <a [routerLink]="['/analisisTornilleria']" mat-raised-button color="primary" style="width: 60%;">
+                <mat-icon>search</mat-icon>
+                Analizar
+            </a>
         </div>
     </div>
 </div>

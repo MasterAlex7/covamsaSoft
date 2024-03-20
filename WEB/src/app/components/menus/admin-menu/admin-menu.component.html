@@ -1,92 +1,161 @@
 <div class="row mx-5 py-5 d-flex justify-content-center">
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/semi.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Pesado</h3>
-                <a [routerLink]="['/addSP','add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
-                <a href="/servicioPesado" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
-                <a (click)="crearPlantilla('SP')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/semi.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="d-flex justify-content-center fw-bolder">Servicio Pesado</h3>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" [routerLink]="['/addSP','add']" class="mt-1" style="width: 60%; background-color: #198754;">
+                <mat-icon>add_circle</mat-icon>
+                Nuevo
+            </a>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/servicioPesado" class="mt-1" style="width: 60%;">
+                <mat-icon>edit</mat-icon>
+                Editar/Eliminar
+            </a>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('SP')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/bolsaaire.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Bolsas de Aire</h3>
-                <a [routerLink]="['/addBA','add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
-                <a href="/bolsasdeaire" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
-                <a (click)="crearPlantilla('BA')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/bolsaaire.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="d-flex justify-content-center fw-bolder">Bolsas de Aire</h3>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" [routerLink]="['/addBA','add']" class="mt-1" style="width: 60%; background-color: #198754;">
+                <mat-icon>add_circle</mat-icon>
+                Nuevo
+            </a>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/bolsasdeaire" class="mt-1" style="width: 60%;">
+                <mat-icon>edit</mat-icon>
+                Editar/Eliminar
+            </a>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('BA')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/coche.gif" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Ligero</h3>
-                <a [routerLink]="['/addSL','add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
-                <a href="/servicioLigero" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
-                <a (click)="crearPlantilla('SL')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/coche.gif" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Servicio Ligero</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" [routerLink]="['/addSL','add']" class="mt-1" style="width: 60%; background-color: #198754;">
+                <mat-icon>add_circle</mat-icon>
+                Nuevo
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/servicioLigero" class="mt-1" style="width: 60%;">
+                <mat-icon>edit</mat-icon>
+                Editar/Eliminar
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('SL')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/muelles.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles</h3>
-                <a [routerLink]="['/addMue', 'add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
-                <a href="/menuMuelles" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
-                <a (click)="crearPlantilla('Muelles')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/muelles.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Muelles</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" [routerLink]="['/addMue','add']" class="mt-1" style="width: 60%; background-color: #198754;">
+                <mat-icon>add_circle</mat-icon>
+                Nuevo
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/menuMuelles" class="mt-1" style="width: 60%;">
+                <mat-icon>edit</mat-icon>
+                Editar/Eliminar
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('Muelles')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/refaccion.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Refacciones</h3>
-                <a [routerLink]="['/addRefa', 'add']" class="btn btn-success d-flex justify-content-center">Nuevo</a>
-                <a href="/menuRefacciones" class="btn btn-warning d-flex justify-content-center mt-1">Editar/Eliminar</a>
-                <a (click)="crearPlantilla('Refacciones')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/refaccion.png" class="img-fluid" alt="Responsive image" width="256" height="256">  
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Refacciones</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" [routerLink]="['/addRefa', 'add']" class="mt-1" style="width: 60%; background-color: #198754;">
+                <mat-icon>add_circle</mat-icon>
+                Nuevo
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/menuRefacciones" class="mt-1" style="width: 60%;">
+                <mat-icon>edit</mat-icon>
+                Editar/Eliminar
+            </a>
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('Refacciones')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/cotizador.png" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
-                <a (click)="crearPlantilla('Cotizadores')" class="btn btn-info d-flex justify-content-center mt-1">Plantilla</a>
-            </div>
+        <img src="assets/cotizador.png" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Cotizadores</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" (click)="crearPlantilla('Cotizadores')" class="mt-1" style="width: 60%;">
+                <mat-icon>description</mat-icon>
+                Plantilla
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/lista-de-verificacion.gif" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Relacionar Tornilleria</h3>
-                <a href="/addTor" class="d-flex justify-content-center btn btn-success mt-1">Ver Mas</a>
-            </div>
+        <img src="assets/lista-de-verificacion.gif" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Relacionar Tornilleria</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/addTor" class="mt-1" style="width: 60%;">
+                <mat-icon>link</mat-icon>
+                Relacionar
+            </a>
         </div>
     </div>
 
     <div class="col-sm-2 py-4">
-        <div class="card mb-3">
-            <img src="assets/relaciones.gif" class="card-img-top py-2" alt="...">
-            <div class="card-body">
-                <h3 class="card-title d-flex justify-content-center fw-bolder">Relacionar Herramientas</h3>
-                <a href="/relacionHerra" class="d-flex justify-content-center btn btn-success mt-1">Ver Mas</a>
-            </div>
+        <img src="assets/relaciones.gif" class="img-fluid" alt="Responsive image" width="256" height="256">
+        <h3 class="card-title d-flex justify-content-center fw-bolder">Relacionar Herramientas</h3>
+
+        <div class="row d-flex justify-content-center">
+            <a mat-raised-button color="primary" href="/relacionHerra" class="mt-1" style="width: 60%;">
+                <mat-icon>link</mat-icon>
+                Relacionar
+            </a>
         </div>
     </div>
-
 </div>

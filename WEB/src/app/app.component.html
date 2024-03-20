@@ -57,23 +57,23 @@
       </a>
       
       <div *ngIf="getUser() === 'ventas' || getUser() === 'master'">
-        <a mat-list-item href="/servicioPesado">
+        <a mat-list-item href="/servicioPesado" (click)="drawer.close()">
           <img src="assets/Icons/spIcon.png" alt="">
           Servicio Pesado
         </a>
-        <a mat-list-item href="/bolsasdeaire">
+        <a mat-list-item href="/bolsasdeaire" (click)="drawer.close()">
           <img src="assets/Icons/baIcon.png" alt="">
           Bolsas de Aire
         </a>
-        <a mat-list-item href="/servicioLigero">
+        <a mat-list-item href="/servicioLigero" (click)="drawer.close()">
           <img src="assets/Icons/slIcon.png" alt="">
           Servicio Ligero
         </a>
-        <a mat-list-item href="/menuMuelles">
+        <a mat-list-item href="/menuMuelles" (click)="drawer.close()">
           <img src="assets/Icons/mueIcon.png" alt="">
           Muelles
         </a>
-        <a mat-list-item href="/menuRefacciones">
+        <a mat-list-item (click)="abrirRefa()" (click)="drawer.close()">
           <img src="assets/Icons/refIcon.png" alt="">
           Refacciones
         </a>
@@ -99,15 +99,15 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuSP')" style="margin-left: 15%;">
-            <a mat-list-item [routerLink]="['/addSP','add']">
+            <a mat-list-item [routerLink]="['/addSP','add']" (click)="drawer.close()">
               <mat-icon>add</mat-icon>
               Nuevo
             </a>
-            <a mat-list-item href="/servicioPesado">
+            <a mat-list-item href="/servicioPesado" (click)="drawer.close()">
               <mat-icon>edit</mat-icon>
               Editar
             </a>
-            <a mat-list-item (click)="crearPlantilla('SP')">
+            <a mat-list-item (click)="crearPlantilla('SP')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -122,15 +122,15 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuBA')" style="margin-left: 15%;">
-            <a mat-list-item [routerLink]="['/addBA','add']">
+            <a mat-list-item [routerLink]="['/addBA','add']" (click)="drawer.close()">
               <mat-icon>add</mat-icon>
               Nuevo
             </a>
-            <a mat-list-item href="/bolsasdeaire">
+            <a mat-list-item href="/bolsasdeaire" (click)="drawer.close()">
               <mat-icon>edit</mat-icon>
               Editar
             </a>
-            <a mat-list-item (click)="crearPlantilla('BA')">
+            <a mat-list-item (click)="crearPlantilla('BA')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -145,15 +145,15 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuSL')" style="margin-left: 15%;">
-            <a mat-list-item [routerLink]="['/addSL','add']">
+            <a mat-list-item [routerLink]="['/addSL','add']" (click)="drawer.close()">
               <mat-icon>add</mat-icon>
               Nuevo
             </a>
-            <a mat-list-item href="/servicioLigero">
+            <a mat-list-item href="/servicioLigero" (click)="drawer.close()">
               <mat-icon>edit</mat-icon>
               Editar
             </a>
-            <a mat-list-item (click)="crearPlantilla('SL')">
+            <a mat-list-item (click)="crearPlantilla('SL')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -168,15 +168,15 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuMue')" style="margin-left: 15%;">
-            <a mat-list-item [routerLink]="['/addMue', 'add']">
+            <a mat-list-item [routerLink]="['/addMue', 'add']" (click)="drawer.close()">
               <mat-icon>add</mat-icon>
               Nuevo
             </a>
-            <a mat-list-item href="/menuMuelles">
+            <a mat-list-item href="/menuMuelles" (click)="drawer.close()">
               <mat-icon>edit</mat-icon>
               Editar
             </a>
-            <a mat-list-item (click)="crearPlantilla('Muelles')">
+            <a mat-list-item (click)="crearPlantilla('Muelles')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -191,15 +191,15 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuRef')" style="margin-left: 15%;">
-            <a mat-list-item [routerLink]="['/addRefa', 'add']">
+            <a mat-list-item [routerLink]="['/addRefa', 'add']" (click)="drawer.close()">
               <mat-icon>add</mat-icon>
               Nuevo
             </a>
-            <a mat-list-item href="/menuRefacciones">
+            <a mat-list-item href="/menuRefacciones" (click)="drawer.close()">
               <mat-icon>edit</mat-icon>
               Editar
             </a>
-            <a mat-list-item (click)="crearPlantilla('Refacciones')">
+            <a mat-list-item (click)="crearPlantilla('Refacciones')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -214,7 +214,7 @@
             </span>
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuCot')" style="margin-left: 15%;">
-            <a mat-list-item (click)="crearPlantilla('Cotizadores')">
+            <a mat-list-item (click)="crearPlantilla('Cotizadores')" (click)="drawer.close()">
               <mat-icon>description</mat-icon>
               Plantilla
             </a>
@@ -230,28 +230,65 @@
           </mat-list-item>
           <div *ngIf="isSubmenuOpen('subMenuRelacion')" style="margin-left: 15%;">
             <a mat-list-item href="/addTor">
-              <img src="assets/Icons/tornilloIcon.png" alt="">
+              <img src="assets/Icons/tornilloIcon.png" alt="" (click)="drawer.close()">
               Tornilleria
             </a>
             <a mat-list-item href="/relacionHerra">
-              <img src="assets/Icons/herramientaIcon.png" alt="">
+              <img src="assets/Icons/herramientaIcon.png" alt="" (click)="drawer.close()">
               Herramienta
             </a>
           </div>
         </div>
 
-        <a mat-list-item href="/tornilleria">
+        <a mat-list-item href="/tornilleria" (click)="drawer.close()">
           <img src="assets/Icons/analisisIcon.png" alt="">
           Analisis de Precios
         </a>
       </div>
 
+      <!-- Menu de Cotizadores Componente-->
       <div *ngIf="getUser() === 'compras' || getUser() === 'master'">
-        <a mat-list-item href="/menuCotizadores">
-          <img src="assets/Icons/cotizadoresIcon.png" alt="">
-          Cotizadores
-        </a>
-        <a mat-list-item href="/addBarcode">
+        <mat-list-item (click)="toggleSubmenu('cotizadores')">
+          <span>
+            <img src="assets/Icons/cotizadoresIcon.png" alt="">
+            Cotizadores
+            <mat-icon class="py-2">{{ isSubmenuOpen('cotizadores') ? 'expand_less' : 'expand_more' }}</mat-icon>
+          </span>
+        </mat-list-item>
+        <div *ngIf="isSubmenuOpen('cotizadores')" style="margin-left: 10%;">
+          <a mat-list-item [routerLink]="['/cotizadores', 'Herramientas']" (click)="setType('Herramientas')">
+            <img src="assets/Icons/herramientaIcon.png" alt="">
+            Herramientas Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/cotizadores', 'Muelles']" (click)="setType('Muelles')">
+            <img src="assets/Icons/mueIcon.png" alt="">
+            Muelles Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/cotizadores', 'Tornilleria']" (click)="setType('Tornilleria')">
+            <img src="assets/Icons/tornilloIcon.png" alt="">
+            Tornilleria Cotizador
+          </a>
+
+          <a mat-list-item [routerLink]="['/herramientas']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>search</mat-icon>
+            Buscar Herramienta
+          </a>
+
+          <a mat-list-item [routerLink]="['/calcularPV']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>calculate</mat-icon>
+            Calcular Precio Venta
+          </a>
+
+          <a mat-list-item [routerLink]="['/analisisTornilleria']" (click)="drawer.close()" *ngIf="getUser() === 'master'">
+            <mat-icon>search</mat-icon>
+            Analisis Costo Tornilleria
+          </a>
+        </div>
+
+
+        <a mat-list-item href="/addBarcode" (click)="drawer.close()">
           <img src="assets/Icons/barcodeIcon.png" alt="">
           Generar Codigo de Barras
         </a>

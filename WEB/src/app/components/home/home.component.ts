@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MenuRefaccionesComponent } from '../menus/menu-refacciones/menu-refacciones.component';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +17,18 @@ import {MatDividerModule} from '@angular/material/divider';
     RouterModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor(private loginService: LoginService, private router:Router) {}
+  constructor(private loginService: LoginService, private router:Router, private dialog: MatDialog) {}
+
+  abrirDialog(){
+    const dialogRef = this.dialog.open(MenuRefaccionesComponent)
+  }
 
   logout() {
     this.loginService.removeAuthToken();
