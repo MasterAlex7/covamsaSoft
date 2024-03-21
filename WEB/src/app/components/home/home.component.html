@@ -1,4 +1,5 @@
-<div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'compras' || getUser() === 'admin'">
+<div class="container">
+  <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'compras' || getUser() === 'admin'">
     <div class="col-sm-2 py-4">
       <a href="/servicioPesado"><img src="assets/semi.png" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
       <h2 class="d-flex justify-content-center fw-bolder">Servicio Pesado</h2>
@@ -28,28 +29,29 @@
       <a href="/adminMenu"><img src="assets/opciones.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
       <h2 class="d-flex justify-content-center fw-bolder">Administrador</h2>
     </div>
+  </div>
+
+  <div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'ventas' && getUser() != 'admin'">
+
+    <div class="col-sm-2 py-4" *ngIf="isMaster()">
+      <a href="/tornilleria"><img src="assets/bolsa-de-dinero.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Analisis de Precios</h2>
+    </div>
+
+    <div class="col-sm-2 py-4">
+      <a href="/menuCotizadores"><img src="assets/documento.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Cotizadores</h2>
+    </div>
+
+    <div class="col-sm-2 py-4">
+      <a href="/addBarcode"><img src="assets/barcode.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
+      <h2 class="d-flex justify-content-center fw-bolder">Generar Codigo de Barras</h2>
+    </div>
+  </div>
+
+  <!-- <div class="d-flex justify-content-center">
+    <footer>
+      <a mat-raised-button color="primary" class="d-flex justify-content-center" (click)="logout()">Cerrar Sesion</a>
+    </footer>
+  </div> -->
 </div>
-
-<div class="row mx-5 py-5 d-flex justify-content-center" *ngIf="getUser() != 'ventas' && getUser() != 'admin'">
-
-  <div class="col-sm-2 py-4" *ngIf="isMaster()">
-    <a href="/tornilleria"><img src="assets/bolsa-de-dinero.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
-    <h2 class="d-flex justify-content-center fw-bolder">Analisis de Precios</h2>
-  </div>
-
-  <div class="col-sm-2 py-4">
-    <a href="/menuCotizadores"><img src="assets/documento.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
-    <h2 class="d-flex justify-content-center fw-bolder">Cotizadores</h2>
-  </div>
-
-  <div class="col-sm-2 py-4">
-    <a href="/addBarcode"><img src="assets/barcode.gif" class="img-fluid" alt="Responsive image" width="256" height="256"></a>
-    <h2 class="d-flex justify-content-center fw-bolder">Generar Codigo de Barras</h2>
-  </div>
-</div>
-
-<!-- <div class="d-flex justify-content-center">
-  <footer>
-    <a mat-raised-button color="primary" class="d-flex justify-content-center" (click)="logout()">Cerrar Sesion</a>
-  </footer>
-</div> -->
