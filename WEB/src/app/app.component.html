@@ -56,7 +56,7 @@
         Inicio
       </a>
       
-      <div *ngIf="getUser() === 'ventas' || getUser() === 'master'">
+      <div *ngIf="getUser() === 'ventas' || getUser() === 'master' || getUser() === 'admin'">
         <a mat-list-item href="/servicioPesado" (click)="drawer.close()">
           <img src="assets/Icons/spIcon.png" alt="">
           Servicio Pesado
