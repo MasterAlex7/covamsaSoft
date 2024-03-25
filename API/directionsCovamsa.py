@@ -616,5 +616,21 @@ def getProductosProv():
     except Exception as e:
         print("Error Get Productos Prov: ",e)
 
+@app.route('/cvm/getKitSuspensionNombres', methods=['GET'])
+def getKitSuspensionNombres():
+    try:
+        objResult = callMethod.fnGetKitSuspensionNombres()
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Kit Suspension Nombres: ",e)
+
+@app.route('/cvm/getKitSuspension/<suspension>', methods=['GET'])
+def getKitSuspension(suspension):
+    try:
+        objResult = callMethod.fnGetKitSuspension(suspension)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Kit Suspension: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)

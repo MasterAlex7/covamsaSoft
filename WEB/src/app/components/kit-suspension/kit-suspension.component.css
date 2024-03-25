@@ -1,0 +1,8 @@
+.tableContainer{
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.total-container{
+    white-space: nowrap;
+}
