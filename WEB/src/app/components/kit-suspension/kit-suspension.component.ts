@@ -4,6 +4,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { DataService } from '../../services/data.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { PdfService } from '../../services/pdf.service';
 
 export interface KitData {
   Cantidad: number;
@@ -34,9 +35,9 @@ export class KitSuspensionComponent {
   displayedColumns: string[] = ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'];
   total: number = 0;
   totalFormat = '0.00';
-  visible = false;
+  visible = true;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private pdf: PdfService) { }
 
   ngOnInit() {
     this.dataService.getKitNombres().subscribe((data: any) => {
@@ -63,12 +64,17 @@ export class KitSuspensionComponent {
   getKitData(kit: string) {
     this.dataService.getSuspension(kit).subscribe((data: any) => {
       this.dataSource = data['strAnswer'];
+      console.log(this.dataSource);
 
       this.dataSource.forEach((kit) => {
         this.total = this.total + Number(kit['Importe']);
       });
       this.totalFormat = this.currencyFormatter({ currency: 'USD', value: this.total });
     });
+  }
+
+  crearPdf() {
+    this.pdf.generatePDF();
   }
 
   currencyFormatter({ currency, value}: { currency: string, value: number}) {
