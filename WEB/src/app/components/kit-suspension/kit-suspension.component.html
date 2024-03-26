@@ -8,7 +8,7 @@
     </div>
 
     <div>
-        <h1 class="fw-bolder total-container mx-3">Total: {{this.totalFormat}}</h1>
+        <h1 class="fw-bolder total-container mx-3">Total: {{this.totalFormat}} + IVA</h1>
     </div>
 </div>
 
@@ -22,27 +22,55 @@
             <th mat-header-cell *matHeaderCellDef>Cantidad</th>
             <td mat-cell *matCellDef="let element">{{ element.Cantidad }}</td>
         </ng-container>
+
         <ng-container matColumnDef="Codigo">
             <th mat-header-cell *matHeaderCellDef>Codigo</th>
             <td mat-cell *matCellDef="let element">{{ element.Codigo }}</td>
         </ng-container>
+
+        <ng-container matColumnDef="Costo">
+            <th mat-header-cell *matHeaderCellDef>Costo</th>
+            <td mat-cell *matCellDef="let element">{{element.Costo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="% Utilidad">
+            <th mat-header-cell *matHeaderCellDef>% Utilidad</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field>
+                    <mat-label>Utilidad</mat-label>
+                    <input matInput type="number" [(ngModel)]="element.Utilidad" (change)="onInputChange(element)">
+                </mat-form-field>
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="Descripcion">
             <th mat-header-cell *matHeaderCellDef>Descripcion</th>
             <td mat-cell *matCellDef="let element">{{ element.Descripcion }}</td>
         </ng-container>
+
         <ng-container matColumnDef="PrecioUnitario">
             <th mat-header-cell *matHeaderCellDef>Precio Unitario</th>
             <td mat-cell *matCellDef="let element">{{ element.PrecioUnitario }}</td>
         </ng-container>
+
         <ng-container matColumnDef="Importe">
             <th mat-header-cell *matHeaderCellDef>Importe</th>
             <td mat-cell *matCellDef="let element">{{ element.Importe }}</td>
         </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 </div>
 
 <div class="d-flex justify-content-center py-2" *ngIf="visible">
-    <button mat-raised-button color="primary" (click)="crearPdf()">Crear Cotizacion</button>
+    <button mat-raised-button color="primary" (click)="crearPdf()" [disabled]='isEditing'>Crear Cotizacion</button>
+
+    <div *ngIf="isMaster()">
+        <button mat-raised-button color="primary" class="mx-3" (click)="editar()">Editar</button>
+    </div>
+
+    <div *ngIf="this.isEditing">
+        <button mat-raised-button color="accent" class="mx-3" (click)="save()">Guardar</button>
+    </div>
 </div>

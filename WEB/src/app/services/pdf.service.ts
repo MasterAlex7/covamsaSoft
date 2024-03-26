@@ -5,33 +5,14 @@ import jsPDF from 'jspdf';
   providedIn: 'root'
 })
 export class PdfService {
-  data = [
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-    {Cantidad: 2, Codigo: 'RR-TRA2741', Descripcion: 'M/C HUTCHENS TANDEM 3 LF 3 X 0.788', ID: 53, Importe: '11928.00',PrecioUnitario:"2982.00"},
-  ]
   constructor() { }
     
-  generatePDF(){
-    const transformedData = this.data.map(item => ({
+  generatePDFSuspensiones(title: string, data: any[], total: number){
+    const iva = this.currencyFormatter({currency: 'USD', value: Number((total * 0.16).toFixed(2))});
+    const subtotal = this.currencyFormatter({currency: 'USD', value: Number(total.toFixed(2))});
+    const totalFinal = this.currencyFormatter({currency: 'USD', value: Number((total + (total * 0.16)).toFixed(2))});
+    const todayDate = new Date().toISOString().slice(0, 10); 
+    const transformedData = data.map(item => ({
       Cantidad: item.Cantidad.toString(),
       Codigo: item.Codigo,
       Descripcion: item.Descripcion,
@@ -47,18 +28,60 @@ export class PdfService {
     doc.text('COMERCIAL VAZQUEZ MONTALVO', 70, 17);
     doc.text('S.A. DE C.V.', 113, 27);
 
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(28);
-    doc.text('SUSPENSION CAMION RABON UN EJE', 13, 55);
+    if(title == 'HUTCHENS'){
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(28);
+      doc.text('SUSPENSION CAMION HUTCHENS', 25, 55);
+      doc.table(4, 70, transformedData, ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'], {autoSize: true});
 
-    doc.table(7, 70, transformedData, ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'], {autoSize: true});
+      doc.setFontSize(14);
+      doc.setFont('Helvetica', 'bold');
+      doc.text('SUBTOTAL: $'+subtotal, 149, 30);
+      doc.text('IVA: $'+iva, 168, 40);
+      doc.text('TOTAL: $'+totalFinal, 160, 50);
+    }else if(title == 'RABON'){
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(28);
+      doc.text('SUSPENSION CAMION RABON UN EJE', 13, 55);
+      doc.table(1, 70, transformedData, ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'], {autoSize: true});
 
-    doc.setFontSize(14);
-    doc.setFont('Helvetica', 'bold');
-    doc.text('SUBTOTAL: $38,750.26', 149, 150);
-    doc.text('IVA: $6,200.04', 168, 160);
-    doc.text('TOTAL: $44,950.30', 160, 170);
+      doc.setFontSize(14);
+      doc.setFont('Helvetica', 'bold');
+      doc.text('SUBTOTAL: $'+subtotal, 149, 250);
+      doc.text('IVA: $'+iva, 168, 260);
+      doc.text('TOTAL: $'+totalFinal, 160, 270);
+    }else if(title == 'TANDEM 2-14'){
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(28);
+      doc.text('SUSPENSION TANDEM 2 EJES', 38, 55);
+      doc.table(4, 70, transformedData, ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'], {autoSize: true});
 
-    doc.save('Test.pdf');
+      doc.setFontSize(14);
+      doc.setFont('Helvetica', 'bold');
+      doc.text('SUBTOTAL: $'+subtotal, 149, 282);
+      doc.text('IVA: $'+iva, 168, 287);
+      doc.text('TOTAL: $'+totalFinal, 160, 292);
+    }else if(title == 'TANDEM 2-58'){
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(28);
+      doc.text('SUSPENSION TANDEM 2 EJES', 38, 55);
+      doc.table(1, 70, transformedData, ['Cantidad', 'Codigo', 'Descripcion', 'PrecioUnitario', 'Importe'], {autoSize: true});
+
+      doc.setFontSize(14);
+      doc.setFont('Helvetica', 'bold');
+      doc.text('SUBTOTAL: $'+subtotal, 149, 30);
+      doc.text('IVA: $'+iva, 168, 40);
+      doc.text('TOTAL: $'+totalFinal, 160, 50);
+    }
+
+    doc.save(title+' '+todayDate+'.pdf');
+  }
+
+  currencyFormatter({ currency, value}: { currency: string, value: number}) {
+    const formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      currency
+    }) 
+    return formatter.format(value)
   }
 }

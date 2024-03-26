@@ -1703,3 +1703,64 @@ def fnGetKitSuspension(suspension):
 		return {'intStatus':500, 'strAnswer': str(e)}
 	finally:
 		MysqlCnx.close()
+
+def fnGetCostoProvKit(datos):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		response = []
+		for dato in datos:
+			params = (
+				dato['Tabla'],
+				dato['Codigo']
+			)
+			cursor.callproc('getCostoProvKits',params)
+			aux = cursor.fetchall()
+			if aux:
+				response.append(aux[0])
+			else:
+				response.append({
+					"CLAVE": dato['Codigo'],
+					"Costo": 0
+				})
+				
+		if response:
+			return {'intStatus':200, 'strAnswer': response}
+		else:
+			return {'intStatus':202, 'strAnswer': 'No hay productos.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()
+
+def fnPutActualizarKits(datos):
+	try:
+		MysqlCnx = pymysql.connect(host=strMysqlHost,
+						port=strMysqlPort,
+						user=strMysqluUser,
+						password=strMysqlPassword,
+						db=strMysqlDB,
+						charset='utf8mb4',
+						cursorclass=pymysql.cursors.DictCursor)
+
+		cursor = MysqlCnx.cursor()
+		for dato in datos:
+			params = (
+				dato['ID'],
+				dato['PrecioUnitario'],
+				dato['Importe']
+			)
+			cursor.callproc('putActualizarKits',params)
+		MysqlCnx.commit()
+		return {'intStatus':200, 'strAnswer': 'Se ha guardado la informacion correctamente.'}
+	except Exception as e:
+		return {'intStatus':500, 'strAnswer': str(e)}
+	finally:
+		MysqlCnx.close()

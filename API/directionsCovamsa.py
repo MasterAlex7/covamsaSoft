@@ -632,5 +632,23 @@ def getKitSuspension(suspension):
     except Exception as e:
         print("Error Get Kit Suspension: ",e)
 
+@app.route('/cvm/getCostoProvKit', methods=['POST'])
+def getCostoProvKit():
+    try:
+        datos = request.json['datos'] if ('datos' in request.json) else None
+        objResult = callMethod.fnGetCostoProvKit(datos)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Get Costo Prov Kit: ",e)
+
+@app.route('/cvm/putActualizarKits', methods=['POST'])
+def putActualizarKits():
+    try:
+        datos = request.json['datos'] if ('datos' in request.json) else None
+        objResult = callMethod.fnPutActualizarKits(datos)
+        return jsonify(objResult)
+    except Exception as e:
+        print("Error Put Actualizar Kits: ",e)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=9005, debug=True, threaded=True)
