@@ -15,6 +15,18 @@ import { LoginService } from '../../services/login.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { finalize, takeUntil, Subject } from 'rxjs';
 
+export interface ProductoTornilleria {
+  Cantidad: number,
+  CVM: string,
+  Codigo: string,
+  Descripcion: string,
+  Empaque: number,
+  PLista: number,
+  Descuento: Number,
+  Costo: number,
+  Importe: number,
+}
+
 @Component({
   selector: 'app-cotizador',
   standalone: true,
@@ -43,11 +55,15 @@ export class CotizadorComponent {
   Importacion = new FormControl('');
   tabla='';
   nombreProveedor = '';
-  dataSource: Producto[] = [];
+  dataSource: any[] = [];
   total = 0;
+  totalFormat = '';
+  totalDolaresFormat = '';
+  totalWImportFormat = '';
   totalDolares = 0;
   totalWImport = 0;
   archivoSeleccionado: File | null = null;
+  isTornilleria = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -101,7 +117,7 @@ export class CotizadorComponent {
                 }
                 this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
                 this.total = Number(this.total.toFixed(2));
-                
+                this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
                 this.Cantidad.setValue('');
                 this.ID.setValue('');
                 this.cantidadInput?.nativeElement.focus();
@@ -158,7 +174,7 @@ export class CotizadorComponent {
                   }
                   this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo']);
                   this.total = Number(this.total.toFixed(2));
-
+                  this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
                   this.Cantidad.setValue('');
                   this.ID.setValue('');
                   this.cantidadInput?.nativeElement.focus();
@@ -195,6 +211,19 @@ export class CotizadorComponent {
         }
       }
     }else{
+      this.isTornilleria = true;
+      this.displayedColumns = [
+        'Cantidad',
+        'CVM',
+        'Codigo',
+        'Descripcion',
+        'Empaque',
+        'P.Lista',
+        'Descuento',
+        'Costo',
+        'Importe',
+        'Eliminar'
+      ]
       const params = {
         tabla: this.tabla,
         idCovamsa: this.ID.value,
@@ -203,8 +232,9 @@ export class CotizadorComponent {
       this.dataService.getTornilleriaProd(params).subscribe((data: any) => {
         if(data['intStatus'] == 200){
             if (!this.dataSource.some(producto => producto.Codigo === data['strAnswer'][0]['CLAVE'])) {
-              const auxProducto: Producto = {
+              const auxProducto: ProductoTornilleria = {
                 "Cantidad": Number(this.Cantidad.value) || 0,
+                "CVM": this.ID.value!,
                 "Codigo": data['strAnswer'][0]['CLAVE'],
                 "Descripcion": data['strAnswer'][0]['Descripcion'],
                 "Empaque": Number(data['strAnswer'][0]['PzaCaja']),
@@ -214,12 +244,13 @@ export class CotizadorComponent {
                 "Importe": Number((Number(this.Cantidad.value) * Number(data['strAnswer'][0]['Costo'])).toFixed(2))
               };
               this.dataSource.push(auxProducto);
-              //console.log(this.dataSource);
+              console.log(this.dataSource);
               if (this.table) {
                 this.table.renderRows();
               }
               this.total = this.total + Number(this.Cantidad.value) * Number(data['strAnswer'][0].Costo);
               this.total = Number(this.total.toFixed(2));
+              this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
               this.Cantidad.setValue('');
               this.ID.setValue('');
               this.cantidadInput?.nativeElement.focus();
@@ -256,6 +287,7 @@ export class CotizadorComponent {
       if(this.getMoneda() != "Dolar"){
         this.excel.crearExcel(this.dataSource, filename, this.total);
         this.total = 0;
+        this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
         this.dataSource = [];
         this.table?.renderRows();
         this.cantidadInput?.nativeElement.focus();
@@ -265,7 +297,9 @@ export class CotizadorComponent {
         const tipoCambio = Number(this.Moneda.value)
         this.excel.crearExcelDolar(this.dataSource, filename, this.total, this.totalDolares,tipoCambio, this.totalWImport);
         this.total = 0;
+        this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
         this.totalDolares = 0;
+        this.totalDolaresFormat = this.currencyFormatter({ currency: 'USD', value: this.totalDolares });
         this.dataSource = [];
         this.table?.renderRows();
         this.cantidadInput?.nativeElement.focus();
@@ -274,6 +308,7 @@ export class CotizadorComponent {
         this.Moneda.setValue('');
         this.Importacion.setValue('');
         this.totalWImport = 0;
+        this.totalWImportFormat = this.currencyFormatter({ currency: 'USD', value: this.totalWImport });
       }
     }else{
       Swal.fire({
@@ -329,14 +364,18 @@ export class CotizadorComponent {
     this.dataSource.splice(index, 1);
     this.total = this.total - element.Importe;
     this.total = Number(this.total.toFixed(2));
+    this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
     if(this.dataSource.length == 0){
       this.total = 0;
+      this.totalFormat = this.currencyFormatter({ currency: 'MXN', value: this.total });
     }
     if(this.getMoneda() == "Dolar"){
       this.totalDolares = this.total * Number(this.Moneda.value);
       this.totalDolares = Number(this.totalDolares.toFixed(2));
+      this.totalDolaresFormat = this.currencyFormatter({ currency: 'USD', value: this.totalDolares });
       this.totalWImport = this.totalDolares+(this.totalDolares * (Number(this.Importacion.value)/100));
       this.totalWImport = Number(this.totalWImport.toFixed(2));
+      this.totalWImportFormat = this.currencyFormatter({ currency: 'USD', value: this.totalWImport });
     }
     this.table?.renderRows();
   }
@@ -349,8 +388,10 @@ export class CotizadorComponent {
     if(this.Moneda.value != ''){
       this.totalDolares = this.total * Number(this.Moneda.value);
       this.totalDolares = Number(this.totalDolares.toFixed(2));
+      this.totalDolaresFormat = this.currencyFormatter({ currency: 'USD', value: this.totalDolares });
     }else{
       this.totalDolares = 0;
+      this.totalDolaresFormat = this.currencyFormatter({ currency: 'USD', value: this.totalDolares });
     }
   }
 
@@ -366,8 +407,10 @@ export class CotizadorComponent {
     if(this.Importacion.value != '' && this.totalDolares != 0){
       this.totalWImport = this.totalDolares+(this.totalDolares * (Number(this.Importacion.value)/100));
       this.totalWImport = Number(this.totalWImport.toFixed(2));
+      this.totalWImportFormat = this.currencyFormatter({ currency: 'USD', value: this.totalWImport });
     }else{
       this.totalWImport = 0;
+      this.totalWImportFormat = this.currencyFormatter({ currency: 'USD', value: this.totalWImport });
     }
   }
 
@@ -377,5 +420,13 @@ export class CotizadorComponent {
 
   getType(){
     return sessionStorage.getItem('type');
+  }
+
+  currencyFormatter({ currency, value}: { currency: string, value: number}) {
+    const formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      currency
+    }) 
+    return formatter.format(value)
   }
 }

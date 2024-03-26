@@ -25,6 +25,7 @@ import { RelacionHerramientaComponent } from './components/relacion-herramienta/
 import { HerramientasComponent } from './components/herramientas/herramientas.component';
 import { AddBarcodeComponent } from './components/adds/add-barcode/add-barcode.component';
 import { CalcularPVComponent } from './components/calcular-pv/calcular-pv.component';
+import { KitSuspensionComponent } from './components/kit-suspension/kit-suspension.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -57,5 +58,6 @@ export const routes: Routes = [
     { path: 'relacionHerra', component: RelacionHerramientaComponent, canActivate: [AuthGuard] },
     { path: 'herramientas', component: HerramientasComponent, canActivate: [AuthGuard] },
     { path: 'addBarcode', component: AddBarcodeComponent, canActivate: [AuthGuard] },
-    { path: 'calcularPV', component: CalcularPVComponent, canActivate: [AuthGuard] }
+    { path: 'calcularPV', component: CalcularPVComponent, canActivate: [AuthGuard] },
+    { path: 'kitSuspension', component: KitSuspensionComponent, canActivate: [AuthGuard] },
 ];

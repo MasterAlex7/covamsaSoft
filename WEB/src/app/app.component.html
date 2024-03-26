@@ -256,6 +256,11 @@
           </span>
         </mat-list-item>
         <div *ngIf="isSubmenuOpen('cotizadores')" style="margin-left: 10%;">
+          <a mat-list-item [routerLink]="['/cotizadores', 'Tornilleria']" (click)="setType('Tornilleria')">
+            <img src="assets/Icons/tornilloIcon.png" alt="">
+            Tornilleria Cotizador
+          </a>
+
           <a mat-list-item [routerLink]="['/cotizadores', 'Herramientas']" (click)="setType('Herramientas')">
             <img src="assets/Icons/herramientaIcon.png" alt="">
             Herramientas Cotizador
@@ -264,11 +269,6 @@
           <a mat-list-item [routerLink]="['/cotizadores', 'Muelles']" (click)="setType('Muelles')">
             <img src="assets/Icons/mueIcon.png" alt="">
             Muelles Cotizador
-          </a>
-
-          <a mat-list-item [routerLink]="['/cotizadores', 'Tornilleria']" (click)="setType('Tornilleria')">
-            <img src="assets/Icons/tornilloIcon.png" alt="">
-            Tornilleria Cotizador
           </a>
 
           <a mat-list-item [routerLink]="['/herramientas']" (click)="drawer.close()" *ngIf="getUser() === 'master'">

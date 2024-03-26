@@ -75,6 +75,11 @@ export class DataService {
 
   private apiUrlGetProductosProv = 'http://'+ip+':'+port+path+'getProductosProv';
 
+  private apiUrlGetKitNombres = 'http://'+ip+':'+port+path+'getKitSuspensionNombres';
+  private apiUrlGetSuspension = 'http://'+ip+':'+port+path+'getKitSuspension';
+  private apiUrlGetCostosKits = 'http://'+ip+':'+port+path+'getCostoProvKit';
+  private apiUrlPutActualizarKits = 'http://'+ip+':'+port+path+'putActualizarKits';
+
   constructor(private http: HttpClient) { }
 
   obtenerDatos(): Observable<any> {
@@ -272,6 +277,22 @@ export class DataService {
 
   getProductosProv(datos: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGetProductosProv, datos);
+  }
+
+  getKitNombres(): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetKitNombres);
+  }
+
+  getSuspension(nomSusp: string): Observable<any> {
+    return this.http.get<any>(this.apiUrlGetSuspension+'/'+nomSusp);
+  }
+
+  getCostosKits(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlGetCostosKits, datos);
+  }
+
+  putActualizarKits(datos: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlPutActualizarKits, datos);
   }
 
   //Datos entre componentes

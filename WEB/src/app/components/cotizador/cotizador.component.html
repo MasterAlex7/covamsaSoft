@@ -29,9 +29,9 @@
     </div>
 
     <div class="totalContainer">
-        <p class="fs-2">Total: {{this.total}}</p>
-        <p class="fs-2" *ngIf="getMoneda() === 'Dolar'">Total MX: {{this.totalDolares}}</p>
-        <p class="fs-2" *ngIf="isImport()">Total con Importacion: {{this.totalWImport}}</p>
+        <p class="fs-2">Total: {{this.totalFormat}}</p>
+        <p class="fs-2" *ngIf="getMoneda() === 'Dolar'">Total MX: {{this.totalDolaresFormat}}</p>
+        <p class="fs-2" *ngIf="isImport()">Total con Importacion: {{this.totalWImportFormat}}</p>
     </div>
 </div>
 
@@ -41,6 +41,11 @@
         <ng-container matColumnDef="Cantidad">
             <th mat-header-cell *matHeaderCellDef>Cantidad</th>
             <td mat-cell *matCellDef="let element">{{ element.Cantidad }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="CVM" *ngIf="isTornilleria">
+            <th mat-header-cell *matHeaderCellDef>Codigo CVM</th>
+            <td mat-cell *matCellDef="let element">{{ element.CVM }}</td>
         </ng-container>
 
         <ng-container matColumnDef="Codigo">
